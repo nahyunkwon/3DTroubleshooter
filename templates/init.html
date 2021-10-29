@@ -1,0 +1,520 @@
+{% extends 'base.html' %} {% block head %}
+<title>Image Upload</title>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
+
+<script class="datajs" src="../static/js/sankey.js"></script>
+
+
+
+{% endblock %} {% block body %}
+
+<div class="container-flexbox">
+  <div class="container-title">
+    <!-- <h3>New UI Layout: {{ output }}</h3> -->
+    <p id="ui-title">3DTroubleshooter</p>
+  </div>
+  
+  
+  <div class="container-top">
+
+    
+    <div class="tab">
+      <div class="tab-right-div">
+        <button class="tab-links" id="tab-add" onclick="everyAddClick()">+</button>
+      </div>
+      
+    </div>
+
+    <div id="container-choose-img">
+      <form method="post" enctype=multipart/form-data id="form-id">
+        <input type="file" name="img-file" id="inputfile0" class="input-cls" accept=".jpeg, .jpg" onchange="viewMultipleFiles(this.id)" /><br>
+        <div id="prev-div"></div>
+        <button class="btn btn-pred" type="submit" onclick="resetValidity();showLoading();">Make Predictions</button>
+      </form>
+    </div>
+
+  </div>
+
+
+</div>
+
+<div id="loading-div">
+  <div>
+    <img src="../static/images/loading.gif" alt="Loading Icon">
+  </div>
+</div>
+
+<div id="sankey-container" style="margin-top: 200px;"></div>
+
+
+
+
+<script type="text/javascript">
+    const prevSize = 240;  // 100
+    const initImg = "/static/images/init.svg";
+    let input;
+    let id_n = 0;
+
+
+
+    function previewFile(id, i) {
+        input = document.getElementById(id);
+        const file = input.files[i];
+        const fileSize = file.size / 1024 / 1024;  // gives size in MB
+        const fileCount = input.files.length;
+        const preview_id = "prev-img-"+ id + "-" + (i+1);
+        // const remove_id = "rm-img-"+ id + "-" + (i+1);  // remove btn
+        const div_rm_id = 'div-prev-img-' + id + "-" + (i+1);  // div of prev-img and remove btn
+
+        const preview = document.getElementById(preview_id);
+        preview.src = initImg;
+
+        if (fileCount > 5) {
+            // alert("Max 5 images allowed.");
+            input.value = null;
+            input.setCustomValidity("Max 5 images allowed.");
+            input.reportValidity();
+            // preview.src = initImg;
+
+            d3.select('#'+div_rm_id).remove();
+            // createInitImg()
+
+            return;
+        } else if (fileSize > 6) {
+            // alert("Please choose a smaller size image (max 6MB).");
+            input.value = null;
+            input.setCustomValidity("File must not exceed 6 MB!");
+            input.reportValidity();
+            // preview.src = initImg;
+
+            d3.select('#'+div_rm_id).remove();
+            // createInitImg()
+
+            return;
+        } else if (/\.(jpe?g)$/i.test(file.name)) {
+            const reader = new FileReader();
+
+            reader.addEventListener(
+                "load",
+                function () {
+                // convert image file to base64 string
+                preview.src = reader.result;
+                },
+                false
+            );
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        } else {
+            // alert("Please choose a JPG/JPEG image.");
+            input.value = null;
+            input.setCustomValidity("File must be a JPG/JPEG image!");
+            input.reportValidity();
+            // preview.src = initImg;
+
+            d3.select('#'+div_rm_id).remove();
+            // createInitImg()
+
+            return;
+        }
+
+    }
+
+
+    function viewMultipleFiles(id) {
+        input = document.getElementById(id);
+        const file_len = input.files.length;
+        // Init all prev-img
+        // d3.selectAll('.prev-img').remove();
+
+        for (let i = 0; i < file_len; i++) {
+            let img_id = 'prev-img-' + id + "-" + (i+1);
+            let btn_id = 'rm-img-' + id + "-" + (i+1);  // remove btn
+            let div_id = 'div-prev-img-' + id + "-" + (i+1);  // div of prev-img and remove btn
+
+            let newDiv = d3
+                        .select('#prev-div')
+                        .append('div')
+                        .attr('class', 'prev-sub-div')
+                        .attr('id', div_id);
+
+            newDiv
+            .append('img')
+            .attr('height', prevSize)
+            .attr('alt', 'Image preview')
+            .attr('class', 'prev-img')
+            .attr('id', img_id);
+
+            newDiv
+            .append("input")
+            .attr("type","button")
+            .attr('class', 'btn btn-remove-input')
+            .attr('value', 'x')
+            .attr('id', btn_id)
+            .attr("onclick", 
+                "document.getElementById('" + id + "').remove(); document.getElementById('" + div_id + "').remove();");
+
+            try {
+                previewFile(id, i);
+            } catch { 
+                // createInitImg()
+                break; 
+            }
+        }
+    }
+
+
+    function resetValidity() {
+        try {
+            input.setCustomValidity("");
+        } catch {};
+    }
+
+
+    function everyAddClick() {
+        try {
+            input.setCustomValidity("");
+        } catch {};
+
+        const ref_input = document.getElementById('inputfile'+id_n)
+        ref_input.click();
+
+        id_n += 1;
+        // Duplicate input tag
+        const clone_input = ref_input.cloneNode(true);
+        clone_input.id = "inputfile"+id_n;
+        document.getElementById("form-id").appendChild(clone_input);
+    }
+
+
+
+  // Show loading icon
+  function showLoading() {
+    let x = document.getElementById("loading-div");
+      x.style.display = "block";
+  }
+
+
+</script>
+
+
+<script type="text/javascript" id="sankey-js">
+  var units = "widgets";
+  var node_w = 200;
+  var node_h = 20;
+  var sankey_w = 1400;
+  var sankey_h = 1100;
+  var extra_width = 200;
+  var extra_height = 400;
+
+  // set the dimensions and margins of the graph
+  var margin = { top: 10, right: 10, bottom: 10, left: 10 },
+    width = sankey_w - margin.left - margin.right,
+    height = sankey_h - margin.top - margin.bottom;
+
+  // format variables
+  var formatNumber = d3.format(",.0f"), // zero decimal places
+    format = function (d) {
+      return "(" + formatNumber(d) + " " + units + ")";
+    },
+    // color = d3.scaleOrdinal(d3.schemeCategory10);
+    color = d3.scaleOrdinal([`#32a852`]);
+
+  // append the svg object to the body of the page
+  var sanSVG = d3
+    .select("#sankey-container")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right + extra_width)
+    .attr("height", height + margin.top + margin.bottom + extra_height)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // Set the sankey diagram properties
+  var sankey = d3.sankey().nodeWidth(node_w).nodePadding(40).size([width, height]);
+
+  var sanPath = sankey.link();
+
+  // load the data from "sankey.js"
+  sankey.nodes(sankeyDB.nodes).links(sankeyDB.links).layout(32);
+
+  // add in the links
+  var sanLink = sanSVG
+    .append("g")
+    .selectAll(".san-link")
+    .data(sankeyDB.links)
+    .enter()
+    .append("path")
+    .attr("class", "san-link")
+    .attr("id", function (d, i) {
+      d.id = i;
+      return "san-link-" + i;
+    })
+    // .attr("id", function (d) {
+    //   return "san-link-" + d.source.name.replace(/\s+/g, '') + "-" + d.target.name.replace(/\s+/g, '')
+    // })
+    .attr("d", sanPath)
+    .style("stroke-width", function (d) {
+      return Math.max(1, d.dy);
+    })
+    .sort(function (a, b) {
+      return b.dy - a.dy;
+    })
+    .on("mouseover", function () {d3.select("#"+this.id).style("stroke-opacity", 0.5);})
+    .on("mouseout", function () {d3.select("#"+this.id).style("stroke-opacity", 0.2);});
+
+  // add the link titles
+  sanLink.append("title").text(function (d) {
+    return d.source.name + " → " + d.target.name + "\n" + format(d.value);
+  });
+
+  // add in the nodes
+  var sanNode = sanSVG
+    .append("g")
+    .selectAll(".san-node")
+    .data(sankeyDB.nodes)
+    .enter()
+    .append("g")
+    .attr("class", "san-node")
+    .attr("id", function (d) {
+      return "san-g-" + d.name.replace(/\s+/g, '')
+    })
+    .attr("transform", function (d) {
+      return "translate(" + d.x + "," + d.y + ")";
+    })
+    .call(
+      d3
+        .drag()
+        .subject(function (d) {
+          return d;
+        })
+        .on("start", function () {
+          this.parentNode.appendChild(this);
+        })
+        .on("drag", dragmove)
+    )
+    .on("mouseover", highlight_node_links)
+    .on("mouseout", highlight_node_links);
+    // .on("mousedown", highlight_node_links)
+    // .on("click", highlight_node_links)
+
+
+
+
+    function clicked(event, d) {
+    if (event.defaultPrevented) return; // dragged
+
+    d3.select(this).transition()
+        .attr("fill", "black")
+      .transition()
+        .attr("fill", "red");
+  }
+
+
+   // Function to add line breaks str every x characters
+   function addNewlines(str) {
+      var result = '';
+      while (str.length > 0) {
+        result += str.substring(0, 20) + '\n';
+        str = str.substring(20);
+      }
+      return result;
+    }
+
+  
+    // add the rectangles for the nodes
+  sanNode
+    .append("rect")
+    .attr("class", "san-node-rect")
+    .attr("height", function (d) {
+      // return d.dy;
+      return d.dy + 8;
+      // return node_h;
+    })
+    .attr("id", function (d) {
+      return "san-node-" + d.name.replace(/\s+/g, '')
+    })
+    .attr("width", sankey.nodeWidth())
+    .style("fill", function (d) {
+      return (d.color = color(d.name.replace(/ .*/, "")));
+    })
+    .attr("onmouseout", "this.style.fill='#32a852';")
+    // .attr("onmouseover", "this.style.fill='orange';")
+
+    .on("mouseover", function () {this.style.fill='orange';})
+
+    .style("stroke", function (d) {
+      return d3.rgb(d.color).darker(2);
+    })
+    .append("title")
+    .text(function (d) {
+      return d.content + "\n\n" + format(d.value / path_w_size);
+    });
+
+  // add in the title for the nodes
+  sanNode
+    .append("text")
+    .attr("class", "node-text")
+    .attr("x", 4)
+    .attr("y", function (d) {
+      // return d.dy / 2;
+      // return node_h / 2;
+      return 10;
+    })
+    .attr("dy", ".35em")
+    // .attr("text-anchor", "end")
+    .attr("transform", null)
+    // .style('fill', 'white')
+    .text(function (d) {
+      return d.name;
+      // return d.content;
+    })
+    // .filter(function (d) {
+    //   return d.x < width / 2;
+    // })
+    // .attr("x", 6 + sankey.nodeWidth())
+    .attr("text-anchor", "start")
+    // .append("tspan")
+    // .attr("x", 20)
+    // .attr("dx", 10)
+    // .attr("dy", 22)
+    // .text("line2")
+    ;
+
+  /////////////////////////////////////////////////
+
+      var acc = document.getElementsByClassName("san-node-rect");
+      // var acc = document.getElementById("san-node-mechanical");
+      var nodes_old_h = [];
+      for (let j = 0; j < acc.length; j++) {
+        nodes_old_h.push(acc[j].style.height);
+      };
+
+      for (let i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("mousedown", function() {
+          var panel = this;
+          if (panel.style.height == "400px") {
+            panel.style.height = nodes_old_h[i];
+            panel.style.width = node_w;
+          } else {
+            panel.style.height = "400px";
+            panel.style.width = "400px";
+          }
+
+          // var panel = this.nextElementSibling;
+          // if (panel.style.display === "block") {
+          //   panel.style.display = "none";
+          // } else {
+          //   panel.style.display = "block";
+          // }
+        });
+      }
+  
+
+    /////////////////////////////////////////////////
+
+
+
+  ////* Original code  
+  // sanNode
+  //   .append("text")
+  //   .attr("x", -6)
+  //   .attr("y", function (d) {
+  //     // return d.dy / 2;
+  //     // return node_h / 2;
+  //     return 0;
+  //   })
+  //   .attr("dy", ".35em")
+  //   .attr("text-anchor", "end")
+  //   .attr("transform", null)
+  //   .text(function (d) {
+  //     return d.name;
+  //   })
+  //   .filter(function (d) {
+  //     return d.x < width / 2;
+  //   })
+  //   .attr("x", 6 + sankey.nodeWidth())
+  //   .attr("text-anchor", "start");
+
+  // the function for moving the nodes
+  function dragmove(d) {
+    d3.select(this).attr(
+      "transform",
+      "translate(" +
+        d.x +
+        "," +
+        (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) +
+        ")"
+    );
+    sankey.relayout();
+    sanLink.attr("d", sanPath);
+    // console.log(this.children[0].height.baseVal.value)
+  };
+
+// Function to highlight san-nodes
+// function nodeFocus_click(node_id) {
+//     let x = document.getElementById(card_id);
+//     const node_now = y.style.fill;
+
+//     if (node_now === "rgb(50, 168, 82)") {
+//       x.style.fill = "yellow";
+//     } else {
+//       x.style.fill = "rgb(50, 168, 82)";
+//     }
+
+//   }
+
+//* Function for hightlighting entire path
+//* Source: https://gist.github.com/jdesilvio/bd35cbc38ed087249d98
+function highlight_node_links(node,i){
+  var remainingNodes=[],
+  nextNodes=[];
+
+  var stroke_opacity = 0;
+
+  if( d3.select(this).attr("mouseover") == "0" ){
+      d3.select(this).attr("mouseover","1");
+      stroke_opacity = 0.2;
+  } else {
+      d3.select(this).attr("mouseover","0");
+      stroke_opacity = 0.5;
+  }
+
+  var traverse = [{
+      linkType : "sourceLinks",
+      nodeType : "target"
+  }, {
+      linkType : "targetLinks",
+      nodeType : "source"
+  }];
+
+  traverse.forEach(function(step){
+      node[step.linkType].forEach(function(link) {
+          remainingNodes.push(link[step.nodeType]);
+          highlight_link(link.id, stroke_opacity);
+      });
+
+      while (remainingNodes.length) {
+          nextNodes = [];
+          remainingNodes.forEach(function(node) {
+              node[step.linkType].forEach(function(link) {
+                  nextNodes.push(link[step.nodeType]);
+                  highlight_link(link.id, stroke_opacity);
+              });
+          });
+
+          remainingNodes = nextNodes;
+      }
+  });
+}
+
+function highlight_link(id,opacity){
+  d3.select("#san-link-"+id).style("stroke-opacity", opacity)
+}
+
+
+</script>
+
+{% endblock %}

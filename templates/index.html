@@ -1,0 +1,561 @@
+{% extends 'base.html' %} {% block head %}
+<title>Image Upload</title>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
+
+<link href="../static/dist/cropper.min.css" rel="stylesheet" />
+<script src="../static/dist/cropper.min.js"></script>
+
+<script class="cropjs" src="../static/js/crop.js"></script>
+<script class="datajs" src="../static/js/errDB.js"></script>
+<script class="datajs" src="../static/js/solDB.js"></script>
+<script class="datajs" src="../static/js/sankey.js"></script>
+
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
+
+<style></style>
+
+{% endblock %} {% block body %}
+
+<div class="container-flexbox">
+  <div class="container-title">
+    <!-- <h3>New UI Layout: {{ output }}</h3> -->
+    <p id="ui-title">3DTroubleshooter</p>
+  </div>
+
+  <div class="container-top">
+    <div class="tab">
+      {% for i in range(n_img) %}
+      <button
+        class="tab-links"
+        onclick="openTab(event, 'up-img-{{ i }}')"
+        id="defaultOpen"
+      >
+        Image {{ i+1 }}
+      </button>
+      {% endfor %}
+
+      <div class="tab-right-div refresh-div">
+        <a href="{{ url_for('index') }}"
+          ><button class="tab-links" id="tab-add" type="reset">
+            Start Over
+          </button></a
+        >
+      </div>
+    </div>
+
+    {% for i in range(n_img) %}
+    <div class="tab-content" id="up-img-{{ i }}">
+      <img
+        class="uploaded-img"
+        src="{{ img_format }}{{ img_path[i] | safe }}"
+        alt=""
+      />
+      <img
+        class="uploaded-img-map"
+        src="{{ img_format }}{{ img_path_cam[-1][i] | safe }}"
+        alt=""
+        id="sub-map-all-{{ i }}"
+      />
+
+      <div class="div-hidden">
+        <img
+          class="uploaded-img-map-sub uploaded-img-map-sub-{{ i }}"
+          src="{{ img_format }}{{ img_path_cam[0][i] | safe }}"
+          alt=""
+          id="sub-map-0-{{ i }}"
+        />
+
+        <img
+          class="uploaded-img-map-sub uploaded-img-map-sub-{{ i }}"
+          src="{{ img_format }}{{ img_path_cam[1][i] | safe }}"
+          alt=""
+          id="sub-map-1-{{ i }}"
+        />
+
+        <img
+          class="uploaded-img-map-sub uploaded-img-map-sub-{{ i }}"
+          src="{{ img_format }}{{ img_path_cam[2][i] | safe }}"
+          alt=""
+          id="sub-map-2-{{ i }}"
+        />
+
+        <img
+          class="uploaded-img-map-sub uploaded-img-map-sub-{{ i }}"
+          src="{{ img_format }}{{ img_path_cam[3][i] | safe }}"
+          alt=""
+          id="sub-map-3-{{ i }}"
+        />
+
+        <img
+          class="uploaded-img-map-sub uploaded-img-map-sub-{{ i }}"
+          src="{{ img_format }}{{ img_path_cam[4][i] | safe }}"
+          alt=""
+          id="sub-map-4-{{ i }}"
+        />
+      </div>
+
+      <button
+        class="btn"
+        id="show-crop-panel-btn"
+        onclick="createCropDiv('up-img-{{ i }}'); showHideDiv('crop-div-all')"
+      >
+        Crop Image
+      </button>
+
+      <div style="display: none">
+        <p style="font-size: 8pt">
+          M1: {{ output_pred[i].loc[0,
+          ["err_name","top1prob_has_err","class_idx"]] }}
+        </p>
+        <p style="font-size: 8pt">
+          M2: {{ output_pred[i].loc[1,
+          ["err_name","top1prob_has_err","class_idx"]] }}
+        </p>
+      </div>
+
+      {% if init_hide == False %}
+      <div class="scrolling-wrapper">
+        {% for j in range( card_info[i] | length ) %}
+        <div class="card">
+          <div class="card-flex">
+            <div
+              class="card-top card-top-{{ i }}"
+              id="card-top-{{ i }}-{{ j }}"
+              onclick="showHideMap_click(this.id, '{{ card_info[i][j] }}', '{{ i }}')"
+              onmouseover="showHideMap_on(this.id, '{{ card_info[i][j] }}', '{{ i }}')"
+              onmouseout="showHideMap_off(this.id, '{{ card_info[i][j] }}', '{{ i }}')"
+            >
+              <h5>Issue #{{ j+1 }}</h5>
+              <h3>
+                {{ card_info[i][j].split('-')[1] }} ({{ (card_info_prob[i][j] *
+                100) | round(1) }} %)
+              </h3>
+            </div>
+            <div class="card-btm">
+              <button
+                class="btn btn-card"
+                name="{{ card_info[i][j].split('-')[1] }}"
+                onclick="addText(this.name);"
+                id="btn-info-{{ i }}-{{ j }}"
+              >
+                What is this?
+              </button>
+              <button
+                class="btn btn-card"
+                name="{{ card_info[i][j].split('-')[1] }}"
+                onclick="showSolution(this.name);"
+              >
+                How to solve?
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div id="open-setting-div">
+  <input
+    type="button"
+    id="open-setting-btn"
+    class="btn"
+    value="Tell us more about your settings"
+    onclick="showHideDiv('printer-setting', 'flex');"
+  />
+</div>
+<div id="printer-setting" class="setting-div">
+  <p id="setting-text">
+    Please provide printing details as many as you can for better suggestions :)
+  </p>
+  <form>
+    <div class="set-left">
+      <div class="set-sub-div">
+        <div class="set-radio-div">
+          <label class="set-label">Printer:</label><br />
+          <input type="radio" id="printer-1" name="set-printer" value="ender" />
+          <label for="printer-1">Ender</label><br />
+          <input type="radio" id="printer-2" name="set-printer" value="prusa" />
+          <label for="printer-2">Prusa</label><br />
+          <input type="radio" id="printer-3" name="set-printer" value="cr-10" />
+          <label for="printer-3">CR-10</label><br />
+          <input type="radio" id="printer-4" name="set-printer" value="anet" />
+          <label for="printer-4">Anet</label><br />
+          <input
+            type="radio"
+            id="printer-5"
+            name="set-printer"
+            value="anycubic"
+          />
+          <label for="printer-5">Anycubic</label><br />
+          <input
+            type="radio"
+            id="printer-6"
+            name="set-printer"
+            value="monoprice"
+          />
+          <label for="printer-6">Monoprice</label><br />
+          <input
+            type="radio"
+            id="printer-7"
+            name="set-printer"
+            value="others"
+          />
+          <label for="printer-7">Others</label>
+        </div>
+      </div>
+
+      <div class="set-sub-div">
+        <div class="set-radio-div">
+          <label class="set-label">Slicer:</label><br />
+          <input type="radio" id="slicer-1" name="set-slicer" value="cura" />
+          <label for="slicer-1">Cura</label><br />
+          <input
+            type="radio"
+            id="slicer-2"
+            name="set-slicer"
+            value="prusaslicer"
+          />
+          <label for="slicer-2">Prusaslicer</label><br />
+          <input
+            type="radio"
+            id="slicer-3"
+            name="set-slicer"
+            value="simplify3d"
+          />
+          <label for="slicer-3">Simplify3d</label><br />
+          <input
+            type="radio"
+            id="slicer-4"
+            name="set-slicer"
+            value="creality slicer"
+          />
+          <label for="slicer-4">Creality slicer</label><br />
+          <input type="radio" id="slicer-5" name="set-slicer" value="slic3r" />
+          <label for="slicer-5">Slic3r</label><br />
+          <input type="radio" id="slicer-6" name="set-slicer" value="others" />
+          <label for="slicer-6">Others</label>
+        </div>
+      </div>
+
+      <div class="set-sub-div">
+        <div class="set-radio-div">
+          <label class="set-label">Material:</label><br />
+          <input type="radio" id="material-1" name="set-material" value="pla" />
+          <label for="material-1">PLA</label><br />
+          <input
+            type="radio"
+            id="material-2"
+            name="set-material"
+            value="petg"
+          />
+          <label for="material-2">PETG</label><br />
+          <input
+            type="radio"
+            id="material-3"
+            name="set-material"
+            value="nylon"
+          />
+          <label for="material-3">Nylon</label><br />
+          <input type="radio" id="material-4" name="set-material" value="abs" />
+          <label for="material-4">ABS</label><br />
+          <input type="radio" id="material-5" name="set-material" value="tpu" />
+          <label for="material-5">TPU</label><br />
+          <input
+            type="radio"
+            id="material-6"
+            name="set-material"
+            value="others"
+          />
+          <label for="material-6">Others</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="set-text-div">
+      <div class="set-sub-div">
+        <label class="set-label">Nozzle temperature:</label>
+        <input type="text" id="set-nozzle-temp" />
+      </div>
+
+      <div class="set-sub-div">
+        <label class="set-label">Bed temperature:</label>
+        <input type="text" id="set-bed" />
+      </div>
+
+      <div class="set-sub-div">
+        <label class="set-label">Print speed:</label>
+        <input type="text" id="set-speed" />
+      </div>
+
+      <div class="set-sub-div">
+        <label class="set-label">Retraction distance:</label>
+        <input type="text" id="set-retract-dist" />
+      </div>
+
+      <div class="set-sub-div">
+        <label class="set-label">Retraction temperature:</label>
+        <input type="text" id="set-retract-temp" />
+      </div>
+    </div>
+
+    <div class="set-sub-div set-btm">
+      <input type="button" class="btn" id="submit-setting" value="Submit" />
+    </div>
+  </form>
+</div>
+
+<div id="crop-div-all">
+  <div class="row top" id="crop-panel">
+    <div class="column left" id="crop-div"></div>
+
+    <div class="column right">
+      <div class="list-container">
+        <button class="btn" id="crop-btn" onclick="imageCrop('image-preview')">
+          Crop
+        </button>
+        <button class="btn" id="reset-crop-btn" onclick="resetCrop()">
+          Reset
+        </button>
+        <p>Brush Lock:</p>
+        <label class="switch">
+          <input
+            class="toggle-input"
+            id="toggle"
+            type="checkbox"
+            onclick="toggleFunc()"
+          />
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="image-cropped" style="max-height: 300px; width: 300px">
+        <canvas id="canvas" height="300" width="300"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row bottom">
+    <div class="image-uploaded">
+      <p>Uploaded Image: {{ output }}</p>
+      <img src="{{ img_format }}{{ img_path[0] | safe }}" alt="" height="200" />
+    </div>
+  </div>
+</div>
+
+{% if init_hide == False %}
+<div class="container-btm" id="btm-div-info">
+  <div class="err-content">
+    <h3>"<span id="errText"></span>"</h3>
+    <p id="errInfo"></p>
+  </div>
+  <div class="err-example">
+    <h3>Examples:</h3>
+    <div class="img-window">
+      <img class="img-example" src="/static/images/under_ex1.jpg" alt="" />
+      <img class="img-example" src="/static/images/under_ex2.jpg" alt="" />
+      <img class="img-example" src="/static/images/under_ex3.jpg" alt="" />
+      <img class="img-example" src="/static/images/under_ex4.jpg" alt="" />
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div id="btm-div-sol">
+  <h3>Top known solutions for "<span id="errText-sol"></span>"</h3>
+  <div id="solution-div"></div>
+  <div id="suggest-btn-div">
+    <input type="button" class="btn suggest-btn" value="See more suggestions" />
+  </div>
+</div>
+
+<script type="text/javascript" id="main-js">
+  var boxBorderColor = "springgreen";
+
+  function resetToggle() {
+    // Uncheck auto-crop toggle
+    let elm = document.getElementById("toggle");
+    if (elm.checked == true) {
+      elm.click();
+    }
+  }
+
+  // Tab control
+  function openTab(evt, imgID) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab-links");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(imgID).style.display = "block";
+    evt.currentTarget.className += " active";
+
+    // Close crop-div-all
+    document.getElementById("crop-div-all").style.display = "none";
+  }
+
+  function createCropDiv(imgID) {
+    // Get orig. img src by click tabs
+    let tab_img_src = document.getElementById(imgID).children[0].src;
+
+    // Init crop-div for each tab click
+    initCropDiv(tab_img_src);
+    resetCrop();
+    resetToggle();
+    initCropImg("image-preview", tab_img_src);
+    let cropper = updateCropper("image-preview");
+  }
+
+  // Image upload Button control
+  function showHideDiv(id, set_display = "block") {
+    let x = document.getElementById(id);
+    if (x.style.display === set_display) {
+      x.style.display = "none";
+    } else {
+      x.style.display = set_display;
+    }
+  }
+
+  // Default open tab 1
+  document.getElementById("defaultOpen").click();
+
+  function addText(inputID) {
+    document.getElementById("btm-div-sol").style.display = "none";
+    document.getElementById("btm-div-info").style.display = "flex";
+    d3.select("#solution-div").selectAll("*").remove();
+
+    // alert(inputID)
+    d3.select("#errText").text(inputID);
+
+    d3.select("#errInfo").text(errDB[inputID]);
+  }
+
+  // Default click error info for issue #1
+  document.getElementById("btn-info-0-0").click();
+
+  // Function to compute length of an Object
+  Object.size = function (obj) {
+    var size = 0,
+      key;
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+  };
+
+  // Display solutions and thumbs up/down
+  function showSolution(inputID) {
+    document.getElementById("btm-div-info").style.display = "none";
+    document.getElementById("btm-div-sol").style.display = "block";
+    d3.select("#errText-sol").text(inputID);
+
+    d3.select("#solution-div").selectAll("*").remove();
+    let solutions = solDB[inputID];
+
+    for (let i = 0; i < Object.size(solutions); i++) {
+      let subSol = d3
+        .select("#solution-div")
+        .append("div")
+        .attr("class", "sub-sol");
+
+      subSol.append("div").attr("class", "sub-sol-left").text(solutions[i][0]);
+
+      subSolRight = subSol.append("div").attr("class", "sub-sol-right");
+
+      subSolRight
+        .append("input")
+        .attr("type", "button")
+        .attr("class", "post-link btn")
+        .attr("value", "Original Post")
+        .attr("onclick", "location.href='" + solutions[i][1] + "'");
+
+      rightDiv = subSolRight.append("div").attr("class", "thumb-div");
+      rightDiv.append("button").attr("class", "thumb thumb-up fa fa-thumbs-up");
+
+      rightDiv
+        .append("button")
+        .attr("class", "thumb thumb-down fa fa-thumbs-down");
+    }
+  }
+
+  // Card link to sub cam map
+  // For mouse over and off
+
+  function showHideMap_on(card_id, card_val, file_idx) {
+    let err_idx = parseInt(card_val.split("-")[0]) - 1;
+    let map_id = "sub-map-" + err_idx + "-" + file_idx;
+
+    let x = document.getElementById(map_id);
+    x.style.display = "block";
+    x.style.zIndex = "100";
+
+    let y = document.getElementById(card_id);
+    y.style.borderColor = boxBorderColor;
+  }
+
+  function showHideMap_off(card_id, card_val, file_idx) {
+    let err_idx = parseInt(card_val.split("-")[0]) - 1;
+    let map_id = "sub-map-" + err_idx + "-" + file_idx;
+
+    let x = document.getElementById(map_id);
+
+    let y = document.getElementById(card_id);
+    if (y.style.borderStyle === "solid") {
+      x.style.zIndex = "90";
+    } else {
+      x.style.display = "none";
+      x.style.zIndex = "50";
+      y.style.borderColor = "white";
+    }
+  }
+
+  // For click
+  function showHideMap_click(card_id, card_val, file_idx) {
+    let err_idx = parseInt(card_val.split("-")[0]) - 1;
+    let map_id = "sub-map-" + err_idx + "-" + file_idx;
+
+    let x = document.getElementById(map_id);
+    // if (x.style.display === "block") {
+    //   x.style.display = "none";
+    // } else {
+    //   x.style.display = "block";
+    // }
+    let y = document.getElementById(card_id);
+    const style_now = y.style.borderStyle;
+
+    // Reset other selections
+    let zz = document.querySelectorAll(".uploaded-img-map-sub-" + file_idx);
+    let cc = document.querySelectorAll(".card-top-" + file_idx);
+    for (let z = 0; z < zz.length; ++z) {
+      zz[z].style.display = "none";
+      zz[z].style.zIndex = "50";
+    }
+    for (let c = 0; c < cc.length; ++c) {
+      cc[c].style.borderColor = "white";
+      cc[c].style.borderStyle = "dotted";
+    }
+
+    if (style_now === "solid") {
+      y.style.borderStyle = "dotted";
+    } else {
+      y.style.borderStyle = "solid";
+      y.style.borderColor = boxBorderColor;
+      x.style.zIndex = "100";
+      x.style.display = "block";
+    }
+  }
+</script>
+
+{% endblock %}
