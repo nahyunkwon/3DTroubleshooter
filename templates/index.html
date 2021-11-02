@@ -11,6 +11,7 @@
 <script class="datajs" src="../static/js/errDB.js"></script>
 <script class="datajs" src="../static/js/solDB.js"></script>
 <script class="datajs" src="../static/js/sankey.js"></script>
+<script class="datajs" src="../static/js/sankeyDB.js"></script>
 
 <link
   rel="stylesheet"
@@ -148,7 +149,8 @@
               <button
                 class="btn btn-card"
                 name="{{ card_info[i][j].split('-')[1] }}"
-                onclick="showSolution(this.name);"
+                onclick="showSolution(this.name); 
+                document.getElementById('defaultOpen_sol').click();"
               >
                 How to solve?
               </button>
@@ -371,9 +373,45 @@
 
 <div id="btm-div-sol">
   <h3>Top known solutions for "<span id="errText-sol"></span>"</h3>
-  <div id="solution-div"></div>
-  <div id="suggest-btn-div">
-    <input type="button" class="btn suggest-btn" value="See more suggestions" />
+  <div class="tab tab-sol">
+    <button
+      class="tab-links-sol"
+      onclick="openTab_sol(event, 'sankey-container')"
+      id="defaultOpen_sol"
+    >
+      Sankey
+    </button>
+    <button
+      class="tab-links-sol"
+      onclick="openTab_sol(event, 'sol-list-container')"
+    >
+      List
+    </button>
+    <button
+      class="tab-links-sol"
+      onclick="openTab_sol(event, 'sol-rank-container')"
+    >
+      Rank
+    </button>
+  </div>
+
+  <div id="sankey-container" class="tab-content-sol">
+    <p id="sankey-content">Sankey content placeholder</p>
+  </div>
+
+  <div id="sol-list-container" class="tab-content-sol">
+    <p>List placeholder</p>
+  </div>
+
+  <div id="sol-rank-container" class="tab-content-sol">
+    <div id="solution-div"></div>
+    <div id="suggest-btn-div">
+      <input
+        type="button"
+        class="btn suggest-btn"
+        value="See more suggestions"
+      />
+    </div>
   </div>
 </div>
 
@@ -405,6 +443,20 @@
     // Close crop-div-all
     document.getElementById("crop-div-all").style.display = "none";
   }
+  // Tab for solutoin section
+  function openTab_sol(evt, imgID) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content-sol");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tab-links-sol");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(imgID).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
 
   function createCropDiv(imgID) {
     // Get orig. img src by click tabs
@@ -430,6 +482,7 @@
 
   // Default open tab 1
   document.getElementById("defaultOpen").click();
+  document.getElementById("defaultOpen_sol").click();
 
   function addText(inputID) {
     document.getElementById("btm-div-sol").style.display = "none";
@@ -555,6 +608,352 @@
       x.style.zIndex = "100";
       x.style.display = "block";
     }
+  }
+</script>
+
+<script type="text/javascript" id="sankey-js">
+  var units = "widgets";
+  var node_w = 120;
+  var node_h = 20;
+  var sankey_w = 1400;
+  var sankey_h = 1100;
+  var extra_width = 200;
+  var extra_height = 50;
+
+  // set the dimensions and margins of the graph
+  var margin = { top: 10, right: 10, bottom: 10, left: 10 },
+    width = sankey_w - margin.left - margin.right,
+    height = sankey_h - margin.top - margin.bottom;
+
+  // format variables
+  var formatNumber = d3.format(",.0f"), // zero decimal places
+    format = function (d) {
+      return "(" + formatNumber(d) + " " + units + ")";
+    },
+    // color = d3.scaleOrdinal(d3.schemeCategory10);
+    // color = d3.scaleOrdinal([`#32a852`]);
+    color = d3.scaleOrdinal([`forestgreen`]);
+
+  // append the svg object to the body of the page
+  var sanSVG = d3
+    .select("#sankey-container")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right + extra_width)
+    .attr("height", height + margin.top + margin.bottom + extra_height)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // Set the sankey diagram properties
+  var sankey = d3
+    .sankey()
+    .nodeWidth(node_w)
+    .nodePadding(40)
+    .size([width, height]);
+
+  var sanPath = sankey.link();
+
+  // load the data from "sankey.js"
+  sankey.nodes(sankeyDB.nodes).links(sankeyDB.links).layout(32);
+
+  // add in the links
+  var sanLink = sanSVG
+    .append("g")
+    .selectAll(".san-link")
+    .data(sankeyDB.links)
+    .enter()
+    .append("path")
+    .attr("class", "san-link")
+    .attr("id", function (d, i) {
+      d.id = i;
+      return "san-link-" + i;
+    })
+    // .attr("id", function (d) {
+    //   return "san-link-" + d.source.name.replace(/\s+/g, '') + "-" + d.target.name.replace(/\s+/g, '')
+    // })
+    .attr("d", sanPath)
+    .style("stroke-width", function (d) {
+      return Math.max(1, d.dy);
+    })
+    .sort(function (a, b) {
+      return b.dy - a.dy;
+    })
+    .on("mouseover", function () {
+      d3.select("#" + this.id).style("stroke-opacity", 0.5);
+    })
+    .on("mouseout", function () {
+      d3.select("#" + this.id).style("stroke-opacity", 0.2);
+    });
+
+  // add the link titles
+  sanLink.append("title").text(function (d) {
+    return d.source.name + " → " + d.target.name + "\n" + format(d.value);
+  });
+
+  // add in the nodes
+  var sanNode = sanSVG
+    .append("g")
+    .selectAll(".san-node")
+    .data(sankeyDB.nodes)
+    .enter()
+    .append("g")
+    .attr("class", "san-node")
+    .attr("id", function (d) {
+      return "san-g-" + d.name.replace(/\s+/g, "");
+    })
+    .attr("transform", function (d) {
+      return "translate(" + d.x + "," + d.y + ")";
+    })
+    .call(
+      d3
+        .drag()
+        .subject(function (d) {
+          return d;
+        })
+        .on("start", function () {
+          this.parentNode.appendChild(this);
+        })
+        .on("drag", dragmove)
+    )
+    .on("mouseover", highlight_node_links)
+    .on("mouseout", highlight_node_links);
+  // .on("mousedown", highlight_node_links)
+  // .on("click", highlight_node_links)
+
+  //   function clicked(event, d) {
+  //   if (event.defaultPrevented) return; // dragged
+
+  //   d3.select(this).transition()
+  //       .attr("fill", "black")
+  //     .transition()
+  //       .attr("fill", "red");
+  // }
+
+  // Function to add line breaks str every x characters
+  //  function addNewlines(str) {
+  //     var result = '';
+  //     while (str.length > 0) {
+  //       result += str.substring(0, 20) + '\n';
+  //       str = str.substring(20);
+  //     }
+  //     return result;
+  //   }
+
+  // add the rectangles for the nodes
+  sanNode
+    .append("rect")
+    .attr("class", "san-node-rect")
+    .attr("height", function (d) {
+      // return d.dy;
+      return d.dy + 8;
+      // return node_h;
+    })
+    .attr("id", function (d) {
+      return "san-node-" + d.name.replace(/\s+/g, "") + "-" + d.node;
+    })
+    .attr("width", sankey.nodeWidth())
+    .style("fill", function (d) {
+      return (d.color = color(d.name.replace(/ .*/, "")));
+    })
+    // .attr("onmouseout", "this.style.fill='forestgreen';")
+    // .attr("onmouseover", "this.style.fill='orange';")
+
+    // .on("mouseover", function () {this.style.fill='orange';})
+
+    .style("stroke", function (d) {
+      return d3.rgb(d.color).darker(2);
+    })
+    .append("title")
+    .text(function (d) {
+      return d.content + "\n\n" + format(d.value / path_w_size);
+    });
+
+  // add in the title for the nodes
+  sanNode
+    .append("text")
+    .attr("class", "node-text")
+    .attr("x", 4)
+    .attr("y", function (d) {
+      // return d.dy / 2;
+      // return node_h / 2;
+      return 10;
+    })
+    .attr("dy", ".35em")
+    // .attr("text-anchor", "end")
+    .attr("transform", null)
+    // .style('fill', 'white')
+    .text(function (d) {
+      return d.name;
+      // return d.content;
+    })
+    // .filter(function (d) {
+    //   return d.x < width / 2;
+    // })
+    // .attr("x", 6 + sankey.nodeWidth())
+    .attr("text-anchor", "start");
+  // .append("tspan")
+  // .attr("x", 20)
+  // .attr("dx", 10)
+  // .attr("dy", 22)
+  // .text("line2")
+
+  /////////////////////////////////////////////////
+
+  var sanNodeRects = document.getElementsByClassName("san-node-rect");
+  var sanLinkPaths = document.getElementsByClassName("san-link");
+
+  // var sanNodeRects = document.getElementById("san-node-mechanical");
+  var nodes_old_h = [];
+  for (let j = 0; j < sanNodeRects.length; j++) {
+    nodes_old_h.push(sanNodeRects[j].style.height);
+  }
+
+  for (let i = 0; i < sanNodeRects.length; i++) {
+    sanNodeRects[i].addEventListener("mousedown", function () {
+      var panel = this;
+      if (panel.style.fill == "orange") {
+        panel.style.fill = "forestgreen";
+
+        for (let k = 0; k < sanLinkPaths.length; k++) {
+          sanLinkPaths[k].style.stroke = "#000";
+        }
+      } else {
+        for (let j = 0; j < sanNodeRects.length; j++) {
+          sanNodeRects[j].style.fill = "forestgreen";
+        }
+        panel.style.fill = "orange";
+
+        // d3.select("#sankey-content").text(sankeyDB.nodes[this.id.split("-")[3]].content);
+
+        document.getElementById("sankey-content").innerHTML = sankeyDB.nodes[
+          this.id.split("-")[3]
+        ].content.replace(/(\r\n|\n|\r)/gm, "<br>");
+
+        for (let k = 0; k < sanLinkPaths.length; k++) {
+          if (sanLinkPaths[k].style["stroke-opacity"] == "0.5") {
+            sanLinkPaths[k].style.stroke = "red";
+          } else {
+            sanLinkPaths[k].style.stroke = "#000";
+          }
+        }
+      }
+
+      // if (panel.style.height == "400px") {
+      //   panel.style.height = nodes_old_h[i];
+      //   panel.style.width = node_w;
+      // } else {
+      //   panel.style.height = "400px";
+      //   panel.style.width = "400px";
+      // }
+
+      // var panel = this.nextElementSibling;
+      // if (panel.style.display === "block") {
+      //   panel.style.display = "none";
+      // } else {
+      //   panel.style.display = "block";
+      // }
+    });
+  }
+
+  /////////////////////////////////////////////////
+
+  ////* Original code
+  // sanNode
+  //   .append("text")
+  //   .attr("x", -6)
+  //   .attr("y", function (d) {
+  //     // return d.dy / 2;
+  //     // return node_h / 2;
+  //     return 0;
+  //   })
+  //   .attr("dy", ".35em")
+  //   .attr("text-anchor", "end")
+  //   .attr("transform", null)
+  //   .text(function (d) {
+  //     return d.name;
+  //   })
+  //   .filter(function (d) {
+  //     return d.x < width / 2;
+  //   })
+  //   .attr("x", 6 + sankey.nodeWidth())
+  //   .attr("text-anchor", "start");
+
+  // the function for moving the nodes
+  function dragmove(d) {
+    d3.select(this).attr(
+      "transform",
+      "translate(" +
+        d.x +
+        "," +
+        (d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))) +
+        ")"
+    );
+    sankey.relayout();
+    sanLink.attr("d", sanPath);
+    // console.log(this.children[0].height.baseVal.value)
+  }
+
+  // Function to highlight san-nodes
+  // function nodeFocus_click(node_id) {
+  //     let x = document.getElementById(card_id);
+  //     const node_now = y.style.fill;
+
+  //     if (node_now === "rgb(50, 168, 82)") {
+  //       x.style.fill = "yellow";
+  //     } else {
+  //       x.style.fill = "rgb(50, 168, 82)";
+  //     }
+
+  //   }
+
+  //* Function for hightlighting entire path
+  //* Source: https://gist.github.com/jdesilvio/bd35cbc38ed087249d98
+  function highlight_node_links(node, i) {
+    var remainingNodes = [],
+      nextNodes = [];
+
+    var stroke_opacity = 0;
+
+    if (d3.select(this).attr("mouseover") == "0") {
+      d3.select(this).attr("mouseover", "1");
+      stroke_opacity = 0.2;
+    } else {
+      d3.select(this).attr("mouseover", "0");
+      stroke_opacity = 0.5;
+    }
+
+    var traverse = [
+      {
+        linkType: "sourceLinks",
+        nodeType: "target",
+      },
+      {
+        linkType: "targetLinks",
+        nodeType: "source",
+      },
+    ];
+
+    traverse.forEach(function (step) {
+      node[step.linkType].forEach(function (link) {
+        remainingNodes.push(link[step.nodeType]);
+        highlight_link(link.id, stroke_opacity);
+      });
+
+      while (remainingNodes.length) {
+        nextNodes = [];
+        remainingNodes.forEach(function (node) {
+          node[step.linkType].forEach(function (link) {
+            nextNodes.push(link[step.nodeType]);
+            highlight_link(link.id, stroke_opacity);
+          });
+        });
+
+        remainingNodes = nextNodes;
+      }
+    });
+  }
+
+  function highlight_link(id, opacity) {
+    d3.select("#san-link-" + id).style("stroke-opacity", opacity);
   }
 </script>
 
