@@ -134,7 +134,12 @@ body div {
   height: 50px;
 }
 
-.tab .tab-links {
+.tab-sol {
+  width: 300px;
+}
+
+.tab .tab-links,
+.tab .tab-links-sol {
   background-color: inherit;
   float: left;
   border: none;
@@ -144,11 +149,13 @@ body div {
   transition: 0.3s;
   font-size: 17px;
   height: 50px;
+  width: 100px;
 }
 
 #tab-add {
   background-color: black;
   color: white;
+  width: 110px;
 }
 
 .tab button:hover {
@@ -161,7 +168,8 @@ body div {
   cursor: pointer;
 }
 
-.tab-content {
+.tab-content,
+.tab-content-sol {
   display: none;
 }
 
@@ -185,6 +193,7 @@ body div {
   }
   .tab,
   .tab-content,
+  .tab-content-sol,
   #container-choose-img {
     /* left: 317px; */
     width: 615px;
@@ -430,6 +439,7 @@ body div {
 #solution-div {
   overflow-y: scroll;
   max-height: 340px;
+  margin-top: 15px;
 }
 
 .sub-sol {
@@ -557,8 +567,9 @@ body div {
 }
 
 /* Sankey CSS */
-#sankey-container {
-  height: 1800px;
+.container-btm,
+.tab-content-sol {
+  height: 1200px;
 }
 
 .san-node {
@@ -621,3 +632,15 @@ tspan {
   font: bold 10px sans-serif;
   fill: red;
 } */
+
+/* Sankey content display box */
+#sankey-content {
+  position: absolute;
+  padding: 10px;
+  height: 200px;
+  width: 650px;
+  background-color: lightyellow;
+  border: 1px #ccc solid;
+  word-wrap: break-word;
+  z-index: -1;
+}
