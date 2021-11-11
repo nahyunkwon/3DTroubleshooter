@@ -19,6 +19,9 @@ from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image
 
 ## Colormap
 from matplotlib.colors import LinearSegmentedColormap
+import matplotlib
+
+matplotlib.use('Agg')
 
 def transform_image(pil_img):
     my_transforms = transforms.Compose([transforms.Resize(224),  # 255
@@ -36,9 +39,7 @@ def get_prediction_gradcam_pkg(pil_img, model):
     
     target_layer = model.layer4[-1]
 
-    cam = GradCAM(model=model, 
-                  target_layer=target_layer,
-                  use_cuda=False)
+    cam = GradCAM(model=model, target_layer=target_layer, use_cuda=False)
 
     input_tensor = transform_image(pil_img=pil_img)
 
@@ -71,8 +72,8 @@ def get_prediction_gradcam_pkg(pil_img, model):
 
 model_info_list = []
 model_info_list.append(["1-Stringing", "stringing_best_model.pth", [False, True]])
-model_info_list.append(["2-Underextrusion", "underextrusion_best_model.pth", [False, True]])
-model_info_list.append(["3-LayerShifting", "layer_shifting_best_model_new.pth", [False, True]])
+model_info_list.append(["2-Underextrusion", "under-extrusion_best_model.pth", [False, True]])
+model_info_list.append(["3-LayerShifting", "layer_shifting_best_model.pth", [False, True]])
 model_info_list.append(["4-Warping", "warping_best_model.pth", [False, True]])
 model_info_list.append(["5-Blobs", "blobs_best_model.pth", [False, True]])
 
