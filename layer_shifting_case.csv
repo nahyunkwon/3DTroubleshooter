@@ -1,0 +1,20 @@
+case_id,case_content,solution
+0,Toolhead is moving too fast,I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds.
+1,belt too loose/tight,"Check your x and y axis belts. When perfectly tensioned, they twang somewhat like a guitar string. If under tensioned, you'll get lines like these. If over tensioned, you could have some defects in prints but the danger is mostly to the motor and belt itself. There are videos you can watch for this, as well as belt tensioners you can print. 
+"
+2,"Set-screw too loose, not tightened / pulley loose",
+3,not enough electrical current getting to the motors,
+4,swap x&y motors (electrical or software),
+5,cleaning issue - very sticky bearings/ rails / belts ,
+6,temperature - motors too hot,
+7,your cables got caught,
+8,jerk/acceleration settings too high,I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds.
+9,the sprockets are slipping on the motor shafts,
+10,bed is not secured properly ,
+11,gcode or firmware issues,"try re slicing, using another slicer, or making sure your firmware is tip top"
+12,"I had the same issue while running Cura. It was because I had a setting called ""Use Adaptive layers"".","After I disabled that feature, my prints have been coming out just fine."
+13,"Disable z hop if it's on, may solve inconsistent layer lines.",Disable z hop
+14,"Check your z screw(s) to see if they're lubricated properly, they may need re-lubing ",
+15,"Check your wheels. Every single wheel can be tightened or loosened, and become loose over long periods of time and use.","Start with the eccentric nut wheels, tighten them ever so slightly, and then lightly roll the wheel with your finger, you should be able to move the bed/x axis with a bit of force but not too much, and you shouldn't have to press the wheel in. The other wheels can be tightened by their primary bolt/screw holding the wheel in place, same procedure. "
+16,Check the belts and make sure they aren’t missing any teeth or have any wear that would cause it to skip,
+17,"You may want to check if your machine is properly leveled. And I mean the machine frame itself, should be square and level to the base of the machine and on a properly flat and level surface, only after that can the bed be leveled in relation to the frame and x axis so that everything is leveled and squared up. If your frame is unlevel, consider rebuilding it carefully. ",

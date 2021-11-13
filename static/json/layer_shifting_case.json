@@ -1,0 +1,92 @@
+[
+    {
+        "case_id": "0",
+        "case_content": "Toolhead is moving too fast",
+        "solution": "I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds."
+    },
+    {
+        "case_id": "1",
+        "case_content": "belt too loose/tight",
+        "solution": "Check your x and y axis belts. When perfectly tensioned, they twang somewhat like a guitar string. If under tensioned, you'll get lines like these. If over tensioned, you could have some defects in prints but the danger is mostly to the motor and belt itself. There are videos you can watch for this, as well as belt tensioners you can print. \n"
+    },
+    {
+        "case_id": "2",
+        "case_content": "Set-screw too loose, not tightened / pulley loose",
+        "solution": ""
+    },
+    {
+        "case_id": "3",
+        "case_content": "not enough electrical current getting to the motors",
+        "solution": ""
+    },
+    {
+        "case_id": "4",
+        "case_content": "swap x&y motors (electrical or software)",
+        "solution": ""
+    },
+    {
+        "case_id": "5",
+        "case_content": "cleaning issue - very sticky bearings/ rails / belts ",
+        "solution": ""
+    },
+    {
+        "case_id": "6",
+        "case_content": "temperature - motors too hot",
+        "solution": ""
+    },
+    {
+        "case_id": "7",
+        "case_content": "your cables got caught",
+        "solution": ""
+    },
+    {
+        "case_id": "8",
+        "case_content": "jerk/acceleration settings too high",
+        "solution": "I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds."
+    },
+    {
+        "case_id": "9",
+        "case_content": "the sprockets are slipping on the motor shafts",
+        "solution": ""
+    },
+    {
+        "case_id": "10",
+        "case_content": "bed is not secured properly ",
+        "solution": ""
+    },
+    {
+        "case_id": "11",
+        "case_content": "gcode or firmware issues",
+        "solution": "try re slicing, using another slicer, or making sure your firmware is tip top"
+    },
+    {
+        "case_id": "12",
+        "case_content": "I had the same issue while running Cura. It was because I had a setting called \"Use Adaptive layers\".",
+        "solution": "After I disabled that feature, my prints have been coming out just fine."
+    },
+    {
+        "case_id": "13",
+        "case_content": "Disable z hop if it's on, may solve inconsistent layer lines.",
+        "solution": "Disable z hop"
+    },
+    {
+        "case_id": "14",
+        "case_content": "Check your z screw(s) to see if they're lubricated properly, they may need re-lubing ",
+        "solution": ""
+    },
+    {
+        "case_id": "15",
+        "case_content": "Check your wheels. Every single wheel can be tightened or loosened, and become loose over long periods of time and use.",
+        "solution": "Start with the eccentric nut wheels, tighten them ever so slightly, and then lightly roll the wheel with your finger, you should be able to move the bed/x axis with a bit of force but not too much, and you shouldn't have to press the wheel in. The other wheels can be tightened by their primary bolt/screw holding the wheel in place, same procedure. "
+    },
+    {
+        "case_id": "16",
+        "case_content": "Check the belts and make sure they aren\u2019t missing any teeth or have any wear that would cause it to skip",
+        "solution": ""
+    },
+    {
+        "case_id": "17",
+        "case_content": "You may want to check if your machine is properly leveled. And I mean the machine frame itself, should be square and level to the base of the machine and on a properly flat and level surface, only after that can the bed be leveled in relation to the frame and x axis so that everything is leveled and squared up. If your frame is unlevel, consider rebuilding it carefully. ",
+        "solution": ""
+    }
+]

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <link href="../static/css/customList.css" rel="stylesheet" />
+<script src="../static/js/jquery.min.js"></script>
 <body>
 
 <div id="clue_placeholder">
@@ -11,14 +12,15 @@
             <div id="myBtnContainer">
 
                 <button class="btn active" onclick="filterSelection('all')">All solutions</button>
-              <button class="btn" onclick="filterSelection('a')">Skip appears to be in both the x and y axis</button>
+                <!--
+              <button class="btn" onclick="filterSelection('0');filterSelection('a');">Skip appears to be in both the x and y axis</button>
 
                 <button class="btn" onclick="filterSelection('a')">I heard a grinding noise while printing</button>
                 <button class="btn" onclick="filterSelection('a')">The bed or extruder not moving during the failure event</button>
                 <button class="btn" onclick="filterSelection('a')">I heard a clicking sound</button>
                 <button class="btn" onclick="filterSelection('b')">Layer misalignment is a reoccurring problem</button>
                   <button class="btn" onclick="filterSelection('c')">None of clues above has spotted</button>
-
+                -->
             </div>
       </div>
     </div>
@@ -38,11 +40,11 @@
               </span>
         </div>
         is moving too fast. <br> Slow down the printing speed. I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds.</div>
-
-    <div class="filterDiv a">Belt is too loose/tight. <br>Check your x and y axis belts. When perfectly tensioned, they twang somewhat like a guitar string. If under tensioned, you'll get lines like these. If over tensioned, you could have some defects in prints but the danger is mostly to the motor and belt itself. There are videos you can watch for this, as well as belt tensioners you can print. </div>
+    <!--
+    <div class="filterDiv 0">Belt is too loose/tight. <br>Check your x and y axis belts. When perfectly tensioned, they twang somewhat like a guitar string. If under tensioned, you'll get lines like these. If over tensioned, you could have some defects in prints but the danger is mostly to the motor and belt itself. There are videos you can watch for this, as well as belt tensioners you can print. </div>
     <div class="filterDiv b">Set-screw is too loose, not tightened well / pulley loose</div>
-    <div class="filterDiv c">Not enough electrical current getting to the motors</div>
-
+    <div class="filterDiv a">Not enough electrical current getting to the motors</div>
+    -->
 
 
 

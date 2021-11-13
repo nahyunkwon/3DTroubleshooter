@@ -1,0 +1,9 @@
+clue_id,clue,related_case
+0,Skip appears to be in both the x and y axis,9
+1,I heard a a grinding noise while printing,"2, 3"
+2,The bed or extruder not moving during that event,"2, 3"
+3,I heard a clicking sound while printing,1
+4,Layer misalignment is a reoccurring problem,3
+5,"My printer is new, and I just assembled it",17
+6,"I used Cura, and turned on ‘Use Adaptive Layers’ in setting when slicing.",12
+7,I enabled z hop for slicing,13

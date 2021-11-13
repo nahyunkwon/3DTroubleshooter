@@ -22,13 +22,42 @@ function filterFunction() {
 
 /* filter solution cards for the selected button */
 filterSelection("all");
+
 function filterSelection(c) {
-  var x, i;
+  var x, i, j, labels;
   x = document.getElementsByClassName("filterDiv");
-  if (c == "all") c = "";
-  for (i = 0; i < x.length; i++) {
+  if (c == "all") {
+    c = "";
+    for (i = 0; i < x.length; i++) {
     w3RemoveClass(x[i], "show");
     if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+    }
+    return;
+  }
+  else if (c.split(" ").length > 1) {
+    var cArray = c.split(", ");
+
+    for (j = 0; j < cArray.length; j++) {
+      for (i = 0; i < x.length; i++) {
+        w3RemoveClass(x[i], "show");
+        labels = x[i].className.split("filterDiv ");
+
+        if (cArray.includes(x[i].className.split("filterDiv")[1].trim())) {
+          w3AddClass(x[i], "show");
+        }
+      }
+    }
+
+    return;
+  }
+
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    labels = x[i].className.split("filterDiv ");
+
+    if (x[i].className.split("filterDiv")[1].trim() === c) {
+      w3AddClass(x[i], "show");
+    }
   }
 }
 
@@ -61,8 +90,10 @@ function createButton(content, c) {
   button.innerHTML = content;
   //button.value = c;
   button.onclick = function() {
+
     filterSelection(c);
-  };
+
+  }
 
   var selectPanel = document.getElementById('myBtnContainer');
   selectPanel.appendChild(button);
@@ -74,7 +105,7 @@ function createButton(content, c) {
 function createCard(title, content, filter) {
   var card = document.createElement("div");
   //button.type = "button";
-  console.log(filter);
+  //console.log(filter);
   card.className = "filterDiv " + filter + ' show';
   card.innerHTML = '<p style="font-weight: bold; margin: 6px">' + title + '</p>' + content;
 
@@ -86,8 +117,41 @@ function createCard(title, content, filter) {
 
 /* create clue buttons and solution cards from json file */
 
-createButton('testcontent',  'a');
-createCard('testtitle', 'testcontent', 'c');
+var case_data;
+var clue_data;
+var failure_type = 'layer_shifting';
+
+$.ajax({
+    'async': false,
+    'global': false,
+    'url': "../static/json/" + failure_type + "_case.json",
+    'dataType': "json",
+    'success': function (data) {
+        case_data = data;
+    }
+});
+
+$.ajax({
+    'async': false,
+    'global': false,
+    'url': "../static/json/" + failure_type + "_clue.json",
+    'dataType': "json",
+    'success': function (data) {
+        clue_data = data;
+    }
+});
+
+for(var k=0;k<clue_data.length;k++){
+
+  createButton(clue_data[k]['clue'],  clue_data[k]['related_case']);
+
+}
+
+for(k=0;k<case_data.length;k++){
+
+  createCard(case_data[k]['case_content'], case_data[k]['solution'], case_data[k]['case_id']);
+
+}
 
 
 // Add active class to the current button (highlight it)
