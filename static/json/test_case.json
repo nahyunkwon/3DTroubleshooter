@@ -1,0 +1,7 @@
+[
+    {
+        "case_id": "0",
+        "case_content": "Toolhead is moving too fast",
+        "solution": "extruder Extruder toolhead print head I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds."
+    }
+  ]
