@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block head %}
-<title>Image Upload</title>
+<title>3DTroubleshooter</title>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
@@ -7,11 +7,13 @@
 <link href="../static/dist/cropper.min.css" rel="stylesheet" />
 <script src="../static/dist/cropper.min.js"></script>
 
-<script class="cropjs" src="../static/js/crop.js"></script>
+<!-- <script class="cropjs" src="../static/js/crop.js"></script> -->
 <script class="datajs" src="../static/js/errDB.js"></script>
-<script class="datajs" src="../static/js/solDB.js"></script>
+<!-- <script class="datajs" src="../static/js/solDB.js"></script> -->
 <script class="datajs" src="../static/js/sankey.js"></script>
 <script class="datajs" src="../static/js/sankeyDB.js"></script>
+
+<link href="../static/css/customList.css" rel="stylesheet" />
 
 <link
   rel="stylesheet"
@@ -100,13 +102,13 @@
         />
       </div>
 
-      <button
+      <!-- <button
         class="btn"
         id="show-crop-panel-btn"
         onclick="createCropDiv('up-img-{{ i }}'); showHideDiv('crop-div-all')"
       >
         Crop Image
-      </button>
+      </button> -->
 
       <div style="display: none">
         <p style="font-size: 8pt">
@@ -131,7 +133,7 @@
               onmouseover="showHideMap_on(this.id, '{{ card_info[i][j] }}', '{{ i }}')"
               onmouseout="showHideMap_off(this.id, '{{ card_info[i][j] }}', '{{ i }}')"
             >
-              <h5>Issue #{{ j+1 }}</h5>
+              <h5>Failure #{{ j+1 }}</h5>
               <h3>
                 {{ card_info[i][j].split('-')[1] }} ({{ (card_info_prob[i][j] *
                 100) | round(1) }} %)
@@ -166,13 +168,13 @@
 </div>
 
 <div id="open-setting-div">
-  <input
+  <!-- <input
     type="button"
     id="open-setting-btn"
     class="btn"
     value="Tell us more about your settings"
     onclick="showHideDiv('printer-setting', 'flex');"
-  />
+  /> -->
 </div>
 <div id="printer-setting" class="setting-div">
   <p id="setting-text">
@@ -315,7 +317,7 @@
   </form>
 </div>
 
-<div id="crop-div-all">
+<!-- <div id="crop-div-all">
   <div class="row top" id="crop-panel">
     <div class="column left" id="crop-div"></div>
 
@@ -351,7 +353,7 @@
       <img src="{{ img_format }}{{ img_path[0] | safe }}" alt="" height="200" />
     </div>
   </div>
-</div>
+</div> -->
 
 {% if init_hide == False %}
 <div class="container-btm" id="btm-div-info">
@@ -376,23 +378,23 @@
   <div class="tab tab-sol">
     <button
       class="tab-links-sol"
-      onclick="openTab_sol(event, 'sankey-container')"
-      id="defaultOpen_sol"
-    >
-      Sankey
-    </button>
-    <button
-      class="tab-links-sol"
       onclick="openTab_sol(event, 'sol-list-container')"
+      id="defaultOpen_sol"
     >
       List
     </button>
     <button
       class="tab-links-sol"
+      onclick="openTab_sol(event, 'sankey-container')"
+    >
+      Diagram
+    </button>
+    <!-- <button
+      class="tab-links-sol"
       onclick="openTab_sol(event, 'sol-rank-container')"
     >
       Rank
-    </button>
+    </button> -->
   </div>
 
   <div id="sankey-container" class="tab-content-sol">
@@ -400,10 +402,110 @@
   </div>
 
   <div id="sol-list-container" class="tab-content-sol">
-    <p>List placeholder</p>
+    <!-- * CustomList -->
+    <div id="customList-container">
+      <div id="clue_placeholder">
+        <div class="dropdown">
+          <h3 class="clue-title customList-sec-title">Clues:</h3>
+
+          <div id="myDropdown" class="dropdown-content">
+            <input
+              type="text"
+              placeholder="Search.."
+              id="myInput"
+              onkeyup="filterFunction()"
+            />
+            <div id="myBtnContainer">
+              <button
+                class="btnList activeList"
+                onclick="filterSelection('all')"
+              >
+                All solutions
+              </button>
+              <button class="btnList" onclick="filterSelection('a')">
+                Skip appears to be in both the x and y axis
+              </button>
+
+              <button class="btnList" onclick="filterSelection('a')">
+                I heard a grinding noise while printing
+              </button>
+              <button class="btnList" onclick="filterSelection('a')">
+                The bed or extruder not moving during the failure event
+              </button>
+              <button class="btnList" onclick="filterSelection('a')">
+                I heard a clicking sound
+              </button>
+              <button class="btnList" onclick="filterSelection('b')">
+                Layer misalignment is a reoccurring problem
+              </button>
+              <button class="btnList" onclick="filterSelection('c')">
+                None of clues above has spotted
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="solution_placeholder">
+        <h3 class="customList-sec-title">Solutions:</h3>
+
+        <div class="filterDiv a">
+          <div class="customList-title">
+            <div class="popover__wrapper">
+              <a class="popover__title">Toolhead</a>
+              <span class="popover__content">
+                <p class="popover__message popover-title">Toolhead</p>
+                <div class="popover-flex">
+                  <div class="popover-flex-1">
+                    <p class="popover__message">
+                      The 3D printing Toolhead allows you to 3D print objects
+                      using the FFD (fuse filament deposition) method. This
+                      method consists in thermo extrude plastic filament through
+                      a hot-end.
+                    </p>
+                    <p class="popover__message related-terms">
+                      Related terms: extruder, hotend, nozzle, print head
+                    </p>
+                  </div>
+                  <div class="popover-flex-2">
+                    <img
+                      alt="LulzBot toolhead"
+                      src="../static/3d_info/desc_images/toolhead.jpg"
+                    />
+                  </div>
+                </div>
+              </span>
+            </div>
+            is moving too fast.
+          </div>
+          Slow down the printing speed. I find all jerk settings should be
+          10mm/s and master print speed shouldn't really go over 40mm/s if you
+          want a quality print on *most* machines. It may also be prudent to
+          check and possibly reduce acceleration speeds.
+        </div>
+
+        <div class="filterDiv a">
+          <div class="customList-title">Belt is too loose/tight.</div>
+          Check your x and y axis belts. When perfectly tensioned, they twang
+          somewhat like a guitar string. If under tensioned, you'll get lines
+          like these. If over tensioned, you could have some defects in prints
+          but the danger is mostly to the motor and belt itself. There are
+          videos you can watch for this, as well as belt tensioners you can
+          print.
+        </div>
+        <div class="filterDiv b">
+          <div class="customList-title">Title XXX</div>
+          Set-screw is too loose, not tightened well / pulley loose
+        </div>
+        <div class="filterDiv c">
+          <div class="customList-title">Title XXX</div>
+          Not enough electrical current getting to the motors
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div id="sol-rank-container" class="tab-content-sol">
+  <!-- <div id="sol-rank-container" class="tab-content-sol">
     <div id="solution-div"></div>
     <div id="suggest-btn-div">
       <input
@@ -412,7 +514,7 @@
         value="See more suggestions"
       />
     </div>
-  </div>
+  </div> -->
 </div>
 
 <script type="text/javascript" id="main-js">
@@ -441,9 +543,9 @@
     evt.currentTarget.className += " active";
 
     // Close crop-div-all
-    document.getElementById("crop-div-all").style.display = "none";
+    // document.getElementById("crop-div-all").style.display = "none";
   }
-  // Tab for solutoin section
+  // Tab for solution section
   function openTab_sol(evt, imgID) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tab-content-sol");
@@ -515,32 +617,32 @@
     d3.select("#errText-sol").text(inputID);
 
     d3.select("#solution-div").selectAll("*").remove();
-    let solutions = solDB[inputID];
+    // let solutions = solDB[inputID];
 
-    for (let i = 0; i < Object.size(solutions); i++) {
-      let subSol = d3
-        .select("#solution-div")
-        .append("div")
-        .attr("class", "sub-sol");
+    // for (let i = 0; i < Object.size(solutions); i++) {
+    //   let subSol = d3
+    //     .select("#solution-div")
+    //     .append("div")
+    //     .attr("class", "sub-sol");
 
-      subSol.append("div").attr("class", "sub-sol-left").text(solutions[i][0]);
+    //   subSol.append("div").attr("class", "sub-sol-left").text(solutions[i][0]);
 
-      subSolRight = subSol.append("div").attr("class", "sub-sol-right");
+    //   subSolRight = subSol.append("div").attr("class", "sub-sol-right");
 
-      subSolRight
-        .append("input")
-        .attr("type", "button")
-        .attr("class", "post-link btn")
-        .attr("value", "Original Post")
-        .attr("onclick", "location.href='" + solutions[i][1] + "'");
+    //   subSolRight
+    //     .append("input")
+    //     .attr("type", "button")
+    //     .attr("class", "post-link btn")
+    //     .attr("value", "Original Post")
+    //     .attr("onclick", "location.href='" + solutions[i][1] + "'");
 
-      rightDiv = subSolRight.append("div").attr("class", "thumb-div");
-      rightDiv.append("button").attr("class", "thumb thumb-up fa fa-thumbs-up");
+    //   rightDiv = subSolRight.append("div").attr("class", "thumb-div");
+    //   rightDiv.append("button").attr("class", "thumb thumb-up fa fa-thumbs-up");
 
-      rightDiv
-        .append("button")
-        .attr("class", "thumb thumb-down fa fa-thumbs-down");
-    }
+    //   rightDiv
+    //     .append("button")
+    //     .attr("class", "thumb thumb-down fa fa-thumbs-down");
+    // }
   }
 
   // Card link to sub cam map
@@ -957,4 +1059,35 @@
   }
 </script>
 
+<script class="datajs" src="../static/js/customList.js"></script>
+
+<script class="mouse-drag-slider">
+  // const slider = document.querySelector(".scrolling-wrapper");
+  // let mouseDown = false;
+  // let startX, scrollLeft;
+
+  // let startDragging = function (e) {
+  //   mouseDown = true;
+  //   startX = e.pageX - slider.offsetLeft;
+  //   scrollLeft = slider.scrollLeft;
+  // };
+  // let stopDragging = function (event) {
+  //   mouseDown = false;
+  // };
+
+  // slider.addEventListener("mousemove", (e) => {
+  //   e.preventDefault();
+  //   if (!mouseDown) {
+  //     return;
+  //   }
+  //   const x = e.pageX - slider.offsetLeft;
+  //   const scroll = x - startX;
+  //   slider.scrollLeft = scrollLeft - scroll;
+  // });
+
+  // // Add the event listeners
+  // slider.addEventListener("mousedown", startDragging, false);
+  // slider.addEventListener("mouseup", stopDragging, false);
+  // slider.addEventListener("mouseleave", stopDragging, false);
+</script>
 {% endblock %}

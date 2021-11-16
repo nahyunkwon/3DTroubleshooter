@@ -1,9 +1,19 @@
 {% extends 'base.html' %} {% block head %}
-<title>Image Upload</title>
+<title>3DTroubleshooter</title>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
 
+<link href="../static/css/customList.css" rel="stylesheet" />
+
+<script src="../static/js/jquery.min.js"></script>
+
+<style>
+  #customList-container {
+    margin-top: 250px;
+    height: 800px;
+  }
+</style>
 
 
 {% endblock %} {% block body %}
@@ -43,6 +53,71 @@
     <img src="../static/images/loading.gif" alt="Loading Icon">
   </div>
 </div>
+
+
+
+<!-- * CustomList -->
+<div id="customList-container">
+
+
+<div id="clue_placeholder">
+  <div class="dropdown">
+    <h3 class="clue-title customList-sec-title">Clues:</h3>
+
+        <div id="myDropdown" class="dropdown-content">
+          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+              <div id="myBtnContainer">
+  
+                  <button class="btnList activeList" onclick="filterSelection('all')">All solutions</button>
+<!--                   
+                <button class="btnList" onclick="filterSelection('a')">Skip appears to be in both the x and y axis</button>
+  
+                  <button class="btnList" onclick="filterSelection('a')">I heard a grinding noise while printing</button>
+                  <button class="btnList" onclick="filterSelection('a')">The bed or extruder not moving during the failure event</button>
+                  <button class="btnList" onclick="filterSelection('a')">I heard a clicking sound</button>
+                  <button class="btnList" onclick="filterSelection('b')">Layer misalignment is a reoccurring problem</button>
+                    <button class="btnList" onclick="filterSelection('c')">None of clues above has spotted</button> -->
+  
+              </div>
+        </div>
+      </div>
+  </div>
+  
+  <div id="solution_placeholder">
+    <h3 class="customList-sec-title">Solutions:</h3>
+<!--   
+      <div class="filterDiv a">
+        <div class="customList-title">
+          <div class="popover__wrapper">
+            <a class="popover__title">Toolhead</a>
+              <span class="popover__content">
+                  <p class="popover__message popover-title">Toolhead</p>
+                  <div class="popover-flex">
+                    <div class="popover-flex-1">
+                      <p class="popover__message">The 3D printing Toolhead allows you to 3D print objects using the FFD (fuse filament deposition) method. This method consists in thermo extrude plastic filament through a hot-end.</p>
+                      <p class="popover__message related-terms">Related terms: extruder, hotend, nozzle, print head</p>
+                    </div>
+                    <div class="popover-flex-2">
+                      <img alt="LulzBot toolhead" src="../static/3d_info/desc_images/toolhead.jpg">
+                    </div>
+                  </div>
+                </span>
+          </div>
+          is moving too fast.</div>
+          Slow down the printing speed. I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds.</div>
+  
+      <div class="filterDiv a"><div class="customList-title">Belt is too loose/tight.</div>Check your x and y axis belts. When perfectly tensioned, they twang somewhat like a guitar string. If under tensioned, you'll get lines like these. If over tensioned, you could have some defects in prints but the danger is mostly to the motor and belt itself. There are videos you can watch for this, as well as belt tensioners you can print. </div>
+      <div class="filterDiv b"><div class="customList-title">Title XXX</div>Set-screw is too loose, not tightened well / pulley loose</div>
+      <div class="filterDiv c"><div class="customList-title">Title XXX</div>Not enough electrical current getting to the motors</div>
+   -->
+  
+  
+  
+  </div>
+
+</div>
+<!-- * CustomList -->
+
 
 
 
@@ -197,6 +272,8 @@
 
 </script>
 
+
+<script class="datajs" src="../static/js/customList.js"></script>
 
 
 {% endblock %}
