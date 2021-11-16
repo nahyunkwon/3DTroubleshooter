@@ -1,0 +1,239 @@
+.filterDiv {
+  float: left;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: black;
+  background-color: #f6f6f6;
+  /* border-color: lightgray; */
+  border-width: 2px;
+  color: black;
+  width: 90%;
+  line-height: 20px;
+  /* text-align: center; */
+  padding: 10px;
+  font-family: Arial, serif;
+  margin: 2px;
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.container {
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.btnList {
+  background: none;
+  border: none;
+  margin: 10px;
+  width: 90%;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.btnList.activeList {
+  background-color: #666;
+  color: white;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: black;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+/* The search field */
+#myInput {
+  box-sizing: border-box;
+  background-image: url("../images/searchicon.png");
+  background-size: 20px 20px;
+  background-position: 14px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 14px 20px 12px 45px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* The search field when it gets focus/clicked on */
+#myInput:focus {
+  outline: 3px solid #ddd;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  /* display: none; */
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 230px;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: block;
+}
+
+#clue_placeholder {
+  float: left;
+  width: 25%;
+}
+#solution_placeholder {
+  float: left;
+  width: 50%;
+  /* padding: 11px; */
+}
+
+/* Popover styling */
+
+a {
+  text-decoration: none;
+}
+
+.popover__title {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.popover__wrapper {
+  position: relative;
+  /* margin-top: 1.5rem; */
+  display: inline-block;
+}
+.popover__content {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  /* left: -150px; */
+  transform: translate(0, 10px);
+  background-color: white;
+  padding: 1.5rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  width: auto;
+  /* transition-duration: 0.8s; */
+  transition-duration: 0.1s;
+}
+.popover__content:before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  right: calc(50% - 10px);
+  top: -8px;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent white transparent;
+  /* transition-duration: 5s; */
+  transition-duration: 0.1s;
+  transition-property: transform;
+}
+/* .popover__wrapper .popover__content {
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 20px);
+  transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+} */
+.popover__wrapper:hover .popover__content {
+  z-index: 10;
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 20px);
+  transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+}
+.popover__message {
+  text-align: left;
+  width: 300px;
+}
+
+/* New styles for customList */
+.customList-title {
+  font-weight: bold;
+  padding-bottom: 5px;
+  /* margin: 6px; */
+}
+
+.popover-flex {
+  display: flex;
+  flex-direction: row-reverse;
+  /* align-items: center; */
+}
+
+.popover-flex-1,
+.popover-flex-2 {
+  flex: 1;
+}
+
+.popover-flex-1 p {
+  font-weight: normal;
+}
+
+.popover-flex-2 img {
+  width: 300px;
+  padding-left: 20px;
+}
+
+.clue-title {
+  padding-bottom: 5px;
+}
+
+.customList-sec-title {
+  /* font-size: 16pt;
+  font-weight: bold; */
+}
+
+.popover-title {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.related-terms {
+  color: forestgreen;
+}
+
+.card-title {
+  font-weight: bold;
+}
+
+a {
+  color: #0745ad;
+}
+
+#solution_placeholder {
+  /* max-height: 600px;
+  overflow-y: auto; */
+}
