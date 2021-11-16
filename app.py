@@ -1,4 +1,3 @@
-from os import name
 from flask import Flask, render_template, request, redirect, url_for
 from io import BytesIO
 from PIL import Image
@@ -15,10 +14,13 @@ import torch.nn.functional as F
 
 ## For Grad-Cam (pkg)
 from pytorch_grad_cam import GradCAM
-from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image
+# from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image
 
 ## Colormap
-from matplotlib.colors import LinearSegmentedColormap
+# from matplotlib.colors import LinearSegmentedColormap
+
+## RAM clean
+import gc
 
 def transform_image(pil_img):
     my_transforms = transforms.Compose([transforms.Resize(224),  # 255
@@ -67,6 +69,13 @@ def get_prediction_gradcam_pkg(pil_img, model):
     return class_idx, top1prob_has_err, class_list[int(class_idx)], grayscale_cam #cam_image
 
 
+def combine_cam(overlay, pil_img):
+    mask_resized = cv2.resize(overlay, (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR)
+    heatmap = cv2.applyColorMap(np.uint8(255 * mask_resized ), cv2.COLORMAP_BONE)
+    heatmap = np.float32(heatmap) / 255
+    cam_both = np.multiply(heatmap, np.float32(pil_img))
+    cam_both = cam_both / np.max(cam_both)
+    return cam_both
 
 
 model_info_list = []
@@ -122,7 +131,7 @@ def index():
         # map_colors = [(1, 1, 1), (0.7, 0.8, 0.6), (0, 0, 0)]  # W -> Y -> Blk
         # map_colors = [(1, 1, 1), (1, 0, 1), (0, 0, 0)]  # W -> Pink -> Blk
         # map_colors = [(1, 1, 1), (0, 1, 1), (0, 0, 0)]  # W -> B -> Blk
-        cmap = LinearSegmentedColormap.from_list('my_list', map_colors, N=3)
+        # cmap = LinearSegmentedColormap.from_list('my_list', map_colors, N=3)
 
 
         for file in request.files.getlist("img-file"):
@@ -145,24 +154,34 @@ def index():
                     model = torch.load("static/model/" + model_info.loc[m, "filename"], map_location=torch.device('cpu'))
                     a,b,c,d = get_prediction_gradcam_pkg(pil_img, model)
 
+                    del model
+                    gc.collect()
+
                     ## Convert to binary overlay map
                     norm_threshold = map_threshold * (np.max(d) - np.min(d))  # % of range
                     # norm_threshold = np.quantile(d, 0.5)  # q-th quantile, 0.5-q == median
 
-                    # d = (d < norm_threshold) * 0.99
+                    d = (d > norm_threshold) * 0.99  # binary
+                    # d = d * (d > norm_threshold)  # grad-binary
 
                     ## For map border
-                    d_mid = ((d > norm_threshold) & (d < (norm_threshold+0.02))) * 0.5
-                    d = (d < norm_threshold) * 0.99 + d_mid
+                    # d_mid = ((d > norm_threshold) & (d < (norm_threshold+0.02))) * 0.5
+                    # d = (d < norm_threshold) * 0.99 + d_mid
 
-                    df_results = df_results.append(pd.Series((model_info.loc[m, "name"],b,c,d), index=output_vars), ignore_index=True)
+                    df_results = df_results.append(pd.Series((model_info.loc[m, "name"],b,c,0), index=output_vars), ignore_index=True)
 
                     ## Grad-Cam heatmap for model 1
                     img_io2 = BytesIO()
                     fig = plt.figure()
-                    plt.imshow(pil_img, alpha=0.5)
+                    # plt.imshow(pil_img, alpha=0.5)
                     # plt.imshow(cv2.resize(overlay, (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.4, cmap='jet')
-                    plt.imshow(cv2.resize(df_results.loc[m, "overlay"], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.5, cmap=cmap)
+                    # plt.imshow(cv2.resize(df_results.loc[m, "overlay"], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.5, cmap=cmap)
+                    
+                    plt.imshow(cv2.cvtColor(combine_cam(d, pil_img), cv2.INTER_LINEAR))
+
+                    del d
+                    gc.collect()
+
                     ax = fig.axes[0]
                     ax.set_axis_off()
                     ax.set_xticks([])
@@ -199,6 +218,9 @@ def index():
                 # output_pred.append((str(class_name), top1prob, class_idx))
 
 
+                del df_results
+                gc.collect()
+
 
                 ## Save temp img_path
                 img_io = BytesIO()
@@ -211,9 +233,11 @@ def index():
                 ## Overall maps
                 img_io3 = BytesIO()
                 fig = plt.figure()
-                plt.imshow(pil_img, alpha=0.5)
-                for n in model_info.index[df_results.top1prob_has_err >= acc_threshold]:
-                    plt.imshow(cv2.resize(df_results.loc[n, "overlay"], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.3, cmap=cmap)  #cmap=map_colors[n]
+                plt.imshow(pil_img, alpha=1)
+                # for n in model_info.index[df_results.top1prob_has_err >= acc_threshold]:
+                #     plt.imshow(cv2.cvtColor(combine_cam(df_results.loc[n, "overlay"], pil_img), cv2.INTER_LINEAR), alpha=0.5)
+
+                    # plt.imshow(cv2.resize(df_results.loc[n, "overlay"], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.3, cmap=cmap)  #cmap=map_colors[n]
                 ax = fig.axes[0]
                 ax.set_axis_off()
                 ax.set_xticks([])
@@ -230,6 +254,8 @@ def index():
 
                 img_io3.close()
 
+                del pil_img
+                gc.collect()
 
                 # # Grad-Cam heatmap for model 1
                 # img_io2 = BytesIO()
@@ -282,4 +308,5 @@ def index():
 
 
 if __name__ == '__main__':
+    app.jinja_env.cache = {}
     app.run(debug=True)
