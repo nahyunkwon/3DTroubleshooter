@@ -1,0 +1,232 @@
+[
+    {
+        "id": "0",
+        "term": "toolhead",
+        "synonyms": "extruder, hotend, nozzle, print head",
+        "related_terms": "",
+        "description": "The 3D printing Toolhead allows you to 3D print objects using the FFD (fuse filament deposition) method. This method consists in thermo extrude plastic filament through a hot-end.",
+        "image_filename": "toolhead.jpg",
+        "image_src": "http://www.diyouware.com/node/176\n",
+        "desc_src": "https://www.lulzbot.com/learn/in-the-news/precision-meets-versatility-3d-printing-aerostruder-tool-head\n"
+    },
+    {
+        "id": "1",
+        "term": "belt",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "When dealing with a 3D printer, accuracy is crucial\u00a0for obtaining good results. If something comes loose in the middle of the print, or doesn\u2019t move exactly the way it should, it will be clearly visible in the print. Thus, when concerning yourself with a 3D printer belt, it\u2019s very important to make sure that its movements are as controlled and accurate as possible. The use of stepper motors can help provide\u00a0more advanced control, but\u00a0it\u2019s\u00a0useless if the belt slips.",
+        "image_filename": "belt.jpg",
+        "image_src": "https://all3dp.com/2/3d-printer-belt-what-to-consider-and-which-to-buy/",
+        "desc_src": "https://all3dp.com/2/3d-printer-belt-what-to-consider-and-which-to-buy/"
+    },
+    {
+        "id": "2",
+        "term": "set-screw",
+        "synonyms": "grub screw",
+        "related_terms": "",
+        "description": "Many 3D printers also include a series of belts that are driven by pulleys attached to a stepper motor shaft using a small set-screw (otherwise known as a grub screw). These set-screws anchor the pulley to the shaft of the motor so that the two items spin together. However, if the set-screw loosens, the pulley will no longer rotate together with the motor shaft.",
+        "image_filename": "",
+        "image_src": "",
+        "desc_src": "https://www.simplify3d.com/support/print-quality-troubleshooting/layer-shifting/"
+    },
+    {
+        "id": "3",
+        "term": "motor",
+        "synonyms": "stepper motor, drive gear",
+        "related_terms": "",
+        "description": "Stepper motors are relatively simple mechanisms: A series of electromagnetic coils are activated in a specific sequence to spin a motor shaft a precise number of degrees. The NEMA specification is what allows stepper motors to be identified, and references the size of the faceplate of the motor.",
+        "image_filename": "motor.jpg",
+        "image_src": "https://all3dp.com/2/3d-printer-stepper-motor-what-to-consider-and-which-to-choose-2/",
+        "desc_src": "https://all3dp.com/2/3d-printer-stepper-motor-what-to-consider-and-which-to-choose-2/"
+    },
+    {
+        "id": "4",
+        "term": "jerk",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "The Jerk setting measures the speed at which your print head moves from its still position. The higher the setting, the faster it will move off from a stable position, the lower the setting, the slower it will move off from a stable position.",
+        "image_filename": "",
+        "image_src": "",
+        "desc_src": "https://3dprinterly.com/how-to-get-the-perfect-jerk-acceleration-setting/"
+    },
+    {
+        "id": "5",
+        "term": "acceleration",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "The Acceleration setting measures how fast your print head speeds up, limited by your designated 3D printer speed in your slicer settings.\nThe higher the setting, the quicker the print head will get to its maximum speed, the lower the setting, the slower the print head will get to its maximum speed.",
+        "image_filename": "",
+        "image_src": "",
+        "desc_src": "https://3dprinterly.com/how-to-get-the-perfect-jerk-acceleration-setting/"
+    },
+    {
+        "id": "6",
+        "term": "bed",
+        "synonyms": "build place, build surface, heated bed",
+        "related_terms": "",
+        "description": "A print bed is the surface of a 3D printer where a print head lays down the materials that make up a 3D print. A 3D printer requires the print bed to be level and flat in order to successfully produce layers of media in filament form that make up a 3D-printed object.",
+        "image_filename": "bed.jpb",
+        "image_src": "https://all3dp.com/2/ender-3-bed-leveling-all-you-need-to-know/",
+        "desc_src": "https://whatis.techtarget.com/definition/print-bed"
+    },
+    {
+        "id": "7",
+        "term": "z hop",
+        "synonyms": "",
+        "related_terms": "retraction",
+        "description": "The specified z hop value is the distance the nozzle gets lifted away from the surface of the model during retraction. This helps prevent nozzle from scratching again the printed part when traveling across.",
+        "image_filename": "z_hop.png",
+        "image_src": "https://support.bcn3d.com/knowledge/travel",
+        "desc_src": "https://www.ideamaker.io/dictionaryDetail.html?name=Z%20Hop%20at%20Retraction&category_name=Extruder"
+    },
+    {
+        "id": "8",
+        "term": "z screw",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "The z-axis of a 3D printer is the vertical axis, so to travel in the z-direction is to move through the layers rather than along them.",
+        "image_filename": "z-screw.jpg",
+        "image_src": "https://atmelcorporation.wordpress.com/2016/02/04/a-3d-printer-with-fully-auomated-bed-leveling-and-tool-height-adjustment/",
+        "desc_src": "https://www.electronicsweekly.com/blogs/engineer-in-wonderland/3d-printing-z-wobble-2019-01/"
+    },
+    {
+        "id": "9",
+        "term": "wheel",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "",
+        "image_filename": "wheel.png",
+        "image_src": "https://www.amazon.com/Befenybay-Buckle-Aluminum-Profile-Printer/dp/B08M3JKKZY/ref=asc_df_B08M3JKKZY/?tag=hyprod-20&linkCode=df0&hvadid=475790020230&hvpos=&hvnetw=g&hvrand=5332544928892138368&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9027902&hvtargid=pla-1165305931901&psc=1",
+        "desc_src": ""
+    },
+    {
+        "id": "10",
+        "term": "slicer",
+        "synonyms": "",
+        "related_terms": "Cura, Makerbot Desktop, Simplify3D, Slic3r",
+        "description": "A slicer is a program that converts digital 3D models into printing instructions for a given 3D printer to build an object. In addition to the model itself, the instructions contain user-entered 3D printing parameters, such as layer height, speed, and support structure settings.",
+        "image_filename": "",
+        "image_src": "",
+        "desc_src": "https://all3dp.com/2/what-is-a-3d-slicer-simply-explained/"
+    },
+    {
+        "id": "11",
+        "term": "estep",
+        "synonyms": "e-step",
+        "related_terms": "e-step calibration",
+        "description": "E-steps are the number of steps the extruder needs to make to extrude one millimeter of filament, and when you calibrate the extruder, you will need to change this value to make sure that it is set correctly. Reference: https://all3dp.com/2/extruder-calibration-6-easy-steps-2/",
+        "image_filename": "",
+        "image_src": "",
+        "desc_src": "https://all3dp.com/2/what-is-e-step-calibration-simply-explained/"
+    },
+    {
+        "id": "12",
+        "term": "flow",
+        "synonyms": "",
+        "related_terms": "flow %, flow rate",
+        "description": "3D printer flow rate, or the extrusion multiplier, refers to the slicer setting that determines the amount of plastic to extrude. By default, the flow rate is set to 1.0 or 100% depending on the slicer. When you set the flow rate to 1.1 or 110% you are increasing the flow rate by 10%.",
+        "image_filename": "flow.jpg",
+        "image_src": "http://best-cheap-3dprinters.com/calibrating-material-flow-rate-3d-printer/",
+        "desc_src": "https://www.nikkoindustries.com/blogs/news/what-is-flow-rate-and-how-does-it-affect-your-3d-prints"
+    },
+    {
+        "id": "13",
+        "term": "fan",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "The layer fan is a small fan placed in the 3D printer head, aimed at the printed part and cools the plastic as it comes out of the hot end. The job of the layer fan is to cool the plastic once it has been deposited so that the part solidifies quickly and the molten plastic does not become deformed.",
+        "image_filename": "fan.png",
+        "image_src": "https://www.amazon.com/Creality-Original-40x40x10MM-Cooling-3D/dp/B07FTNCC9B/ref=asc_df_B07FTNCC9B/?tag=hyprod-20&linkCode=df0&hvadid=312148796847&hvpos=&hvnetw=g&hvrand=11918700240182203221&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9027902&hvtargid=pla-569999753224&psc=1",
+        "desc_src": "https://bitfab.io/blog/layer-fan-3d-printing/"
+    },
+    {
+        "id": "14",
+        "term": "brim",
+        "synonyms": "",
+        "related_terms": "raft, skirt",
+        "description": "A brim is a type of 3D printing raft that\u2019s only attached to the outer edges of the print,\u00a0 not beneath it like a true raft. It can also be thought of as a type of skirt that touches the edges of the print.",
+        "image_filename": "brim.jpg",
+        "image_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/",
+        "desc_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/"
+    },
+    {
+        "id": "15",
+        "term": "raft",
+        "synonyms": "",
+        "related_terms": "brim, skirt",
+        "description": "A 3D printing raft forms the first layer of a horizontal mesh of filament deposited directly on the build platform. Upon this first layer, the print is deposited.",
+        "image_filename": "raft.jpg",
+        "image_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/",
+        "desc_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/"
+    },
+    {
+        "id": "16",
+        "term": "skirt",
+        "synonyms": "",
+        "related_terms": "brim, raft",
+        "description": "A skirt is an outline surrounding the part to be printed. The skirt doesn\u2019t touch the part like rafts or brims but is controlled in more or less a similar way. It\u2019s useful in helping to prime the extruder, encouraging a smooth flow of material before starting a print.\nThough it doesn\u2019t support the print in any way, as with a raft or a brim, it\u2019s very useful to understand the flow of material, bed leveling, layer adhesion, and other layer properties set in the slicer.",
+        "image_filename": "skirt.jpg",
+        "image_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/",
+        "desc_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/"
+    },
+    {
+        "id": "17",
+        "term": "ABS",
+        "synonyms": "",
+        "related_terms": "filament, material",
+        "description": "Acrylonitrile butadiene styrene (ABS) is less popular than PLA for everyday 3D printing. With respect to its material properties though, ABS is actually moderately superior to PLA, despite being slightly more difficult to print \u2013 it\u2019s prone to warping without a hot print bed and bed adhesive.",
+        "image_filename": "ABS.jpg",
+        "image_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/",
+        "desc_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/"
+    },
+    {
+        "id": "18",
+        "term": "PLA",
+        "synonyms": "",
+        "related_terms": "filament, material",
+        "description": "Polylactic acid (PLA) is easy to print with. It has a lower printing temperature than ABS, and it doesn\u2019t warp as easily, meaning it doesn\u2019t require a heating bed (although it definitely helps). Another benefit of using PLA is that it doesn\u2019t give off an offputting odor during printing (unlike ABS). It\u2019s generally considered an odorless filament, but many have reported smelling sweet candy-like fumes depending on the type of PLA.\nAnother appealing aspect of PLA is it\u2019s available in a nearly endless abundance of colors and styles",
+        "image_filename": "PLA.jpg",
+        "image_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/",
+        "desc_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/"
+    },
+    {
+        "id": "19",
+        "term": "TPU",
+        "synonyms": "",
+        "related_terms": "filament, material",
+        "description": "As the name implies, thermoplastic elastomers (TPE) are essentially plastics with rubber-like qualities, making them extremely flexible and durable. As such, TPE is commonly used to produce automotive parts, household appliances, and medical supplies.",
+        "image_filename": "TPU.jpg",
+        "image_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/",
+        "desc_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/"
+    },
+    {
+        "id": "20",
+        "term": "PETG",
+        "synonyms": "",
+        "related_terms": "filament, material",
+        "description": "Polyethylene terephthalate (PET) is one of the most commonly used plastics in the world. Best known as the polymer used in water bottles, it is also found in clothing fibers and food containers. While \u201craw\u201d PET is rarely used in 3D printing, its variant PETG is an increasingly popular 3D printer filament.",
+        "image_filename": "PETG.jpg",
+        "image_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/",
+        "desc_src": "https://all3dp.com/1/3d-printer-filament-types-3d-printing-3d-filament/"
+    },
+    {
+        "id": "21",
+        "term": "printing sheet",
+        "synonyms": "build sheet",
+        "related_terms": "",
+        "description": "Printing sheet adheres to a print bed to help the filament stick during printing, while also enabling clean removal of the printed part afterward",
+        "image_filename": "printing_sheet.jpg",
+        "image_src": "https://www.amazon.com/BuildTak-Printing-Build-Surface-Rectangle/dp/B00MN5X084",
+        "desc_src": "https://www.amazon.com/BuildTak-Printing-Build-Surface-Rectangle/dp/B00MN5X084"
+    },
+    {
+        "id": "22",
+        "term": "draft shield",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "A draft shield will create a one-layer thick wall around the object, which protects it from unwanted air flows from the environment. Materials that are prone to warping or delaminate easily (e.g. ABS) can benefit from this feature.",
+        "image_filename": "draft_shield.png",
+        "image_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings",
+        "desc_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings"
+    }
+]

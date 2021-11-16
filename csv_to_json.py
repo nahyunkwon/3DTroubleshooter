@@ -54,4 +54,4 @@ csvFilePath = filename + '.csv'
 jsonFilePath = filename + '.json'
 
 # Call the make_json function
-csv_to_json(csvFilePath, jsonFilePath)
+csv_to_json('3D_technical_terms.csv', '3D_technical_terms.json')

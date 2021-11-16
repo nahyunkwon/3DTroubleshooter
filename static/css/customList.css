@@ -122,7 +122,7 @@ a {
 
 .popover__wrapper {
   position: relative;
-  margin-top: 1.5rem;
+  /*margin-top: 1.5rem;*/
   display: inline-block;
 }
 .popover__content {
@@ -135,7 +135,7 @@ a {
   padding: 1.5rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
   width: auto;
-    transition-duration: 0.8s;
+    transition-duration: 0.1s;
 }
 .popover__content:before {
   position: absolute;
@@ -146,7 +146,7 @@ a {
   border-style: solid;
   border-width: 0 10px 10px 10px;
   border-color: transparent transparent white transparent;
-  transition-duration: 5s;
+  transition-duration: 0.1s;
   transition-property: transform;
 }
 .popover__wrapper:hover .popover__content {
@@ -160,3 +160,10 @@ a {
   text-align: left;
 }
 
+.card-title{
+  font-weight:bold;
+}
+
+a{
+  color:#0745ad;
+}
