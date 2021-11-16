@@ -6,6 +6,11 @@ body {
   height: 1200px;
 }
 
+#customList-container {
+  /* margin-top: 200px;
+  height: 800px; */
+}
+
 body div {
   /* border: 1px #ccc solid; */
 }
@@ -109,8 +114,12 @@ body div {
   position: absolute;
   height: 400px;
   /* max-width: 600px; */
-  right: 20px;
+  /* right: 20px; */
   top: 129px;
+}
+
+.uploaded-img-map {
+  display: none;
 }
 
 .uploaded-img-map-sub {
@@ -135,7 +144,8 @@ body div {
 }
 
 .tab-sol {
-  width: 300px;
+  /* width: 300px; */
+  width: 200px;
 }
 
 .tab .tab-links,
@@ -229,7 +239,7 @@ body div {
 
 /* Middle sec */
 .scrolling-wrapper {
-  overflow-x: scroll;
+  overflow-x: auto;
   /* overflow-x: hidden; */
   overflow-y: hidden;
   white-space: nowrap;
@@ -241,6 +251,12 @@ body div {
   width: 400px;
   height: 200px;
   background: rgb(202, 202, 202);
+  border-style: solid;
+  border-radius: 10px;
+  border-color: black;
+  border-width: 2px;
+
+  /* cursor: all-scroll; */
 }
 
 .card-top {
@@ -248,10 +264,11 @@ body div {
   border: 5px;
   border-color: white;
   border-style: dotted;
+  width: 200px;
 }
 
 .scrolling-wrapper {
-  border: 1px #ccc solid;
+  /* border: 1px #ccc solid; */
   width: 100%;
   /* -webkit-overflow-scrolling: touch; */
 }
