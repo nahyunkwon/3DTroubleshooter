@@ -14,10 +14,6 @@ import torch.nn.functional as F
 
 ## For Grad-Cam (pkg)
 from pytorch_grad_cam import GradCAM
-# from pytorch_grad_cam.utils.image import show_cam_on_image, preprocess_image
-
-## Colormap
-# from matplotlib.colors import LinearSegmentedColormap
 
 ## RAM clean
 import gc
@@ -59,8 +55,6 @@ def get_prediction_gradcam_pkg(pil_img, model):
     top1prob = torch.topk(pred_probabilities, 1)[0][0]  # Top-1 prediction
     class_idx = int(torch.topk(pred_probabilities, 1)[1])
     
-    # return class_list[int(class_idx)], float(top1prob), class_idx, grayscale_cam #cam_image
-
     if class_idx == 1:
         top1prob_has_err = float(top1prob)
     else:
@@ -77,11 +71,13 @@ def combine_cam(overlay, pil_img):
     cam_both = cam_both / np.max(cam_both)
     return cam_both
 
+def sigmoid(x, slope):
+  return 1 / (1 + np.exp(-slope * x))
 
 model_info_list = []
 model_info_list.append(["1-Stringing", "stringing_best_model.pth", [False, True]])
 model_info_list.append(["2-Underextrusion", "underextrusion_best_model.pth", [False, True]])
-model_info_list.append(["3-LayerShifting", "layer_shifting_best_model_new.pth", [False, True]])
+model_info_list.append(["3-LayerShifting", "layer_shifting_best_model.pth", [False, True]])
 model_info_list.append(["4-Warping", "warping_best_model.pth", [False, True]])
 model_info_list.append(["5-Blobs", "blobs_best_model.pth", [False, True]])
 
@@ -116,24 +112,6 @@ def index():
         card_info_prob = []
 
 
-
-
-        # img_path_cam = []
-        img_path_cam_2 = []
-        text_filenames = ""
-        output_pred_2 = []
-        n = 0
-
-        ## Colors for cam maps
-        # map_colors = ['Reds', 'Blues', 'Greens', 'Greys']
-        map_colors = [(1, 1, 1), (0, 1, 0), (0, 0, 0)]  # W -> G -> Blk
-        # map_colors = [(1, 1, 1), (1, 0, 0), (0, 0, 0)]  # W -> R -> Blk
-        # map_colors = [(1, 1, 1), (0.7, 0.8, 0.6), (0, 0, 0)]  # W -> Y -> Blk
-        # map_colors = [(1, 1, 1), (1, 0, 1), (0, 0, 0)]  # W -> Pink -> Blk
-        # map_colors = [(1, 1, 1), (0, 1, 1), (0, 0, 0)]  # W -> B -> Blk
-        # cmap = LinearSegmentedColormap.from_list('my_list', map_colors, N=3)
-
-
         for file in request.files.getlist("img-file"):
             ## Check if "file" is any kind of zero or empty container (None), or False
             if not file:  
@@ -158,25 +136,19 @@ def index():
                     gc.collect()
 
                     ## Convert to binary overlay map
-                    norm_threshold = map_threshold * (np.max(d) - np.min(d))  # % of range
+                    # norm_threshold = map_threshold * (np.max(d) - np.min(d))  # % of range
                     # norm_threshold = np.quantile(d, 0.5)  # q-th quantile, 0.5-q == median
 
-                    d = (d > norm_threshold) * 0.99  # binary
+                    # d = (d > norm_threshold) * 0.99  # binary
                     # d = d * (d > norm_threshold)  # grad-binary
-
-                    ## For map border
-                    # d_mid = ((d > norm_threshold) & (d < (norm_threshold+0.02))) * 0.5
-                    # d = (d < norm_threshold) * 0.99 + d_mid
+                    d = sigmoid((d) * 2 - 1, 8)  # sigmoid: range (-1, 1)
 
                     df_results = df_results.append(pd.Series((model_info.loc[m, "name"],b,c,0), index=output_vars), ignore_index=True)
 
                     ## Grad-Cam heatmap for model 1
                     img_io2 = BytesIO()
                     fig = plt.figure()
-                    # plt.imshow(pil_img, alpha=0.5)
-                    # plt.imshow(cv2.resize(overlay, (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.4, cmap='jet')
-                    # plt.imshow(cv2.resize(df_results.loc[m, "overlay"], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.5, cmap=cmap)
-                    
+
                     plt.imshow(cv2.cvtColor(combine_cam(d, pil_img), cv2.INTER_LINEAR))
 
                     del d
@@ -213,11 +185,6 @@ def index():
                     card_info.append(df_results.sort_values(by="top1prob_has_err", ascending=False).err_name.to_list())
                     card_info_prob.append(df_results.sort_values(by="top1prob_has_err", ascending=False).top1prob_has_err.to_list())
 
-                # class_name, top1prob, class_idx, overlay = get_prediction_gradcam_pkg(pil_img, model1)
-
-                # output_pred.append((str(class_name), top1prob, class_idx))
-
-
                 del df_results
                 gc.collect()
 
@@ -234,10 +201,7 @@ def index():
                 img_io3 = BytesIO()
                 fig = plt.figure()
                 plt.imshow(pil_img, alpha=1)
-                # for n in model_info.index[df_results.top1prob_has_err >= acc_threshold]:
-                #     plt.imshow(cv2.cvtColor(combine_cam(df_results.loc[n, "overlay"], pil_img), cv2.INTER_LINEAR), alpha=0.5)
 
-                    # plt.imshow(cv2.resize(df_results.loc[n, "overlay"], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.3, cmap=cmap)  #cmap=map_colors[n]
                 ax = fig.axes[0]
                 ax.set_axis_off()
                 ax.set_xticks([])
@@ -257,43 +221,7 @@ def index():
                 del pil_img
                 gc.collect()
 
-                # # Grad-Cam heatmap for model 1
-                # img_io2 = BytesIO()
-                # plt.figure()
-                # plt.imshow(pil_img)
-                # # plt.imshow(cv2.resize(overlay[0], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.4, cmap='jet')
-                # plt.imshow(cv2.resize(df_results.loc[0, "overlay"][0], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.4, cmap='jet')
-                # plt.savefig(img_io2, format='JPEG')
-                # img_io2.seek(0)
-                # base64_img = b64encode(img_io2.getvalue())
-                # img_path_cam.append(base64_img.decode('ascii'))
-                # img_io2.close()
-
-                # # Grad-Cam heatmap for model 2
-                # img_io2 = BytesIO()
-                # plt.figure()
-                # plt.imshow(pil_img)
-                # # plt.imshow(cv2.resize(overlay[0], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.4, cmap='jet')
-                # plt.imshow(cv2.resize(df_results.loc[1, "overlay"][0], (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR), alpha=0.4, cmap='jet')
-                # plt.savefig(img_io2, format='JPEG')
-                # img_io2.seek(0)
-                # base64_img = b64encode(img_io2.getvalue())
-                # img_path_cam_2.append(base64_img.decode('ascii'))
-                # img_io2.close()
-
-                # w, h = pil_img.size
-                # text = f'Width: {w}px; Height: {h}px'
-
                 text_names += str(file).split("'")[1] + "; "
-
-
-
-        # card_info = [["Error-1", "Error-2", "Error-3", "Error-5", "Error-4"],
-        #             ["Error-4", "Error-8", "Error-3", "Error-2"],
-        #             ["Error-7", "Error-4", "Error-2", "Error-8", "Error-3"],
-        #             ["Error-9", "Error-1", "Error-2", "Error-8", "Error-3"],
-        #             ["Error-5", "Error-4", "Error-2", "Error-8", "Error-3"],
-        #             ["Error-9", "Error-4", "Error-2", "Error-8", "Error-3"]]
 
         if len(img_path) > 0:
             return render_template("index.html", img_format='data:image/JPEG;base64,', svg_format='data:image/SVG+xml;base64,', img_path=img_path, n_img=len(img_path),output=text + str(len(img_path)) + " file(s) -- " + text_names,card_info=card_info, init_hide=False,
