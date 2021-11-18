@@ -205,6 +205,8 @@ a {
 .popover-flex-2 img {
   width: 300px;
   padding-left: 20px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
 }
 
 .clue-title {
@@ -216,8 +218,8 @@ a {
   font-weight: bold; */
 }
 
-.popover-title {
-  font-size: 20pt;
+.pop-term {
+  font-size: 15pt;
   font-weight: bold;
 }
 
@@ -227,6 +229,8 @@ a {
 
 .card-title {
   font-weight: bold;
+  /* background-color: rgb(255, 254, 233); */
+  /* border-bottom: 1px solid rgb(167, 167, 167); */
 }
 
 a {
@@ -236,4 +240,8 @@ a {
 #solution_placeholder {
   /* max-height: 600px;
   overflow-y: auto; */
+}
+
+.horiz-line {
+  border-top: 1px solid rgb(167, 167, 167);
 }
