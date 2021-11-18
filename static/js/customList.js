@@ -131,19 +131,29 @@ function termToPopover(
     '<div class="popover__wrapper"><a class="popover__title">' +
     term +
     '</a><span class="popover__content"><p class="popover__message pop-term">' +
-    capitalize(term);
+    capitalize(term) +
+    '</p><div class="popover-flex">';
 
   if (image_filename !== "") {
     replace_text +=
-      '</p><div class="popover-flex"><div class="popover-flex-2"><img src="../static/3d_info/desc_images/' +
+      '<div class="popover-flex-2"><img src="../static/3d_info/desc_images/' +
       image_filename +
       '"></div>';
   }
 
-  replace_text +=
-    '<div class="popover-flex-1"><p class="popover__message">' +
-    description +
-    "</p>";
+  // replace_text +=
+  //   '<div class="popover-flex-1"><p class="popover__message">' +
+  //   description +
+  //   "</p>";
+
+  if (description !== "") {
+    replace_text +=
+      '<div class="popover-flex-1"><p class="popover__message">' +
+      description +
+      "</p>";
+  } else {
+    replace_text += "<div>";
+  }
 
   //if(target_terms.length > 1){
   //var synonyms_list = target_terms.splice(target_terms.indexOf(target_terms[j]), 1);
@@ -164,7 +174,7 @@ function termToPopover(
       "</p>";
   }
 
-  replace_text += "</div></div></div></span>";
+  replace_text += "</div></div></span></div>";
 
   return replace_text;
 }
@@ -274,6 +284,8 @@ function createCard(title, content, filter) {
   card.innerHTML =
     '<div class="card-title">' +
     capitalize(title) +
+    "</div>" +
+    '<div class="horiz-line">' +
     "</div>" +
     capitalize(content);
 
