@@ -61,8 +61,10 @@
 
 
 <div id="clue_placeholder">
+  
   <div class="dropdown">
     <h3 class="clue-title customList-sec-title">Clues:</h3>
+    <div class="modal-btn">Show Modal</div>
 
         <div id="myDropdown" class="dropdown-content">
           <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
@@ -82,9 +84,24 @@
         </div>
       </div>
   </div>
+
+
   
   <div id="solution_placeholder">
     <h3 class="customList-sec-title">Solutions:</h3>
+    <div class="diff-checkbox">
+      <div class="checkbox checkbox-1">
+        <label><input type="checkbox" rel="diff-1" onchange="diffFilter();"/>diff-1</label>
+      </div>
+      <div class="checkbox checkbox-2">
+        <label><input type="checkbox" rel="diff-2" onchange="diffFilter();"/>diff-2</label>
+      </div>
+      <div class="checkbox checkbox-3">
+        <label><input type="checkbox" rel="diff-3" onchange="diffFilter();"/>diff-3</label>
+      </div>
+    </div>
+
+
 <!--   
       <div class="filterDiv a">
         <div class="customList-title">
@@ -116,9 +133,26 @@
   </div>
 
 </div>
-<!-- * CustomList -->
 
 
+<!-- * Modal window box -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-title">
+      <span class="close">&times;</span>
+
+    </div>
+    <div class="modal-body">
+
+    </div>
+    <div class="modal-tail">
+
+    </div>
+  </div>
+
+</div>
 
 
 
@@ -274,6 +308,7 @@
 
 
 <script class="datajs" src="../static/js/customList.js"></script>
+<script class="datajs" src="../static/js/modal.js"></script>
 
 
 {% endblock %}
