@@ -125,11 +125,23 @@ function termToPopover(
   description,
   image_filename,
   synonyms,
-  related_terms
+  related_terms,
+  desc_src
 ) {
+  var disableClass = "";
+  if (desc_src == "") {
+    disableClass = "disable-click";
+  }
   var replace_text =
-    '<div class="popover__wrapper"><a class="popover__title">' +
+    '<div class="popover__wrapper">' +
+    '<a target="_blank"' +
+    'class="popover__title ' +
+    disableClass +
+    '" href="' +
+    desc_src +
+    '">' +
     term +
+    "</a>" +
     '</a><span class="popover__content"><p class="popover__message pop-term">' +
     capitalize(term) +
     '</p><div class="popover-flex">';
@@ -184,7 +196,8 @@ function createCard(title, content, filter) {
   var card = document.createElement("div");
   //button.type = "button";
   // console.log(filter);
-  card.className = "filterDiv " + filter + " show";
+  var rndDiff = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+  card.className = "filterDiv " + filter + " show" + " diff-" + rndDiff;
 
   var target_terms;
 
@@ -234,6 +247,7 @@ function createCard(title, content, filter) {
     var description = terms_data[i]["description"];
     var image_filename = terms_data[i]["image_filename"];
     var related_terms = terms_data[i]["related_terms"];
+    var desc_src = terms_data[i]["desc_src"];
     var synonyms;
 
     for (j = 0; j < target_terms.length; j++) {
@@ -244,7 +258,8 @@ function createCard(title, content, filter) {
           description,
           image_filename,
           target_terms,
-          related_terms
+          related_terms,
+          desc_src
         )
       );
       title = title.replace(
@@ -254,7 +269,8 @@ function createCard(title, content, filter) {
           description,
           image_filename,
           target_terms,
-          related_terms
+          related_terms,
+          desc_src
         )
       );
 
@@ -265,7 +281,8 @@ function createCard(title, content, filter) {
           description,
           image_filename,
           target_terms,
-          related_terms
+          related_terms,
+          desc_src
         )
       );
       content = content.replace(
@@ -275,7 +292,8 @@ function createCard(title, content, filter) {
           description,
           image_filename,
           target_terms,
-          related_terms
+          related_terms,
+          desc_src
         )
       );
     }
@@ -284,8 +302,8 @@ function createCard(title, content, filter) {
   card.innerHTML =
     '<div class="card-title">' +
     capitalize(title) +
-    "</div>" +
-    '<div class="horiz-line">' +
+    " -------- Diff level: " +
+    rndDiff +
     "</div>" +
     capitalize(content);
 
@@ -329,11 +347,11 @@ for (var k = 0; k < clue_data.length; k++) {
 }
 
 for (k = 0; k < case_data.length; k++) {
-  createCard(
-    case_data[k]["case_content"],
-    case_data[k]["solution"],
-    case_data[k]["case_id"]
-  );
+  var sol_temp = "";
+  if (case_data[k]["solution"] != "") {
+    sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
+  }
+  createCard(case_data[k]["case_content"], sol_temp, case_data[k]["case_id"]);
 }
 
 /* create clue buttons and solution cards from json file */
@@ -350,4 +368,74 @@ for (var i = 0; i < btns.length; i++) {
     current[0].className = current[0].className.replace(" activeList", "");
     this.className += " activeList";
   });
+}
+
+//// * Difficulty level checkbox
+function diffFilter() {
+  var selectLevel = document.querySelectorAll(
+    ".diff-checkbox input[type='checkbox']"
+  );
+  var filters = {
+    diffLevel: getClassOfCheckedCheckboxes(selectLevel),
+  };
+
+  filterResults(filters);
+}
+
+function getClassOfCheckedCheckboxes(checkboxes) {
+  var classes = [];
+
+  if (checkboxes && checkboxes.length > 0) {
+    for (var i = 0; i < checkboxes.length; i++) {
+      var cb = checkboxes[i];
+
+      if (cb.checked) {
+        classes.push(cb.getAttribute("rel"));
+      }
+    }
+  }
+
+  return classes;
+}
+
+function filterResults(filters) {
+  var rElems = document.querySelectorAll(".filterDiv");
+  var hiddenElems = [];
+
+  if (!rElems || rElems.length <= 0) {
+    return;
+  }
+
+  for (var i = 0; i < rElems.length; i++) {
+    var el = rElems[i];
+
+    if (filters.diffLevel.length > 0) {
+      var isHidden = true;
+
+      for (var j = 0; j < filters.diffLevel.length; j++) {
+        var filter = filters.diffLevel[j];
+
+        if (el.classList.contains(filter)) {
+          isHidden = false;
+          break;
+        }
+      }
+
+      if (isHidden) {
+        hiddenElems.push(el);
+      }
+    }
+  }
+
+  for (var i = 0; i < rElems.length; i++) {
+    rElems[i].style.display = "block";
+  }
+
+  if (hiddenElems.length <= 0) {
+    return;
+  }
+
+  for (var i = 0; i < hiddenElems.length; i++) {
+    hiddenElems[i].style.display = "none";
+  }
 }
