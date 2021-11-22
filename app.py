@@ -76,7 +76,7 @@ def sigmoid(x, slope):
 
 model_info_list = []
 model_info_list.append(["1-Stringing", "stringing_best_model.pth", [False, True]])
-model_info_list.append(["2-Underextrusion", "underextrusion_best_model.pth", [False, True]])
+model_info_list.append(["2-Underextrusion", "under-extrusion_best_model.pth", [False, True]])
 model_info_list.append(["3-LayerShifting", "layer_shifting_best_model.pth", [False, True]])
 model_info_list.append(["4-Warping", "warping_best_model.pth", [False, True]])
 model_info_list.append(["5-Blobs", "blobs_best_model.pth", [False, True]])
@@ -141,7 +141,7 @@ def index():
 
                     # d = (d > norm_threshold) * 0.99  # binary
                     # d = d * (d > norm_threshold)  # grad-binary
-                    d = sigmoid((d) * 2 - 1, 8)  # sigmoid: range (-1, 1)
+                    d = sigmoid((d) * 2 - 1, 4)  # sigmoid: range (-1, 1)
 
                     df_results = df_results.append(pd.Series((model_info.loc[m, "name"],b,c,0), index=output_vars), ignore_index=True)
 
