@@ -91,6 +91,7 @@ function createButton(content, c) {
   //button.value = c;
   button.onclick = function () {
     filterSelection(c);
+    diffFilter();
   };
 
   var selectPanel = document.getElementById("myBtnContainer");
@@ -197,7 +198,9 @@ function createCard(title, content, filter) {
   //button.type = "button";
   // console.log(filter);
   var rndDiff = Math.floor(Math.random() * (3 - 1 + 1) + 1);
-  card.className = "filterDiv " + filter + " show" + " diff-" + rndDiff;
+  card.className = "filterDiv " + filter + " show"; // + " diff-" + rndDiff;
+  card.setAttribute("name", "diff-" + rndDiff);
+  card.setAttribute("value", "diff-show");
 
   var target_terms;
 
@@ -415,10 +418,14 @@ function filterResults(filters) {
       for (var j = 0; j < filters.diffLevel.length; j++) {
         var filter = filters.diffLevel[j];
 
-        if (el.classList.contains(filter)) {
+        if (el.getAttribute("name") == filter) {
           isHidden = false;
           break;
         }
+        // if (el.classList.contains(filter)) {
+        //   isHidden = false;
+        //   break;
+        // }
       }
 
       if (isHidden) {
@@ -428,7 +435,12 @@ function filterResults(filters) {
   }
 
   for (var i = 0; i < rElems.length; i++) {
-    rElems[i].style.display = "block";
+    rElems[i].setAttribute("value", "diff-show");
+    // rElems[i].style.display = "block";
+    // rElems[i].classList.add("diff-show");
+    // rElems[i].classList.toggle("diff-show");
+    // rElems[i].classList.toggle("diff-hide");
+    // rElems[i].classList.toggle("show");
   }
 
   if (hiddenElems.length <= 0) {
@@ -436,6 +448,11 @@ function filterResults(filters) {
   }
 
   for (var i = 0; i < hiddenElems.length; i++) {
-    hiddenElems[i].style.display = "none";
+    hiddenElems[i].setAttribute("value", "diff-hide");
+    // hiddenElems[i].style.display = "none";
+    // hiddenElems[i].classList.add("diff-hide");
+    // hiddenElems[i].classList.toggle("diff-show");
+    // hiddenElems[i].classList.toggle("diff-hide");
+    // hiddenElems[i].classList.toggle("show");
   }
 }
