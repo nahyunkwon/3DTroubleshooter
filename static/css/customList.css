@@ -20,6 +20,29 @@
   display: block;
 }
 
+/* .show div[value="diff-show"] {
+  display: block;
+} */
+
+div[value="diff-hide"] {
+  display: none;
+}
+
+/* .show.diff-show {
+  display: block;
+}
+
+.diff-hide {
+  display: none;
+} */
+
+/* .show.diff-show {
+  display: block;
+}
+.diff-hide {
+  display: none;
+} */
+
 .container {
   margin-top: 20px;
   overflow: hidden;
@@ -104,9 +127,9 @@
 }
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {
+/* .show {
   display: block;
-}
+} */
 
 #clue_placeholder {
   float: left;
