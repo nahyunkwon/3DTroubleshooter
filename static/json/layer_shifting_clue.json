@@ -2,41 +2,46 @@
     {
         "clue_id": "0",
         "clue": "Skip appears to be in both the x and y axis",
-        "related_case": "8"
+        "related_case": "6"
     },
     {
         "clue_id": "1",
         "clue": "I heard a a grinding noise while printing",
-        "related_case": "2, 3"
+        "related_case": "1, 2"
     },
     {
         "clue_id": "2",
         "clue": "The bed or extruder not moving during that event",
-        "related_case": "2, 3"
+        "related_case": "1, 2"
     },
     {
         "clue_id": "3",
         "clue": "I heard a clicking sound while printing",
-        "related_case": "1"
+        "related_case": "0"
     },
     {
         "clue_id": "4",
         "clue": "Layer misalignment is a reoccurring problem",
-        "related_case": "3"
+        "related_case": "2"
     },
     {
         "clue_id": "5",
         "clue": "My printer is new, and I just assembled it",
-        "related_case": "17"
+        "related_case": "13"
     },
     {
         "clue_id": "6",
-        "clue": "I used Cura, and turned on \u2018Use Adaptive Layers\u2019 in setting when slicing.",
-        "related_case": "12"
+        "clue": "I used Cura, and turned on \u2018Use Adaptive Layers\u2019 in setting when slicing",
+        "related_case": "8"
     },
     {
         "clue_id": "7",
-        "clue": "I enabled z hop for slicing",
-        "related_case": "13"
+        "clue": "I enabled z hop in Cura",
+        "related_case": "9"
+    },
+    {
+        "clue_id": "9",
+        "clue": "Bed is wobbling (not secured)",
+        "related_case": "11"
     }
 ]

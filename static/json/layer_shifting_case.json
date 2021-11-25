@@ -1,92 +1,156 @@
 [
     {
         "case_id": "0",
+        "priority": "0",
+        "difficulty_level": "0",
+        "clue_id": "",
+        "clue": "",
         "case_content": "Toolhead is moving too fast",
-        "solution": "I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds."
+        "solution": "If you feel that your printer may be moving too fast, try to reduce the printing speed by 50% to see if it helps . Print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. ",
+        "tutorial_webdoc": "https://3dprintscape.com/cura-speed/",
+        "tutorial_video": ""
     },
     {
         "case_id": "1",
-        "case_content": "belt too loose/tight",
-        "solution": "Check your x and y axis belts. When perfectly tensioned, they twang somewhat like a guitar string. If under tensioned, you'll get lines like these. If over tensioned, you could have some defects in prints but the danger is mostly to the motor and belt itself. There are videos you can watch for this, as well as belt tensioners you can print. \n"
+        "priority": "0",
+        "difficulty_level": "1",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Belt is too loose or tight",
+        "solution": "Ideal assembly requires a belt that is somewhat tight to prevent slipping, but not too tight to where the system is unable to rotate. If you start noticing issues with misaligned layers, you should verify that your belts all have the appropriate tension, and none appear to be too loose or too tight.",
+        "tutorial_webdoc": "",
+        "tutorial_video": "https://www.youtube.com/watch?v=sPAs-DzgOWM"
     },
     {
         "case_id": "2",
-        "case_content": "Set-screw too loose, not tightened / pulley loose",
-        "solution": ""
+        "priority": "0",
+        "difficulty_level": "1",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Set-screw too loose, not tightened enough.",
+        "solution": "Set-screws anchor the pulley to the shaft of the motor so that the two items spin together. If the set-screw loosens, the pulley will no longer rotate together with the motor shaft. You should verify that all of the motor fasteners are properly tightened.",
+        "tutorial_webdoc": "",
+        "tutorial_video": "https://www.youtube.com/watch?v=hgfTVNBRRTo"
     },
     {
         "case_id": "3",
-        "case_content": "not enough electrical current getting to the motors",
-        "solution": ""
+        "priority": "0",
+        "difficulty_level": "2",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Electrical Issue: Not enough electrical current getting to the motors",
+        "solution": "",
+        "tutorial_webdoc": "https://3dsolved.com/3d-printers-stepper-motor-not-working-lets-fix-it/",
+        "tutorial_video": ""
     },
     {
         "case_id": "4",
-        "case_content": "swap x&y motors (electrical or software)",
-        "solution": ""
+        "priority": "1",
+        "difficulty_level": "0",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Cleaning issue: very sticky bearings / rails / belts ",
+        "solution": "Try cleaning sticky parts in 3D printer with isopropyl alcohol",
+        "tutorial_webdoc": "https://learndentistry.com/isopropyl-vs-ethyl-alcohol/",
+        "tutorial_video": ""
     },
     {
         "case_id": "5",
-        "case_content": "cleaning issue - very sticky bearings/ rails / belts ",
-        "solution": ""
+        "priority": "0",
+        "difficulty_level": "2",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Electrical Issue: motor driver electronics could overheat, which causes the motors to stop spinning temporarily until the electronics cool down.",
+        "solution": "",
+        "tutorial_webdoc": "https://3dsolved.com/3d-printers-stepper-motor-not-working-lets-fix-it/",
+        "tutorial_video": ""
     },
     {
         "case_id": "6",
-        "case_content": "temperature - motors too hot",
-        "solution": ""
+        "priority": "1",
+        "difficulty_level": "0",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Electrical Issue: electric cables got caught",
+        "solution": "Check if the electric cables are not stuck in somewhere",
+        "tutorial_webdoc": "",
+        "tutorial_video": ""
     },
     {
         "case_id": "7",
-        "case_content": "your cables got caught",
-        "solution": ""
+        "priority": "1",
+        "difficulty_level": "0",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Jerk/acceleration settings are too high",
+        "solution": "I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds.",
+        "tutorial_webdoc": "https://3dprintscape.com/cura-jerk-settings-how-to-set-them/",
+        "tutorial_video": ""
     },
     {
         "case_id": "8",
-        "case_content": "jerk/acceleration settings too high",
-        "solution": "I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds."
+        "priority": "1",
+        "difficulty_level": "0",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "\"Use Adaptive layers\u201d in Cura can cause layer shifting.",
+        "solution": "Disable \"Use Adaptive layers\u201d setting in Cura.",
+        "tutorial_webdoc": "https://3duniverse.org/2018/04/06/ultimaker-cura-adaptive-layers-tutorial/",
+        "tutorial_video": ""
     },
     {
         "case_id": "9",
-        "case_content": "the sprockets are slipping on the motor shafts",
-        "solution": ""
+        "priority": "1",
+        "difficulty_level": "0",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Disable z hop if it's on, may solve inconsistent layer lines.",
+        "solution": "Disable z hop in slicer software",
+        "tutorial_webdoc": "https://community.ultimaker.com/topic/23304-how-to-force-retracts-for-all-travel-moves/",
+        "tutorial_video": ""
     },
     {
         "case_id": "10",
-        "case_content": "bed is not secured properly ",
-        "solution": ""
+        "priority": "1",
+        "difficulty_level": "1",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Check your z screw(s) to see if they're lubricated properly, they may need re-lubing ",
+        "solution": "Apply lubricants on z screw",
+        "tutorial_webdoc": "https://letsprint3d.net/how-to-lubricate-z-axis-lead-screw-3d-printers/",
+        "tutorial_video": ""
     },
     {
         "case_id": "11",
-        "case_content": "gcode or firmware issues",
-        "solution": "try re slicing, using another slicer, or making sure your firmware is tip top"
+        "priority": "1",
+        "difficulty_level": "1",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Check your wheels. Every single wheel can be tightened or loosened, and become loose over long periods of time and use.",
+        "solution": "Start with the eccentric nut wheels, tighten them ever so slightly, and then lightly roll the wheel with your finger, you should be able to move the bed/x axis with a bit of force but not too much, and you shouldn't have to press the wheel in. The other wheels can be tightened by their primary bolt/screw holding the wheel in place, same procedure. ",
+        "tutorial_webdoc": "",
+        "tutorial_video": "https://www.youtube.com/watch?v=GsEdU8ZtI6U"
     },
     {
         "case_id": "12",
-        "case_content": "I had the same issue while running Cura. It was because I had a setting called \"Use Adaptive layers\".",
-        "solution": "After I disabled that feature, my prints have been coming out just fine."
+        "priority": "1",
+        "difficulty_level": "1",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Check the belts and make sure they aren\u2019t missing any teeth or have any wear that would cause it to skip",
+        "solution": "If you find the belt damaged, you need to replace it to the new one.",
+        "tutorial_webdoc": "",
+        "tutorial_video": "https://www.youtube.com/watch?v=Jd3amP1OtIo"
     },
     {
         "case_id": "13",
-        "case_content": "Disable z hop if it's on, may solve inconsistent layer lines.",
-        "solution": "Disable z hop"
-    },
-    {
-        "case_id": "14",
-        "case_content": "Check your z screw(s) to see if they're lubricated properly, they may need re-lubing ",
-        "solution": ""
-    },
-    {
-        "case_id": "15",
-        "case_content": "Check your wheels. Every single wheel can be tightened or loosened, and become loose over long periods of time and use.",
-        "solution": "Start with the eccentric nut wheels, tighten them ever so slightly, and then lightly roll the wheel with your finger, you should be able to move the bed/x axis with a bit of force but not too much, and you shouldn't have to press the wheel in. The other wheels can be tightened by their primary bolt/screw holding the wheel in place, same procedure. "
-    },
-    {
-        "case_id": "16",
-        "case_content": "Check the belts and make sure they aren\u2019t missing any teeth or have any wear that would cause it to skip",
-        "solution": ""
-    },
-    {
-        "case_id": "17",
-        "case_content": "You may want to check if your machine is properly leveled. And I mean the machine frame itself, should be square and level to the base of the machine and on a properly flat and level surface, only after that can the bed be leveled in relation to the frame and x axis so that everything is leveled and squared up. If your frame is unlevel, consider rebuilding it carefully. ",
-        "solution": ""
+        "priority": "1",
+        "difficulty_level": "1",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "3D printer is not properly leveled during assembly",
+        "solution": "You may want to check if your machine is properly leveled. And I mean the machine frame itself, should be square and level to the base of the machine and on a properly flat and level surface, only after that can the bed be leveled in relation to the frame and x axis so that everything is leveled and squared up. If your frame is unlevel, consider rebuilding it carefully. ",
+        "tutorial_webdoc": "",
+        "tutorial_video": "https://www.youtube.com/watch?v=2Th2e7wTNV0"
     }
 ]
