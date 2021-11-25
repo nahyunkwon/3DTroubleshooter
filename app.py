@@ -17,6 +17,9 @@ from pytorch_grad_cam import GradCAM
 
 ## RAM clean
 import gc
+import matplotlib
+
+matplotlib.use('Agg')
 
 def transform_image(pil_img):
     my_transforms = transforms.Compose([transforms.Resize(224),  # 255
