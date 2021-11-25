@@ -63,11 +63,14 @@ def get_prediction_gradcam_pkg(pil_img, model):
     return class_idx, top1prob_has_err, class_list[int(class_idx)], grayscale_cam #cam_image
 
 
-def combine_cam(overlay, pil_img):
-    mask_resized = cv2.resize(overlay, (pil_img.size[0], pil_img.size[1]), interpolation=cv2.INTER_LINEAR)
-    heatmap = cv2.applyColorMap(np.uint8(255 * mask_resized ), cv2.COLORMAP_BONE)
+def combine_cam(overlay, pil_img, img_max_w):
+    # img_max_w = 120
+    img_max_h = int(img_max_w / pil_img.size[0] * pil_img.size[1])
+
+    mask_resized = cv2.resize(overlay, (img_max_w, img_max_h), interpolation=cv2.INTER_LINEAR)
+    heatmap = cv2.applyColorMap(np.uint8(255 * mask_resized), cv2.COLORMAP_BONE)
     heatmap = np.float32(heatmap) / 255
-    cam_both = np.multiply(heatmap, np.float32(pil_img))
+    cam_both = np.multiply(heatmap, cv2.resize(np.float32(pil_img),(img_max_w, img_max_h)))
     cam_both = cam_both / np.max(cam_both)
     return cam_both
 
@@ -88,6 +91,8 @@ model_info = pd.DataFrame(model_info_list, columns=cols)
 
 map_threshold = 0.5
 acc_threshold = 0.75
+sigmoid_slop = 4
+img_max_w = 400  # image resolution before combine_cam
 
 ## * ###################
 
@@ -141,7 +146,7 @@ def index():
 
                     # d = (d > norm_threshold) * 0.99  # binary
                     # d = d * (d > norm_threshold)  # grad-binary
-                    d = sigmoid((d) * 2 - 1, 4)  # sigmoid: range (-1, 1)
+                    d = sigmoid((d) * 2 - 1, sigmoid_slop)  # sigmoid: range (-1, 1)
 
                     df_results = df_results.append(pd.Series((model_info.loc[m, "name"],b,c,0), index=output_vars), ignore_index=True)
 
@@ -149,7 +154,7 @@ def index():
                     img_io2 = BytesIO()
                     fig = plt.figure()
 
-                    plt.imshow(cv2.cvtColor(combine_cam(d, pil_img), cv2.INTER_LINEAR))
+                    plt.imshow(cv2.cvtColor(combine_cam(d, pil_img, img_max_w), cv2.INTER_LINEAR))
 
                     del d
                     gc.collect()
