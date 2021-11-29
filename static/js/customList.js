@@ -193,13 +193,12 @@ function termToPopover(
 }
 
 /* create solution cards */
-function createCard(title, content, filter) {
+function createCard(title, content, filter, diffLevel_n) {
   var card = document.createElement("div");
   //button.type = "button";
   // console.log(filter);
-  var rndDiff = Math.floor(Math.random() * (3 - 1 + 1) + 1);
   card.className = "filterDiv " + filter + " show"; // + " diff-" + rndDiff;
-  card.setAttribute("name", "diff-" + rndDiff);
+  card.setAttribute("name", "diff-" + diffLevel_n);
   card.setAttribute("value", "diff-show");
 
   var target_terms;
@@ -306,7 +305,7 @@ function createCard(title, content, filter) {
     '<div class="card-title">' +
     capitalize(title) +
     " -------- Diff level: " +
-    rndDiff +
+    diffLevel_n +
     "</div>" +
     capitalize(content);
 
@@ -354,7 +353,12 @@ for (k = 0; k < case_data.length; k++) {
   if (case_data[k]["solution"] != "") {
     sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
   }
-  createCard(case_data[k]["case_content"], sol_temp, case_data[k]["case_id"]);
+  createCard(
+    case_data[k]["case_content"],
+    sol_temp,
+    case_data[k]["case_id"],
+    case_data[k]["difficulty_level"]
+  );
 }
 
 /* create clue buttons and solution cards from json file */

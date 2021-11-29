@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/main.css') }}"
+    <!-- <link href="../static/css/main.css" rel="stylesheet" /> -->
+    <title>3DPFix</title>
+    <!-- utf-8 -->
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- logo -->
+    <link href="../static/images/icon.png" type="image/gif" rel="short icon" />
+    <!-- Google font-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@200;300;400;600&family=Raleway:ital,wght@0,100;0,400;0,800;1,400;1,800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- customized CSS -->
+    <link href="../static/css/global.css" type="text/css" rel="stylesheet" />
     {% block head %}{% endblock %}
   </head>
   <body>

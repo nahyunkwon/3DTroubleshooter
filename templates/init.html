@@ -1,51 +1,86 @@
 {% extends 'base.html' %} {% block head %}
-<title>3DTroubleshooter</title>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
 
-<link href="../static/css/customList.css" rel="stylesheet" />
-
-<script src="../static/js/jquery.min.js"></script>
-
 <style>
-  #customList-container {
-    margin-top: 250px;
-    height: 800px;
-  }
+    body {
+        background-image: url("../static/images/3DPFIX_BG.png");
+    }
 </style>
-
 
 {% endblock %} {% block body %}
 
-<div class="container-flexbox">
-  <div class="container-title">
-    <!-- <h3>New UI Layout: {{ output }}</h3> -->
-    <p id="ui-title">3DTroubleshooter</p>
-  </div>
-  
-  
-  <div class="container-top">
+<!-- Header hat -->
+<div style="height: 5px; background: rgba(218, 28, 92, 1);"></div>
 
-    
-    <div class="tab">
-      <div class="tab-right-div">
-        <button class="tab-links" id="tab-add" onclick="everyAddClick()">+</button>
-      </div>
-      
+<!-- Header -->
+<div class="flex_container_center" style="flex-direction: row; height:135px;">
+    <div id="flex_item_header_logo">
+        <a href="/" target="_self">
+            <img src="../static/images/logo_3DPFIX.png" alt="3DPFix Logo" width="225px" height="90px"/>
+        </a>
     </div>
-
-    <div id="container-choose-img">
-      <form method="post" enctype=multipart/form-data id="form-id">
-        <input type="file" name="img-file" id="inputfile0" class="input-cls" accept=".jpeg, .jpg" onchange="viewMultipleFiles(this.id)" /><br>
-        <div id="prev-div"></div>
-        <button class="btn btn-pred" type="submit" onclick="resetValidity();showLoading();">Make Predictions</button>
-      </form>
+    <div id="flex_item_header_bar"></div>
+    <div id="flex_item_header_message">
+        <div style="font-size: 24px;font-weight: 100;">
+            Make your 3D Printing troubleshooting easier
+        </div>
     </div>
+</div>
 
-  </div>
+<!-- Image loader -->
+<div class="flex_container_center">
+    <div id="prev-div"></div>
+</div>
 
+<div class="flex_container_center" style="height:130px">
+    <div id="flex_container_imageloader_add">
+        <div style="padding-left: 70px; padding-top: 25px;">
+            <a onclick="document.getElementById('tab-add').click();" style="cursor: pointer;">Add one or multiple images</a> you would <br/>investigate for troubleshooting.
+        </div>
+    </div>
+    <div id="flex_container_imageloader_go" onclick="document.getElementById('pred-btn').click();" style="cursor: pointer;"><a>Go!</a></div>
+</div>
 
+<div class="hidden-back">
+    <button id="tab-add" onclick="everyAddClick()">+</button>
+    <form method="post" enctype=multipart/form-data id="form-id">
+        <button id="pred-btn" type="submit" onclick="resetValidity();showLoading();">Make Predictions</button>
+        <input type="file" name="img-file" id="inputfile0" class="input-cls" accept=".jpeg, .jpg" onchange="viewMultipleFiles(this.id)" multiple />
+    </form>
+</div>
+
+<!-- Content -->
+<div class="flex_container_center" style="flex-direction:column">
+    <div class="paragraph_heading" style="padding-top:50px;">
+        3DPFIX Introduction
+    </div>
+    <div class="paragraph_text">
+        Does your 3D print have a problem, and you do not know what to do to fix it? Get immediate help from 3DPFIX! Using 3DPFIX, you do not need to struggle to recognize what the problem is by searching for online tutorials or waiting for the comments in online communities.
+    </div>
+    <div class="paragraph_text">
+        3DPFIX provides an automatic diagnosis of common printing failures powered by AI from the photo of your failed print. Simply take a photo of your print, preferably centering the print with a clear background, and upload the photo(s) to get the diagnosis. Please allow some time, but less than a minute, to get the diagnosis. 
+    </div>
+    <div class="paragraph_text">
+        3DPFIX also supports you to decide what to do to resolve the problem. Go over the general solutions for the diagnosed problem that will highly likely resolve most of the cases. Did you spot any notable issues (e.g., clicking sound, wobbling printing bed, etc.) when you printed the 3D model? Those issues will also help 3DPFIX find a customized solution for your specific case. So, please check if there is an issue that matches what you spotted. 3DPFIX will show the matching solutions that you can try first. Click the 'tutorial' button in each solution card, it will lead you to an adequate web tutorial for that solution if you need more details.
+    </div>
+    <div class="paragraph_text">
+        You are very new to 3D printing, and even do not know the basic technical terms in 3D printing? No worries, 3DPFIX will support you to learn the technical terms as well. Just like Wikipedia, put your mouse pointer on the term, and it will show a detailed explanation. 
+    </div>
+    <div class="paragraph_text" style="padding-bottom:50px;">
+        Happy printing with 3DPFIX!
+    </div>
+</div>
+
+<!-- Footer hat -->
+<div class="flex_container_center" style="background:rgba(170, 170, 170, 1);height:5px;"></div>
+<!-- Footer -->
+<div class="flex_container_center" style="background: #000;">
+    <div id="flex_item_footer">
+        <div>Copyright @ 2021, 3DPFix all right reserved</div>
+        <div>Last updated: 11/24./2021 <a href="" class="link_black">GitHub</a></div>
+    </div>
 </div>
 
 <div id="loading-div">
@@ -56,105 +91,6 @@
 
 
 
-<!-- * CustomList -->
-<div id="customList-container">
-
-
-<div id="clue_placeholder">
-  
-  <div class="dropdown">
-    <h3 class="clue-title customList-sec-title">Clues:</h3>
-    <div class="modal-btn">Show Modal</div>
-
-        <div id="myDropdown" class="dropdown-content">
-          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-              <div id="myBtnContainer">
-  
-                  <button class="btnList activeList" onclick="filterSelection('all')">All solutions</button>
-<!--                   
-                <button class="btnList" onclick="filterSelection('a')">Skip appears to be in both the x and y axis</button>
-  
-                  <button class="btnList" onclick="filterSelection('a')">I heard a grinding noise while printing</button>
-                  <button class="btnList" onclick="filterSelection('a')">The bed or extruder not moving during the failure event</button>
-                  <button class="btnList" onclick="filterSelection('a')">I heard a clicking sound</button>
-                  <button class="btnList" onclick="filterSelection('b')">Layer misalignment is a reoccurring problem</button>
-                    <button class="btnList" onclick="filterSelection('c')">None of clues above has spotted</button> -->
-  
-              </div>
-        </div>
-      </div>
-  </div>
-
-
-  
-  <div id="solution_placeholder">
-    <h3 class="customList-sec-title">Solutions:</h3>
-    <div class="diff-checkbox">
-      <div class="checkbox checkbox-1">
-        <label><input type="checkbox" rel="diff-1" onchange="diffFilter();"/>Easy</label>
-      </div>
-      <div class="checkbox checkbox-2">
-        <label><input type="checkbox" rel="diff-2" onchange="diffFilter();"/>Normal</label>
-      </div>
-      <div class="checkbox checkbox-3">
-        <label><input type="checkbox" rel="diff-3" onchange="diffFilter();"/>Hard</label>
-      </div>
-    </div>
-
-
-<!--   
-      <div class="filterDiv a">
-        <div class="customList-title">
-          <div class="popover__wrapper">
-            <a class="popover__title">Toolhead</a>
-              <span class="popover__content">
-                  <p class="popover__message popover-title">Toolhead</p>
-                  <div class="popover-flex">
-                    <div class="popover-flex-1">
-                      <p class="popover__message">The 3D printing Toolhead allows you to 3D print objects using the FFD (fuse filament deposition) method. This method consists in thermo extrude plastic filament through a hot-end.</p>
-                      <p class="popover__message related-terms">Related terms: extruder, hotend, nozzle, print head</p>
-                    </div>
-                    <div class="popover-flex-2">
-                      <img alt="LulzBot toolhead" src="../static/3d_info/desc_images/toolhead.jpg">
-                    </div>
-                  </div>
-                </span>
-          </div>
-          is moving too fast.</div>
-          Slow down the printing speed. I find all jerk settings should be 10mm/s and master print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. It may also be prudent to check and possibly reduce acceleration speeds.</div>
-  
-      <div class="filterDiv a"><div class="customList-title">Belt is too loose/tight.</div>Check your x and y axis belts. When perfectly tensioned, they twang somewhat like a guitar string. If under tensioned, you'll get lines like these. If over tensioned, you could have some defects in prints but the danger is mostly to the motor and belt itself. There are videos you can watch for this, as well as belt tensioners you can print. </div>
-      <div class="filterDiv b"><div class="customList-title">Title XXX</div>Set-screw is too loose, not tightened well / pulley loose</div>
-      <div class="filterDiv c"><div class="customList-title">Title XXX</div>Not enough electrical current getting to the motors</div>
-   -->
-  
-  
-  
-  </div>
-
-</div>
-
-
-<!-- * Modal window box -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-title">
-      <span class="close">&times;</span>
-
-    </div>
-    <div class="modal-body">
-
-    </div>
-    <div class="modal-tail">
-
-    </div>
-  </div>
-
-</div>
-
-
 
 
 <script type="text/javascript">
@@ -163,69 +99,68 @@
     let input;
     let id_n = 0;
 
+    function previewFileCheck(id, i, pass_check) {
+        input = document.getElementById(id);
+        const file = input.files[i];
+        const fileSize = file.size / 1024 / 1024;  // gives size in MB
+        const fileCount = input.files.length;
+        // const remove_id = "rm-img-"+ id + "-" + (i+1);  // remove btn
+        // const div_rm_id = 'div-prev-img-' + id + "-" + (i+1);  // div of prev-img and remove btn
+
+        if (fileSize > 6) {
+            // alert("Please choose a smaller size image (max 6MB).");
+            input.value = null;
+            input.setCustomValidity("Each file must not exceed 6 MB!");
+            input.reportValidity();
+            // preview.src = initImg;
+
+            // d3.select('.'+div_rm_cls).remove();
+            // createInitImg()
+
+        } else if (/\.(jpe?g)$/i.test(file.name)) {
+            pass_check += 1;
+        } else {
+            // alert("Please choose a JPG/JPEG image.");
+            input.value = null;
+            input.setCustomValidity("Files must be JPG/JPEG images!");
+            input.reportValidity();
+            // preview.src = initImg;
+
+            // d3.select('.'+div_rm_cls).remove();
+            // createInitImg()
+
+        }
+        return pass_check;
+
+    }
 
 
     function previewFile(id, i) {
         input = document.getElementById(id);
         const file = input.files[i];
-        const fileSize = file.size / 1024 / 1024;  // gives size in MB
-        const fileCount = input.files.length;
         const preview_id = "prev-img-"+ id + "-" + (i+1);
         // const remove_id = "rm-img-"+ id + "-" + (i+1);  // remove btn
-        const div_rm_id = 'div-prev-img-' + id + "-" + (i+1);  // div of prev-img and remove btn
+        // const div_rm_cls = 'div-prev-img-' + id;  // div of prev-img and remove btn
+        // const div_rm_id = 'div-prev-img-' + id + "-" + (i+1);  // div of prev-img and remove btn
 
         const preview = document.getElementById(preview_id);
         preview.src = initImg;
 
-        if (fileCount > 5) {
-            // alert("Max 5 images allowed.");
-            input.value = null;
-            input.setCustomValidity("Max 5 images allowed.");
-            input.reportValidity();
-            // preview.src = initImg;
+        const reader = new FileReader();
 
-            d3.select('#'+div_rm_id).remove();
-            // createInitImg()
+        reader.addEventListener(
+            "load",
+            function () {
+            // convert image file to base64 string
+            preview.src = reader.result;
+            },
+            false
+        );
 
-            return;
-        } else if (fileSize > 6) {
-            // alert("Please choose a smaller size image (max 6MB).");
-            input.value = null;
-            input.setCustomValidity("File must not exceed 6 MB!");
-            input.reportValidity();
-            // preview.src = initImg;
-
-            d3.select('#'+div_rm_id).remove();
-            // createInitImg()
-
-            return;
-        } else if (/\.(jpe?g)$/i.test(file.name)) {
-            const reader = new FileReader();
-
-            reader.addEventListener(
-                "load",
-                function () {
-                // convert image file to base64 string
-                preview.src = reader.result;
-                },
-                false
-            );
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        } else {
-            // alert("Please choose a JPG/JPEG image.");
-            input.value = null;
-            input.setCustomValidity("File must be a JPG/JPEG image!");
-            input.reportValidity();
-            // preview.src = initImg;
-
-            d3.select('#'+div_rm_id).remove();
-            // createInitImg()
-
-            return;
+        if (file) {
+            reader.readAsDataURL(file);
         }
+    
 
     }
 
@@ -236,41 +171,58 @@
         // Init all prev-img
         // d3.selectAll('.prev-img').remove();
 
+        var pass_check = 0;
+        var pass_check_total = file_len;
+
+        // for (let i = 0; i < file_len; i++) {
+            
+
+        // }
+
+
         for (let i = 0; i < file_len; i++) {
             let img_id = 'prev-img-' + id + "-" + (i+1);
-            let btn_id = 'rm-img-' + id + "-" + (i+1);  // remove btn
-            let div_id = 'div-prev-img-' + id + "-" + (i+1);  // div of prev-img and remove btn
+            let div_cls = 'div-prev-img-' + id;  // div of prev-img and remove btn
+            // let div_id = 'div-prev-img-' + id + "-" + (i+1);  // div of prev-img and remove btn
 
             let newDiv = d3
                         .select('#prev-div')
                         .append('div')
-                        .attr('class', 'prev-sub-div')
-                        .attr('id', div_id);
+                        .attr('class', 'prev-sub-div ' + div_cls);
+                        
 
             newDiv
             .append('img')
-            .attr('height', prevSize)
             .attr('alt', 'Image preview')
             .attr('class', 'prev-img')
             .attr('id', img_id);
 
-            newDiv
-            .append("input")
-            .attr("type","button")
-            .attr('class', 'btn btn-remove-input')
-            .attr('value', 'x')
-            .attr('id', btn_id)
-            .attr("onclick", 
-                "document.getElementById('" + id + "').remove(); document.getElementById('" + div_id + "').remove();");
 
             try {
-                previewFile(id, i);
+                pass_check_total -= previewFileCheck(id, i, pass_check);
+
+                // console.log(previewFileCheck(id, i, pass_check));
+                // previewFile(id, i);
             } catch { 
                 // createInitImg()
                 break; 
             }
         }
+
+        if (pass_check_total == 0) {
+            for (let i = 0; i < file_len; i++) {
+                try {
+                    previewFile(id, i);
+                } catch { 
+                    // createInitImg()
+                    break; 
+                }
+            }
+        } else {
+            d3.selectAll('.' + 'div-prev-img-' + id).remove();
+        }
     }
+
 
 
     function resetValidity() {
@@ -306,9 +258,6 @@
 
 </script>
 
-
-<script class="datajs" src="../static/js/customList.js"></script>
-<script class="datajs" src="../static/js/modal.js"></script>
 
 
 {% endblock %}
