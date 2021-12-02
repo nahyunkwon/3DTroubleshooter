@@ -232,10 +232,10 @@ def index():
                 text_names += str(file).split("'")[1] + "; "
 
         if len(img_path) > 0:
-            return render_template("index.html", img_format='data:image/JPEG;base64,', svg_format='data:image/SVG+xml;base64,', img_path=img_path, n_img=len(img_path),output=text + str(len(img_path)) + " file(s) -- " + text_names,card_info=card_info, init_hide=False,
-            output_pred=output_pred,
-            img_path_cam=img_path_cam,
-            card_info_prob=card_info_prob)
+            return render_template("index.html", img_format='data:image/JPEG;base64,', svg_format='data:image/SVG+xml;base64,', img_path=img_path, n_img=len(img_path), output=text + str(len(img_path)) + " file(s) -- " + text_names, card_info=card_info, init_hide=False,
+                                   output_pred=output_pred,
+                                   img_path_cam=img_path_cam,
+                                   card_info_prob=card_info_prob)
 
         else: 
             pass

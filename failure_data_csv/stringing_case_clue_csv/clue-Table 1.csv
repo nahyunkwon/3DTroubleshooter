@@ -1,0 +1,12 @@
+clue_id,clue,related_case
+0,My printer has bowden extruder.,"1, 11"
+1,I am using extra long bowden tube.,2
+2,Retraction distance is above 10mm.,3
+3,"I have already adjusted retraction settings, and still have stringing.",5
+4,I am printing PLA at above 230°C with 0.4mm nozzle.,6
+5,There are big blobs on the surface.,6
+6,I am printing PLA with 0.8mm nozzle.,7
+7,I am using Simplify3D for slicing.,8
+8,I am using Cura for slicing.,"9, 20"
+9,I use PETG and 0.8mm nozzle.,12
+10,I turned on Z hop when slicing.,13

@@ -1,0 +1,7 @@
+id,clue,related case
+0,Bed temperature is lower than 80C.,2
+1,I am printing small multiple parts at once.,6
+2,Bed is not clean due to the previous prints.,7
+3,I am using ABS.,8
+4,I am using PLA.,11
+5,There is draft where my printer is located.,12

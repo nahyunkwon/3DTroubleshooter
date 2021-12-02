@@ -1,0 +1,32 @@
+[
+    {
+        "clue_id": "0",
+        "clue": "I am using Simplify3D for slicing.",
+        "related_case": "0, 2, 3, 5"
+    },
+    {
+        "clue_id": "1",
+        "clue": "The defect does not occur until the end of the perimeter when the extruder is coming to a stop.",
+        "related_case": "1"
+    },
+    {
+        "clue_id": "2",
+        "clue": "You have noticed an alignment of bumps down the side of your print, which is called Z seam. ",
+        "related_case": "6, 7, 8, 11"
+    },
+    {
+        "clue_id": "3",
+        "clue": "I am using Cura for slicing.",
+        "related_case": "6, 7, 8, 10, 11, 12"
+    },
+    {
+        "clue_id": "4",
+        "clue": "Blobs and voids happen together.",
+        "related_case": "9"
+    },
+    {
+        "clue_id": "5",
+        "clue": "I am using Cura 4.7.x.",
+        "related_case": "13"
+    }
+]
