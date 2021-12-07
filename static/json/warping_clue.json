@@ -1,32 +1,32 @@
 [
     {
-        "id": "0",
+        "clue_id": "0",
         "clue": "Bed temperature is lower than 80C.",
-        "related case": "2"
+        "related_case": "2"
     },
     {
-        "id": "1",
+        "clue_id": "1",
         "clue": "I am printing small multiple parts at once.",
-        "related case": "6"
+        "related_case": "6"
     },
     {
-        "id": "2",
+        "clue_id": "2",
         "clue": "Bed is not clean due to the previous prints.",
-        "related case": "7"
+        "related_case": "7"
     },
     {
-        "id": "3",
+        "clue_id": "3",
         "clue": "I am using ABS.",
-        "related case": "8"
+        "related_case": "8"
     },
     {
-        "id": "4",
+        "clue_id": "4",
         "clue": "I am using PLA.",
-        "related case": "11"
+        "related_case": "11"
     },
     {
-        "id": "5",
+        "clue_id": "5",
         "clue": "There is draft where my printer is located.",
-        "related case": "12"
+        "related_case": "12"
     }
 ]

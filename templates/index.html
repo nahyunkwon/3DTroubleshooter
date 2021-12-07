@@ -204,70 +204,65 @@
             <div id="flex_innercontainer_search">
                 <div id="flex_innercontainer_search_left">
                     <div class="flex_innercontainer_search_heading">
-                        Step 1. Find a clue.
+                        Step 1. Find an issue that you observed.
                     </div>
                     <div class="search">
-                        <input type="text" class="searchTerm" placeholder="What are you looking for?">
-                        <button type="submit" class="searchButton">
-                            Go
-                        </button>
+                        <input type="text" class="searchTerm" placeholder="What are you looking for?" id="myInput" onkeyup="filterFunction()">
                     </div>
-                    <div class="clue_item">
-                        Clue 1 is like this. This will be no longer than one or two lines. 
+
+                    <div id="myBtnContainer">
+
+                        <button class="btnList activeList" onclick="filterSelection('all')">All solutions</button>
+
                     </div>
-                    <div class="clue_item">
-                        Clue 1 is like this. This will be no longer than one or two lines. 
-                    </div>
-                    <div class="clue_item">
-                        Clue 1 is like this. This will be no longer than one or two lines. 
-                    </div>
-                    <div class="clue_item">
-                        <a class="button" href="">Cannot find the clue. Show every solution.</a>
-                    </div>                                     
                 </div>
                 <div id="flex_innercontainer_search_right">
                     <div class="flex_innercontainer_search_heading">
-                        Step 2. Learn solutions.
+                        Step 2. Learn solutions, and read suggestions from experts.
                     </div>
 
-                    <form method="post" action="/Tests/Post" style="padding-bottom:20px;">
-                        <fieldset>
+                    <div id="solution_placeholder">
+
+                        <fieldset style="height:50px;width:300px">
                             <legend>Filter based on your skill</legend>
-                            <input type="radio" name="favorite_pet" value="every" checked>Show every solution
-                            <input type="radio" name="favorite_pet" value="easy">Easy
-                            <input type="radio" name="favorite_pet" value="intermediate">Intermediate
-                            <input type="radio" name="favorite_pet" value="expert">Expert
-                        </fieldset>
-                    </form>
 
-                    <!--each item-->
-                    <div class="solution_heading">
-                        Heading can be short.
+                        <div class="diff-checkbox" style="padding-top:20px">
+                          <div class="checkbox checkbox-1">
+                            <label
+                              ><input
+                                type="checkbox"
+                                rel="diff-0"
+                                onchange="diffFilter();"
+                                checked="true"
+                              />Easy</label
+                            >
+                          </div>
+                          <div class="checkbox checkbox-2">
+                            <label
+                              ><input
+                                type="checkbox"
+                                rel="diff-1"
+                                onchange="diffFilter();"
+                                checked="true"
+                              />Normal</label
+                            >
+                          </div>
+                          <div class="checkbox checkbox-3">
+                            <label
+                              ><input
+                                type="checkbox"
+                                rel="diff-2"
+                                onchange="diffFilter();"
+                                checked="true"
+                              />Hard</label
+                            >
+                          </div>
+                        </div>
+
+                        </fieldset>
+                        <br>
                     </div>
-                    <div class="solution_content">
-                        Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. 
-                    </div>
-                    <!--each item-->
-                    <div class="solution_heading">
-                        Heading can be short.
-                    </div>
-                    <div class="solution_content">
-                        Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. 
-                    </div>
-                    <!--each item-->
-                    <div class="solution_heading">
-                        Heading can be short.
-                    </div>
-                    <div class="solution_content">
-                        Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. 
-                    </div>
-                    <!--each item-->
-                    <div class="solution_heading">
-                        Heading can be short.
-                    </div>
-                    <div class="solution_content">
-                        Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. Content will be like this. You can add a couple of or more longer solutions. 
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -739,7 +734,7 @@
     </script>
 
     <script class="datajs" src="../static/js/customList.js"></script>
-    <script class="datajs" src="../static/js/modal.js"></script>
+    <!--<script class="datajs" src="../static/js/modal.js"></script>-->
 
 
 {% endblock %}

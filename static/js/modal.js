@@ -22,13 +22,15 @@ var span = document.getElementsByClassName("close")[0];
 //         var current = projects[j];
 //     }
 //   }
+
+/*
 modelBtn.onclick = function () {
   modal.style.display = "block";
 };
 
 document.getElementsByClassName("modal-body")[0].innerHTML =
   "<h4>" + "Title" + "</h4>" + "<hr>" + "<h5>Placeholder</h5>";
-
+*/
 //document.getElementsByClassName("modal-body")[0].innerHTML = projects[0]['title'];
 //  console.log(i);
 

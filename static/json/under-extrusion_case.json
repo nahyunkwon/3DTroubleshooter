@@ -1,6 +1,6 @@
 [
     {
-        "case": "0",
+        "case_id": "0",
         "priority": "0",
         "difficulty_level": "0",
         "title": "Incorrect Filament Diameter",
@@ -12,7 +12,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "1",
+        "case_id": "1",
         "priority": "0",
         "difficulty_level": "0",
         "title": "",
@@ -24,7 +24,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "2",
+        "case_id": "2",
         "priority": "0",
         "difficulty_level": "0",
         "title": "Increase the Extrusion Multiplier",
@@ -36,7 +36,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "3",
+        "case_id": "3",
         "priority": "1",
         "difficulty_level": "1",
         "title": "New machine/firmware?",
@@ -48,7 +48,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "4",
+        "case_id": "4",
         "priority": "1",
         "difficulty_level": "0",
         "title": "Uneven filament supply",
@@ -60,7 +60,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "5",
+        "case_id": "5",
         "priority": "1",
         "difficulty_level": "1",
         "title": "",
@@ -72,7 +72,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "6",
+        "case_id": "6",
         "priority": "1",
         "difficulty_level": "1",
         "title": "",
@@ -84,7 +84,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "7",
+        "case_id": "7",
         "priority": "1",
         "difficulty_level": "",
         "title": "Wet filament",
@@ -96,7 +96,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "8",
+        "case_id": "8",
         "priority": "1",
         "difficulty_level": "",
         "title": "Calibration",
@@ -108,7 +108,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "9",
+        "case_id": "9",
         "priority": "1",
         "difficulty_level": "",
         "title": "Print speed",
@@ -120,7 +120,7 @@
         "tutorial_video": ""
     },
     {
-        "case": "10",
+        "case_id": "10",
         "priority": "1",
         "difficulty_level": "",
         "title": "Heat",
@@ -132,7 +132,7 @@
         "tutorial_video": "https://www.youtube.com/watch?v=3CGSsDD6TMA"
     },
     {
-        "case": "11",
+        "case_id": "11",
         "priority": "1",
         "difficulty_level": "",
         "title": "",

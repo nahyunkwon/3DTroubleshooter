@@ -7,8 +7,8 @@ function filterFunction() {
   var input, filter, ul, li, a, i;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByClassName("btnList");
+  //div = document.getElementById("myDropdown");
+  a = document.getElementsByClassName("btnList");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText || a[i].text;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -193,7 +193,7 @@ function termToPopover(
 }
 
 /* create solution cards */
-function createCard(title, content, filter, diffLevel_n) {
+function createCard(title, content, filter, diffLevel_n, priority, tutorial_webdoc, tutorial_video) {
   var card = document.createElement("div");
   //button.type = "button";
   // console.log(filter);
@@ -304,8 +304,8 @@ function createCard(title, content, filter, diffLevel_n) {
   card.innerHTML =
     '<div class="card-title">' +
     capitalize(title) +
-    " -------- Diff level: " +
-    diffLevel_n +
+    //" -------- Diff level: " +
+    //diffLevel_n +
     "</div>" +
     capitalize(content);
 
@@ -317,65 +317,76 @@ function createCard(title, content, filter, diffLevel_n) {
   selectPanel.appendChild(card);
 }
 
-/* create clue buttons and solution cards from json file */
-
-var case_data;
-var clue_data;
+/* create clue buttons and solution cards from json file for the given failure type name*/
 var failure_type = "layer_shifting";
 
-$.ajax({
-  async: false,
-  global: false,
-  url: "../static/json/" + failure_type + "_case.json",
-  //'url': "../static/json/test_case.json",
-  dataType: "json",
-  success: function (data) {
-    case_data = data;
-  },
-});
+function loadSoltions(failure_type){
 
-$.ajax({
-  async: false,
-  global: false,
-  url: "../static/json/" + failure_type + "_clue.json",
-  dataType: "json",
-  success: function (data) {
-    clue_data = data;
-  },
-});
+  var case_data = [];
+  var clue_data = [];
 
-for (var k = 0; k < clue_data.length; k++) {
-  createButton(clue_data[k]["clue"], clue_data[k]["related_case"]);
-}
-
-for (k = 0; k < case_data.length; k++) {
-  var sol_temp = "";
-  if (case_data[k]["solution"] != "") {
-    sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
-  }
-  createCard(
-    case_data[k]["case_content"],
-    sol_temp,
-    case_data[k]["case_id"],
-    case_data[k]["difficulty_level"]
-  );
-}
-
-/* create clue buttons and solution cards from json file */
-
-// createButton("testcontent", "a");
-// createCard("testtitle", "testcontent", "c");
-
-// Add activeList class to the current button (highlight it)
-var btnContainer = document.getElementById("myBtnContainer");
-var btns = btnContainer.getElementsByClassName("btnList");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function () {
-    var current = document.getElementsByClassName("activeList");
-    current[0].className = current[0].className.replace(" activeList", "");
-    this.className += " activeList";
+  $.ajax({
+    async: false,
+    global: false,
+    url: "../static/json/" + failure_type + "_case.json",
+    //'url': "../static/json/test_case.json",
+    dataType: "json",
+    success: function (data) {
+      case_data = data;
+    },
   });
+
+  $.ajax({
+    async: false,
+    global: false,
+    url: "../static/json/" + failure_type + "_clue.json",
+    dataType: "json",
+    success: function (data) {
+      clue_data = data;
+    },
+  });
+
+  for (var k = 0; k < clue_data.length; k++) {
+    createButton(clue_data[k]["clue"], clue_data[k]["related_case"]);
+  }
+
+  for (k = 0; k < case_data.length; k++) {
+    var sol_temp = "";
+    if (case_data[k]["solution"] != "") {
+      sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
+    }
+
+    createCard(
+        case_data[k]["case_content"],
+        sol_temp,
+        case_data[k]["case_id"],
+        case_data[k]["difficulty_level"],
+        case_data[k]["priority"],
+        case_data[k]["tutorial_webdoc"],
+        case_data[k]["tutorial_video"]
+    );
+
+
+  }
+
+  /* create clue buttons and solution cards from json file */
+
+  // createButton("testcontent", "a");
+  // createCard("testtitle", "testcontent", "c");
+
+  // Add activeList class to the current button (highlight it)
+  var btnContainer = document.getElementById("myBtnContainer");
+  var btns = btnContainer.getElementsByClassName("btnList");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      var current = document.getElementsByClassName("activeList");
+      current[0].className = current[0].className.replace(" activeList", "");
+      this.className += " activeList";
+    });
+  }
 }
+
+loadSoltions("layer_shifting");
 
 //// * Difficulty level checkbox
 function diffFilter() {
