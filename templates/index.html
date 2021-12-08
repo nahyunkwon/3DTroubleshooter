@@ -1,11 +1,12 @@
 {% extends 'base.html' %} {% block head %}
-<html lang="en">
+
 	<head>
 		<title> 3DPFIX </title>
 		<!-- utf-8 -->
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none'">
 		<!-- logo -->
 		<link href='../static/images/icon.png' type='image/gif' rel='short icon'/>
         <!-- Google font-->
@@ -234,6 +235,7 @@
                                 rel="diff-0"
                                 onchange="diffFilter();"
                                 checked="true"
+                                required
                               />Easy</label
                             >
                           </div>
@@ -244,6 +246,7 @@
                                 rel="diff-1"
                                 onchange="diffFilter();"
                                 checked="true"
+                                required
                               />Normal</label
                             >
                           </div>
@@ -254,6 +257,7 @@
                                 rel="diff-2"
                                 onchange="diffFilter();"
                                 checked="true"
+                                required
                               />Hard</label
                             >
                           </div>
@@ -275,6 +279,27 @@
                 <div>Last updated: 11/24./2021 <a href="" class="link_black">GitHub</a></div>
             </div>
         </div>
+
+
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-title">
+          <span class="close">&times;</span>
+
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-tail">
+
+        </div>
+      </div>
+
+    </div>
 
 
 
@@ -731,6 +756,16 @@
       // slider.addEventListener("mousedown", startDragging, false);
       // slider.addEventListener("mouseup", stopDragging, false);
       // slider.addEventListener("mouseleave", stopDragging, false);
+      $(function(){
+        var requiredCheckboxes = $('.browsers :checkbox[required]');
+        requiredCheckboxes.change(function(){
+            if(requiredCheckboxes.is(':checked')) {
+                requiredCheckboxes.removeAttr('required');
+            } else {
+                requiredCheckboxes.attr('required', 'required');
+            }
+        });
+    });
     </script>
 
     <script class="datajs" src="../static/js/customList.js"></script>

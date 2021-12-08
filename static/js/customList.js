@@ -198,6 +198,10 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
   //button.type = "button";
   // console.log(filter);
   card.className = "filterDiv " + filter + " show"; // + " diff-" + rndDiff;
+
+  if (priority == "0"){
+    card.style = "background-color:#b3e6cc";
+  }
   card.setAttribute("name", "diff-" + diffLevel_n);
   card.setAttribute("value", "diff-show");
 
@@ -301,13 +305,36 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
     }
   }
 
-  card.innerHTML =
+  if (priority == "0"){
+
+    card.innerHTML = '<img src="../static/images/common_y.png" style="width:80px"><div class="card-title">' +
+    capitalize(title) +
+    //" -------- Diff level: " +
+    //diffLevel_n +
+    '</div>' +
+    capitalize(content);
+
+  }
+  else {
+    card.innerHTML =
     '<div class="card-title">' +
     capitalize(title) +
     //" -------- Diff level: " +
     //diffLevel_n +
-    "</div>" +
+    '</div>' +
     capitalize(content);
+  }
+  
+  
+  if (tutorial_webdoc != ""){
+     //card.innerHTML += '<br> <button class="modal-btn" name="'+tutorial_webdoc+'|'+tutorial_video+'">View Tutorial</button>';
+    
+    card.innerHTML += '<br><a href="' + tutorial_webdoc + '" style="color:dodgerblue;padding-top:7px" target="_blank">View Detail</a>'
+  }
+  if (tutorial_video != ""){
+    card.innerHTML += '<br><a href="' + tutorial_video + '" style="color:dodgerblue;padding-top:7px" target="_blank">View Video</a>'
+  }
+
 
   // *** card.innerHTML =
   //   '<div class="customList-title">' + title + "</div>" + content;
@@ -318,7 +345,7 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
 }
 
 /* create clue buttons and solution cards from json file for the given failure type name*/
-var failure_type = "layer_shifting";
+var failure_type = "warping";
 
 function loadSoltions(failure_type){
 
@@ -384,9 +411,60 @@ function loadSoltions(failure_type){
       this.className += " activeList";
     });
   }
+  
+  /*
+  // Get the modal
+  var modal = document.getElementById("myModal");
+  
+  // Get the button that opens the modal
+  var modalBtns = document.getElementsByClassName("modal-btn");
+  
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  
+  // var request = new XMLHttpRequest();
+  // request.open("GET", "./json/project-detail.json", false);
+  // request.send(null)
+  // var projects = JSON.parse(request.responseText);
+  
+  // When the user clicks the button, open the modal
+  for(var i=0; i<modalBtns.length; i++){
+     modalBtns[i].onclick = function() {
+       modal.style.display = "block";
+
+       var current_webdoc = this.name.split("|")[0];
+       var current_video = this.name.split("|")[1];
+       console.log(current_webdoc);
+       document.getElementsByClassName("modal-body")[0].innerHTML =
+        '<h4>Tutorial</h4><hr>' + '<embed src="'+ current_webdoc + '"></embed>';
+     }
+     
+    
+  
+  }
+     
+
+  //document.getElementsByClassName("modal-body")[0].innerHTML = projects[0]['title'];
+  //  console.log(i);
+  
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+  
+   */
+  
+  
 }
 
-loadSoltions("layer_shifting");
+loadSoltions("warping");
 
 //// * Difficulty level checkbox
 function diffFilter() {

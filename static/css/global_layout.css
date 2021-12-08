@@ -219,12 +219,12 @@
   font-size: 18px;
 }
 #flex_innercontainer_search_left {
-  flex-basis: 45%;
+  flex-basis: 35%;
   padding-right: 15px;
   border-right: 2px #ccc solid;
 }
 #flex_innercontainer_search_right {
-  flex-basis: 55%;
+  flex-basis: 65%;
   padding-left: 15px;
 }
 
