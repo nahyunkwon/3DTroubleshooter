@@ -31,7 +31,9 @@
 
 <!-- Image loader -->
 <div class="flex_container_center">
-    <div id="prev-div"></div>
+    <div id="prev-div"><div id="flex_container_imageloader_noimage">
+        Nothing is added... yet ¯\_(ツ)_/¯
+    </div></div>
 </div>
 
 <div class="flex_container_center" style="height:130px">
@@ -40,7 +42,7 @@
             <a onclick="document.getElementById('tab-add').click();" style="cursor: pointer;">Add one or multiple images</a> you would <br/>investigate for troubleshooting.
         </div>
     </div>
-    <div id="flex_container_imageloader_go" onclick="document.getElementById('pred-btn').click();" style="cursor: pointer;"><a>Go!</a></div>
+    <div id="flex_container_imageloader_go_dim"><a>Go!</a></div>
 </div>
 
 <div class="hidden-back">
@@ -56,7 +58,7 @@
     <div class="paragraph_heading" style="padding-top:50px;">
         What is 3DPFIX?
     </div>
-    <div class="paragraph_text">
+    <div class="paragraph_text" style="padding-bottom:50px;">
         Does your 3D print have a problem, and you do not know what to do to fix it? Get immediate help from 3DPFIX!
         <br><br>3DPFIX provides an automatic diagnosis of common printing failures powered by AI from the photo of your failed print.
         <br>Simply take a photo of your print, preferably centering the print with a clear background, and upload the photo(s) to get the diagnosis.
@@ -64,7 +66,6 @@
         <br><br>You are very new to 3D printing, and even do not know the basic technical terms in 3D printing?
         <br>No worries, 3DPFIX will support you to learn the technical terms as well.
         <br><br>Happy printing with 3DPFIX!
-
     </div>
 </div>
 
@@ -155,7 +156,7 @@
         if (file) {
             reader.readAsDataURL(file);
         }
-    
+
 
     }
 
@@ -170,7 +171,7 @@
         var pass_check_total = file_len;
 
         // for (let i = 0; i < file_len; i++) {
-            
+
 
         // }
 
@@ -184,7 +185,7 @@
                         .select('#prev-div')
                         .append('div')
                         .attr('class', 'prev-sub-div ' + div_cls);
-                        
+
 
             newDiv
             .append('img')
@@ -198,13 +199,22 @@
 
                 // console.log(previewFileCheck(id, i, pass_check));
                 // previewFile(id, i);
-            } catch { 
+            } catch {
                 // createInitImg()
-                break; 
+                break;
             }
         }
 
         if (pass_check_total == 0) {
+
+            d3.select("#flex_container_imageloader_go_dim")
+            .attr('id', "flex_container_imageloader_go")
+            .style("cursor", "pointer")
+            .attr('onclick', "document.getElementById('pred-btn').click();")
+
+            d3.select("#flex_container_imageloader_noimage")
+            .style("display", "none")
+
             for (let i = 0; i < file_len; i++) {
                 try {
                     previewFile(id, i);

@@ -119,6 +119,13 @@ a:active {
   font-weight: 200;
 }
 
+#flex_container_imageloader_noimage {
+  line-height: 220px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #flex_container_imageloader_go,
 #flex_container_imageloader_go_dim {
   flex: 200px;
@@ -201,4 +208,96 @@ a:active {
   font-family: "Raleway", sans-serif;
   font-size: 14px;
   color: rgba(255, 255, 255, 1);
+}
+
+/*--------------------2nd page selectors--------------------*/
+#flex_container_imageselector {
+  display: flex;
+  width: 1000px;
+  height: 75px;
+  background: rgb(44, 44, 44);
+}
+
+#flex_container_imageselector img {
+  max-height: 75px;
+  max-width: 100%;
+  margin-left: 10px;
+}
+
+.flex_container_imageselector_on,
+.flex_imageselector_on {
+  outline: solid 4px rgb(218, 29, 92);
+  outline-offset: -4px;
+}
+
+.flex_container_imageselector_off,
+.flex_imageselector_off {
+  opacity: 50%;
+}
+
+.flex_container_imageselector_message {
+  flex: 100%;
+  background: rgb(0, 0, 0);
+  color: rgb(150, 150, 150);
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 100;
+  font-size: 24px;
+  line-height: 60px;
+  height: 60px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#flex_container_imageselector_innercontainer {
+  background: rgb(0, 0, 0);
+  color: rgb(150, 150, 150);
+  display: flex;
+}
+
+.flex_imageselector_innercontainer_each {
+  position: relative;
+  top: 8px;
+}
+
+.flex_imageselector_innercontainer_each_name,
+.flex_imageselector_innercontainer_each_prob {
+  position: absolute;
+  top: -5px;
+  line-height: 15px;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.flex_imageselector_innercontainer_each_prob {
+  top: 14px;
+}
+
+.flex_imageselector_innercontainer_each_name span,
+.flex_imageselector_innercontainer_each_prob span {
+  color: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.error_color1 {
+  background-color: #1b9e77;
+}
+.error_color2 {
+  background-color: #d95f02;
+}
+.error_color3 {
+  background-color: #7570b3;
+}
+.error_color4 {
+  background-color: #e7298a;
+}
+.error_color5 {
+  background-color: #66a61e;
+}
+
+.flex_imageselector_innercontainer_each img {
+  max-width: 100%;
+  margin-top: -7px;
 }

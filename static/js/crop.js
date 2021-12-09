@@ -25,7 +25,7 @@ function initCropDiv(tab_img_src) {
     .attr("id", "image-preview")
     .attr("src", tab_img_src)
     .attr("alt", "Image preview")
-    .attr("style", "max-height: 400px;");
+    .attr("height", "360px");
 
   d3.select("#crop-form")
     .append("input")
@@ -34,19 +34,26 @@ function initCropDiv(tab_img_src) {
     .attr("name", "crop_input")
     .attr("value", "");
 
-  d3.select("#crop-form")
-    .append("input")
-    .attr("type", "hidden")
-    .attr("id", "cropimg-storedata")
-    .attr("name", "crop_img")
-    .attr("value", "");
+  // d3.select("#crop-form")
+  //   .append("input")
+  //   .attr("type", "hidden")
+  //   .attr("id", "cropimg-storedata")
+  //   .attr("name", "crop_img")
+  //   .attr("value", "");
 
-  d3.select("#crop-form")
-    .append("button")
-    .attr("type", "submit")
-    .text("Upload Image")
-    .attr("class", "btn")
-    .attr("id", "upload-crop-btn");
+  // d3.select("#crop-form")
+  //   .append("button")
+  //   .attr("type", "submit")
+  //   .text("Upload Image")
+  //   .attr("class", "btn")
+  //   .attr("id", "upload-crop-btn");
+
+  // d3.select("#crop-form")
+  //   .append("button")
+  //   .text("Upload Image")
+  //   .attr("class", "btn")
+  //   .attr("id", "upload-crop-btn")
+  //   .attr("onclick", "storeCropData();");
 }
 
 let auto_crop_input = false;
@@ -102,11 +109,18 @@ function updateCropper(prev_id) {
   return cropper;
 }
 
-function imageCrop(prev_id) {
+var input_storedata = "";
+
+function imageCrop(prev_id, data_display = true) {
   const preview = document.getElementById(prev_id);
   const ctx = canvas.getContext("2d");
 
-  const cropimg = preview.src.split("data:image/JPEG;base64,")[1];
+  // const cropimg = preview.src.split("data:image/JPEG;base64,")[1];
+
+  if (data_display == true) {
+    document.getElementById("text-storedata").innerHTML +=
+      "\n" + JSON.stringify(cropdata);
+  }
 
   let r_corr = cropdata.x + cropdata.width;
   let b_corr = cropdata.y + cropdata.height;
@@ -115,9 +129,18 @@ function imageCrop(prev_id) {
   r_corr = r_corr > preview.width ? preview.width : r_corr;
   b_corr = b_corr > preview.height ? preview.height : b_corr;
 
+  input_storedata += [l_corr, t_corr, r_corr, b_corr] + ",";
+
   document.getElementById("input-storedata").value +=
     [l_corr, t_corr, r_corr, b_corr] + ",";
-  document.getElementById("cropimg-storedata").value = cropimg;
+  // document.getElementById("cropimg-storedata").value = cropimg;
+
+  console.log(cropdata.width);
+  console.log(cropdata.height);
+  console.log(r_corr);
+  console.log(b_corr);
+  console.log(l_corr);
+  console.log(t_corr);
 
   ctx.drawImage(
     preview,
@@ -135,6 +158,12 @@ function imageCrop(prev_id) {
 function resetCrop() {
   const ctx = canvas.getContext("2d");
   document.getElementById("input-storedata").value = "";
-  document.getElementById("cropimg-storedata").value = "";
+  // document.getElementById("cropimg-storedata").value = "";
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  input_storedata = "";
 }
+
+// function storeCropData() {
+//   document.getElementById("input-storedata2").innerHTML +=
+//     "\n" + input_storedata;
+// }

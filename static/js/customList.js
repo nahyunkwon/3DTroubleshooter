@@ -373,6 +373,22 @@ function loadSoltions(failure_type){
     },
   });
 
+  $("#myBtnContainer").empty();
+  $("#solution_placeholder").empty();
+
+  /* All solutions button */
+  var button = document.createElement("button");
+  button.className = "btnList activeList";
+  button.innerHTML = "All solutions";
+  button.onclick = function () {
+    filterSelection('all');
+    diffFilter();
+  };
+
+  var selectPanel = document.getElementById("myBtnContainer");
+  selectPanel.appendChild(button);
+
+  /* buttons for clues */
   for (var k = 0; k < clue_data.length; k++) {
     createButton(clue_data[k]["clue"], clue_data[k]["related_case"]);
   }
@@ -463,8 +479,6 @@ function loadSoltions(failure_type){
   
   
 }
-
-loadSoltions("warping");
 
 //// * Difficulty level checkbox
 function diffFilter() {
