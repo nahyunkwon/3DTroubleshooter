@@ -91,7 +91,7 @@
     0.75 %}
     <div
       class="flex_imageselector_innercontainer_each acc_below_threshold"
-      style="display: block"
+      style="display: none"
     >
       {% else %}
       <div
@@ -128,9 +128,8 @@
 
 <div class="flex_container_center">
   <div class="flex_container_imageselector_message">
-    According to the image you selected, your problem can be...
-      <button onclick="addClass();">Select</button>
-      <button onclick="showHideClass('acc_below_threshold');">Show All Failures</button>
+    Do you want to see all failures and possibilities?
+     <button onclick="showHideClass('acc_below_threshold');">Show All Failures</button>
 
   </div>
 </div>
@@ -145,7 +144,7 @@
             <div id="flex_innercontainer_search">
                 <div id="flex_innercontainer_search_left">
                     <div class="flex_innercontainer_search_heading">
-                        Step 1. Find an issue that you observed.
+                        Step 1. Find an issue that you have or observed.
                     </div>
                     <div class="search">
                         <input type="text" class="searchTerm" placeholder="What are you looking for?" id="myInput" onkeyup="filterFunction()">
@@ -214,9 +213,6 @@
 
 <script class="datajs" src="../static/js/customList.js"></script>
 <script>
-  function addClass() {
-    d3.select(".sub-map-0").node().classList.add("flex_imageselector_on");
-  }
 
   function selectMap(selected) {
     //d3.select(".sub-map-"+map_id).node().classList.add("flex_imageselector_on");
@@ -249,7 +245,6 @@
       }
       else if (failure_label === "Warping"){
           loadSoltions("warping");
-
       }
       else if (failure_label === "Blobs"){
           loadSoltions("blobs");

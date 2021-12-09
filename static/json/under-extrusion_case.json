@@ -86,7 +86,7 @@
     {
         "case_id": "7",
         "priority": "1",
-        "difficulty_level": "",
+        "difficulty_level": "0",
         "title": "Wet filament",
         "clue_id": "",
         "clue": "",
@@ -98,7 +98,7 @@
     {
         "case_id": "8",
         "priority": "1",
-        "difficulty_level": "",
+        "difficulty_level": "1",
         "title": "Calibration",
         "clue_id": "",
         "clue": "",
@@ -110,7 +110,7 @@
     {
         "case_id": "9",
         "priority": "1",
-        "difficulty_level": "",
+        "difficulty_level": "0",
         "title": "Print speed",
         "clue_id": "",
         "clue": "",
@@ -122,7 +122,7 @@
     {
         "case_id": "10",
         "priority": "1",
-        "difficulty_level": "",
+        "difficulty_level": "0",
         "title": "Heat",
         "clue_id": "2",
         "clue": "I am using PLA at 180C or lower.",
@@ -134,7 +134,7 @@
     {
         "case_id": "11",
         "priority": "1",
-        "difficulty_level": "",
+        "difficulty_level": "0",
         "title": "",
         "clue_id": "3",
         "clue": "I am using PLA at 230C or above.",
