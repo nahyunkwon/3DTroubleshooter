@@ -87,7 +87,7 @@ function createButton(content, c) {
   var button = document.createElement("button");
   //button.type = "button";
   button.className = "btnList";
-  button.innerHTML = content;
+  button.innerHTML = content + " (" + c.split(', ').length.toString() +")";
   //button.value = c;
   button.onclick = function () {
     filterSelection(c);
@@ -199,8 +199,14 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
   // console.log(filter);
   card.className = "filterDiv " + filter + " show"; // + " diff-" + rndDiff;
 
-  if (priority == "0"){
+  if (diffLevel_n == "0"){
     card.style = "background-color:#b3e6cc";
+  }
+  else if (diffLevel_n == "1"){
+    card.style = "background-color:#F2F972";
+  }
+  else if (diffLevel_n == "2"){
+    card.style = "background-color:#FA8585";
   }
   card.setAttribute("name", "diff-" + diffLevel_n);
   card.setAttribute("value", "diff-show");
@@ -307,7 +313,7 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
 
   if (priority == "0"){
 
-    card.innerHTML = '<img src="../static/images/common_y.png" style="width:80px"><div class="card-title">' +
+    card.innerHTML = '<img src="../static/images/common_black.png" style="width:80px"><div class="card-title">' +
     capitalize(title) +
     //" -------- Diff level: " +
     //diffLevel_n +
@@ -379,7 +385,8 @@ function loadSoltions(failure_type){
   /* All solutions button */
   var button = document.createElement("button");
   button.className = "btnList activeList";
-  button.innerHTML = "All solutions";
+  var count_all = case_data.length;
+  button.innerHTML = "Select no clue and show every solution (" + count_all.toString() +")";
   button.onclick = function () {
     filterSelection('all');
     diffFilter();

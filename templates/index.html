@@ -50,13 +50,25 @@
   <div id="flex_container_imageselector">
     {% for i in range(n_img) %}
 
+      {% if i == 0 %}
     <img
       class="uploaded-img tab-links flex_container_imageselector_on"
-      onclick="openTab(event, 'up-img-{{ i }}')"
-      id="defaultOpen"
+      onclick="selectImage(this);"
+      id="uploaded-img-{{ i }}"
       src="{{ img_format }}{{ img_path[i] | safe }}"
       alt=""
     />
+      {% else %}
+
+      <img
+      class="uploaded-img tab-links flex_container_imageselector_off"
+      onclick="selectImage(this);"
+      id="uploaded-img-{{ i }}"
+      src="{{ img_format }}{{ img_path[i] | safe }}"
+      alt=""
+    />
+
+      {% endif %}
 
     {% endfor %}
 
@@ -76,13 +88,13 @@
 
 <div class="flex_container_center">
   {% for i in range(n_img) %}
-  <div id="flex_container_imageselector_innercontainer">
+  <div id="flex_container_imageselector_innercontainer" class="uploaded-img-wrapper-{{ i }}">
     <div class="flex_imageselector_innercontainer_each">
       <div class="flex_imageselector_innercontainer_each_name">
         <span style="background-color: #000">Original Image</span>
       </div>
       <img
-        class="uploaded-img"
+        class="uploaded-img-{{ i }}"
         src="{{ img_format }}{{ img_path[i] | safe }}"
         alt=""
       />
@@ -144,7 +156,7 @@
             <div id="flex_innercontainer_search">
                 <div id="flex_innercontainer_search_left">
                     <div class="flex_innercontainer_search_heading">
-                        Step 1. Find an issue that you have or observed.
+                        Step 1. Find a clue.
                     </div>
                     <div class="search">
                         <input type="text" class="searchTerm" placeholder="What are you looking for?" id="myInput" onkeyup="filterFunction()">
@@ -156,11 +168,11 @@
                 </div>
                 <div id="flex_innercontainer_search_right">
                     <div class="flex_innercontainer_search_heading">
-                        Step 2. Learn solutions, and read suggestions from experts.
+                        Step 2. Learn solutions.
                     </div>
 
                     <fieldset style="height:50px;width:300px">
-                            <legend>Filter based on your skill</legend>
+                            <legend>Filter based on difficulty level</legend>
 
                         <div class="diff-checkbox" style="padding-top:20px">
                           <div class="checkbox checkbox-1">
@@ -171,7 +183,7 @@
                                 onchange="diffFilter();"
                                 checked="true"
                                 required
-                              />Easy</label
+                              />Basic</label
                             >
                           </div>
                           <div class="checkbox checkbox-2">
@@ -182,7 +194,7 @@
                                 onchange="diffFilter();"
                                 checked="true"
                                 required
-                              />Normal</label
+                              />Intermediate</label
                             >
                           </div>
                           <div class="checkbox checkbox-3">
@@ -193,7 +205,7 @@
                                 onchange="diffFilter();"
                                 checked="true"
                                 required
-                              />Hard</label
+                              />Advanced</label
                             >
                           </div>
                         </div>
@@ -213,6 +225,57 @@
 
 <script class="datajs" src="../static/js/customList.js"></script>
 <script>
+
+    var uploaded_imgs = document.getElementsByClassName('uploaded-img');
+
+    for (var k=0; k<uploaded_imgs.length; k++){
+
+            if (k.toString() === "0"){
+                document.getElementsByClassName('uploaded-img-wrapper-' + k.toString())[0].style.display = 'flex';
+            }
+            else {
+                document.getElementsByClassName('uploaded-img-wrapper-' + k.toString())[0].style.display = 'none';
+            }
+
+        }
+
+    function selectImage(selected) {
+        var uploaded_imgs = document.getElementsByClassName('uploaded-img');
+        var current_img = selected.id.split('-')[2];
+
+        /* uploaded image selection */
+        for (var i = 0; i < uploaded_imgs.length; i++){
+
+            while (uploaded_imgs[i].className.includes('flex_container_imageselector_on')){
+              uploaded_imgs[i].classList.remove("flex_container_imageselector_on");
+          }
+          while (uploaded_imgs[i].className.includes('flex_container_imageselector_off')){
+              uploaded_imgs[i].classList.remove("flex_container_imageselector_off");
+          }
+
+          if (i.toString() !== current_img){
+              uploaded_imgs[i].classList.add("flex_container_imageselector_off");
+          }
+          else{
+              uploaded_imgs[i].classList.add("flex_container_imageselector_on");
+          }
+
+        }
+
+
+
+        for (var k=0; k<uploaded_imgs.length; k++){
+
+
+            if (k.toString() === current_img){
+                document.getElementsByClassName('uploaded-img-wrapper-' + k.toString())[0].style.display = 'flex';
+            }
+            else {
+                document.getElementsByClassName('uploaded-img-wrapper-' + k.toString())[0].style.display = 'none';
+            }
+
+        }
+    }
 
   function selectMap(selected) {
     //d3.select(".sub-map-"+map_id).node().classList.add("flex_imageselector_on");
