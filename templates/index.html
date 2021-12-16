@@ -160,8 +160,8 @@
         <div class="flex_container_center" style="flex-direction:column">
             <div id="flex_innercontainer_menu">
                 <div class="flex_innercontainer_menu_item_off" id="general_button" onclick="switchTab(this, 'general');"><a href="#" style="text-decoration:none;">What's This Problem?</a></div>
-                <div class="flex_innercontainer_menu_item_off" id="common_button" onclick="switchTab(this, 'common');"><a href="#" style="text-decoration:none;">See Common Solution</a></div>
-                <div class="flex_innercontainer_menu_item_off" id="solution_button" onclick="switchTab(this, 'solution');"><a href="#" style="text-decoration:none;">Common Solution Did Not Solve Failure?</a></div>
+                <div class="flex_innercontainer_menu_item_off" id="common_button" onclick="switchTab(this, 'common');"><a href="#" style="text-decoration:none;">See Common Solutions</a></div>
+                <div class="flex_innercontainer_menu_item_off" id="solution_button" onclick="switchTab(this, 'solution');"><a href="#" style="text-decoration:none;">Common Solutions Did Not Work?</a></div>
             </div>
 
             <div id="selected_failure_label"></div>
@@ -308,6 +308,20 @@
         document.getElementById('flex_innercontainer_search').style.display = 'none';
         document.getElementById('selected_failure_label').innerHTML = '<h2>Nothing is selected.</h2>';
 
+        // disable all tab button
+        var sol_button = document.getElementById('solution_button');
+        var gen_button = document.getElementById('general_button');
+        var com_button = document.getElementById('common_button');
+
+        sol_button.classList.remove('flex_innercontainer_menu_item_on');
+        sol_button.classList.add('flex_innercontainer_menu_item_off');
+
+        com_button.classList.remove('flex_innercontainer_menu_item_on');
+        com_button.classList.add('flex_innercontainer_menu_item_off');
+
+        gen_button.classList.remove('flex_innercontainer_menu_item_on');
+        gen_button.classList.add('flex_innercontainer_menu_item_off');
+
     }
 
     function switchTab(clicked, tab) {
@@ -373,9 +387,11 @@
         var sol_div = document.getElementById('flex_innercontainer_search')
 
         if (clicked.id === "general_button") {
-            //sol_button.classList.remove('flex_innercontainer_menu_item_off');
             sol_button.classList.remove('flex_innercontainer_menu_item_on');
             sol_button.classList.add('flex_innercontainer_menu_item_off');
+
+            com_button.classList.remove('flex_innercontainer_menu_item_on');
+            com_button.classList.add('flex_innercontainer_menu_item_off');
 
             gen_button.classList.remove('flex_innercontainer_menu_item_off');
             gen_button.classList.add('flex_innercontainer_menu_item_on');
@@ -385,9 +401,11 @@
 
         }
         else if (clicked.id === "solution_button") {
-            //sol_button.classList.remove('flex_innercontainer_menu_item_off');
             gen_button.classList.remove('flex_innercontainer_menu_item_on');
             gen_button.classList.add('flex_innercontainer_menu_item_off');
+
+            com_button.classList.remove('flex_innercontainer_menu_item_on');
+            com_button.classList.add('flex_innercontainer_menu_item_off');
 
             sol_button.classList.remove('flex_innercontainer_menu_item_off');
             sol_button.classList.add('flex_innercontainer_menu_item_on');
@@ -395,6 +413,19 @@
             general_div.style.display = 'none';
             sol_div.style.display = 'flex';
 
+        }
+        else if (clicked.id === "common_button") {
+            gen_button.classList.remove('flex_innercontainer_menu_item_on');
+            gen_button.classList.add('flex_innercontainer_menu_item_off');
+
+            sol_button.classList.remove('flex_innercontainer_menu_item_on');
+            sol_button.classList.add('flex_innercontainer_menu_item_off');
+
+            com_button.classList.remove('flex_innercontainer_menu_item_off');
+            com_button.classList.add('flex_innercontainer_menu_item_on');
+
+            general_div.style.display = 'none';
+            sol_div.style.display = 'flex';
         }
 
         if (tab === "general") {
@@ -420,11 +451,15 @@
             }
 
         }
-        else if (tab === "solution" && selected_failure !== "none") {
+        else var priority;
+        if (tab === "solution") {
 
             sol_div.style.display = 'flex';
-            callSolution(selected_failure);
+            callSolution(selected_failure, priority = "1");
 
+        } else if (tab === "common") {
+            sol_div.style.display = 'flex';
+            callSolution(selected_failure, priority = "0");
         }
 
     }
@@ -498,11 +533,19 @@
 
       var sol_button = document.getElementById('solution_button');
       var gen_button = document.getElementById('general_button');
+      var com_button= document.getElementById('common_button');
+
+      var priority;
 
       if (sol_button.className.includes('flex_innercontainer_menu_item_on')) {
           general_div.style.display = 'none';
           sol_div.style.display = 'flex';
-          callSolution(failure_label);
+          callSolution(failure_label, priority = "1");
+      }
+      else if (com_button.className.includes('flex_innercontainer_menu_item_on')) {
+          general_div.style.display = 'none';
+          sol_div.style.display = 'flex';
+          callSolution(failure_label, priority = "0");
       }
       else if (gen_button.className.includes('flex_innercontainer_menu_item_on')) {
           general_div.style.display = 'flex';
@@ -522,7 +565,7 @@
       }
   }
 
-  function callSolution(failure_label){
+  function callSolution(failure_label, priority){
 
         if (failure_label === "none") {
             document.getElementById('selected_failure_label').innerHTML = '<h2>Nothing is selected.</h2>';
@@ -533,19 +576,19 @@
 
 
       if (failure_label === "Underextrusion"){
-          loadSolutions("under-extrusion");
+          loadSolutions("under-extrusion", priority);
       }
       else if (failure_label === "Stringing"){
-          loadSolutions("stringing");
+          loadSolutions("stringing", priority);
       }
       else if (failure_label === "LayerShifting"){
-          loadSolutions("layer_shifting");
+          loadSolutions("layer_shifting", priority);
       }
       else if (failure_label === "Warping"){
-          loadSolutions("warping");
+          loadSolutions("warping", priority);
       }
       else if (failure_label === "Blobs"){
-          loadSolutions("blobs");
+          loadSolutions("blobs", priority);
       }
 
   }

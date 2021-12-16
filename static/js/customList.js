@@ -353,7 +353,7 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
 /* create clue buttons and solution cards from json file for the given failure type name*/
 var failure_type = "warping";
 
-function loadSolutions(failure_type){
+function loadSolutions(failure_type, priority){
 
   var case_data = [];
   var clue_data = [];
@@ -382,11 +382,35 @@ function loadSolutions(failure_type){
   $("#myBtnContainer").empty();
   $("#solution_placeholder").empty();
 
+  var featured_cases = [];
+
+  for (k = 0; k < case_data.length; k++) {
+    var sol_temp = "";
+    if (case_data[k]["solution"] != "") {
+      sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
+    }
+
+    if (priority === case_data[k]['priority']){
+      createCard(
+          case_data[k]["case_content"],
+          sol_temp,
+          case_data[k]["case_id"],
+          case_data[k]["difficulty_level"],
+          case_data[k]["priority"],
+          case_data[k]["tutorial_webdoc"],
+          case_data[k]["tutorial_video"]
+      );
+
+      featured_cases.push(case_data[k]["case_id"]);
+    }
+
+  }
+
   /* All solutions button */
   var button = document.createElement("button");
   button.className = "btnList activeList";
   var count_all = case_data.length;
-  button.innerHTML = "Select no clue and show every solution (" + count_all.toString() +")";
+  button.innerHTML = "Select no clue and show every solution (" + featured_cases.length.toString() +")";
   button.onclick = function () {
     filterSelection('all');
     diffFilter();
@@ -397,25 +421,18 @@ function loadSolutions(failure_type){
 
   /* buttons for clues */
   for (var k = 0; k < clue_data.length; k++) {
-    createButton(clue_data[k]["clue"], clue_data[k]["related_case"]);
-  }
+    var related_case = clue_data[k]["related_case"].split(", ");
+    var target_case = [];
 
-  for (k = 0; k < case_data.length; k++) {
-    var sol_temp = "";
-    if (case_data[k]["solution"] != "") {
-      sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
+    for (var r=0; r<related_case.length; r++) {
+      if (featured_cases.includes(related_case[r])) {
+        target_case.push(related_case[r]);
+      }
     }
 
-    createCard(
-        case_data[k]["case_content"],
-        sol_temp,
-        case_data[k]["case_id"],
-        case_data[k]["difficulty_level"],
-        case_data[k]["priority"],
-        case_data[k]["tutorial_webdoc"],
-        case_data[k]["tutorial_video"]
-    );
-
+    if (target_case.length !== 0) {
+      createButton(clue_data[k]["clue"], target_case.join(', '));
+    }
 
   }
 
@@ -434,57 +451,7 @@ function loadSolutions(failure_type){
       this.className += " activeList";
     });
   }
-  
-  /*
-  // Get the modal
-  var modal = document.getElementById("myModal");
-  
-  // Get the button that opens the modal
-  var modalBtns = document.getElementsByClassName("modal-btn");
-  
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-  
-  // var request = new XMLHttpRequest();
-  // request.open("GET", "./json/project-detail.json", false);
-  // request.send(null)
-  // var projects = JSON.parse(request.responseText);
-  
-  // When the user clicks the button, open the modal
-  for(var i=0; i<modalBtns.length; i++){
-     modalBtns[i].onclick = function() {
-       modal.style.display = "block";
 
-       var current_webdoc = this.name.split("|")[0];
-       var current_video = this.name.split("|")[1];
-       console.log(current_webdoc);
-       document.getElementsByClassName("modal-body")[0].innerHTML =
-        '<h4>Tutorial</h4><hr>' + '<embed src="'+ current_webdoc + '"></embed>';
-     }
-     
-    
-  
-  }
-     
-
-  //document.getElementsByClassName("modal-body")[0].innerHTML = projects[0]['title'];
-  //  console.log(i);
-  
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
-    modal.style.display = "none";
-  };
-  
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
-  
-   */
-  
-  
 }
 
 //// * Difficulty level checkbox
