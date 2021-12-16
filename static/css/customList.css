@@ -155,6 +155,11 @@ div[value="diff-hide"] {
 
 a {
   text-decoration: none;
+  color: #0363b3;
+}
+
+.popover__title {
+  color: #0363b3;
 }
 
 .popover__title:hover {
@@ -207,11 +212,14 @@ a {
   transform: translate(0, 20px);
   transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
 } */
+
+/* adjust popover location here*/
 .popover__wrapper:hover .popover__content {
   z-index: 10;
   opacity: 1;
   visibility: visible;
-  transform: translate(0, 20px);
+  transform: translate(-300px, 20px);
+  /*transition: 0.5s;*/
   transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
 }
 .popover__message {

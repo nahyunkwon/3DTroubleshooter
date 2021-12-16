@@ -131,11 +131,11 @@ function termToPopover(
 ) {
   var disableClass = "";
   if (desc_src == "") {
-    disableClass = "disable-click";
+    //disableClass = "disable-click";
   }
   var replace_text =
     '<div class="popover__wrapper">' +
-    '<a target="_blank"' +
+    '<a target="_blank" style="color: #0363b3" ' +
     'class="popover__title ' +
     disableClass +
     '" href="' +
@@ -226,21 +226,21 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
         //target_terms_in_title.push(target_terms[j]);
         title = title.replace(target_terms[j], "placeholder" + target_terms[j]);
       }
-      if (title.includes(capitalize(target_terms[j]))) {
+      else if (title.includes(capitalize(target_terms[j]))) {
         title = title.replace(
           capitalize(target_terms[j]),
           "placeholder" + capitalize(target_terms[j])
         );
       }
 
-      if (content.includes(target_terms[j])) {
+      else if (content.includes(target_terms[j])) {
         //target_terms_in_content.push(target_terms[j]);
         content = content.replace(
           target_terms[j],
           "placeholder" + target_terms[j]
         );
       }
-      if (content.includes(capitalize(target_terms[j]))) {
+      else if (content.includes(capitalize(target_terms[j]))) {
         content = content.replace(
           capitalize(target_terms[j]),
           "placeholder" + capitalize(target_terms[j])
@@ -386,9 +386,9 @@ function loadSolutions(failure_type, priority){
 
   for (k = 0; k < case_data.length; k++) {
     var sol_temp = "";
-    if (case_data[k]["solution"] != "") {
+    //if (case_data[k]["solution"] != "") {
       sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
-    }
+    //}
 
     if (priority === case_data[k]['priority']){
       createCard(
