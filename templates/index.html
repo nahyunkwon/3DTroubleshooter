@@ -159,8 +159,9 @@
 <!-- Content -->
         <div class="flex_container_center" style="flex-direction:column">
             <div id="flex_innercontainer_menu">
-                <div class="flex_innercontainer_menu_item_off" id="general_button" onclick="switchTab(this, 'general');"><a href="#" style="text-decoration:none;">What's this problem?</a></div>
-                <div class="flex_innercontainer_menu_item_off" id="solution_button" onclick="switchTab(this, 'solution');"><a href="#" style="text-decoration:none;">Search How to fix</a></div>
+                <div class="flex_innercontainer_menu_item_off" id="general_button" onclick="switchTab(this, 'general');"><a href="#" style="text-decoration:none;">What's This Problem?</a></div>
+                <div class="flex_innercontainer_menu_item_off" id="common_button" onclick="switchTab(this, 'common');"><a href="#" style="text-decoration:none;">See Common Solution</a></div>
+                <div class="flex_innercontainer_menu_item_off" id="solution_button" onclick="switchTab(this, 'solution');"><a href="#" style="text-decoration:none;">Common Solution Did Not Solve Failure?</a></div>
             </div>
 
             <div id="selected_failure_label"></div>
@@ -331,6 +332,10 @@
             }
         }
 
+        if (selected_failure === "none") {
+            return;
+        }
+
         var label = "";
 
         if (selected_failure === "Underextrusion"){
@@ -363,6 +368,7 @@
 
         var sol_button = document.getElementById('solution_button');
         var gen_button = document.getElementById('general_button');
+        var com_button = document.getElementById('common_button');
         var general_div = document.getElementById('flex_innercontainer_general');
         var sol_div = document.getElementById('flex_innercontainer_search')
 
@@ -415,7 +421,6 @@
 
         }
         else if (tab === "solution" && selected_failure !== "none") {
-            alert(selected_failure);
 
             sol_div.style.display = 'flex';
             callSolution(selected_failure);

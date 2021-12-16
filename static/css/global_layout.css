@@ -247,6 +247,22 @@
   padding-right: 15px;
 }
 
+#flex_innercontainer_common {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+}
+#flex_innercontainer_common_left {
+  flex-basis: 35%;
+  padding-right: 15px;
+  border-right: 2px #ccc solid;
+}
+#flex_innercontainer_common_right {
+  flex-basis: 65%;
+  padding-left: 15px;
+}
+
+
 /*search*/
 body {
   background: #f2f2f2;
