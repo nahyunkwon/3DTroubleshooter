@@ -47,11 +47,12 @@ def csv_to_json(csvFilePath, jsonFilePath):
 
 def main():
 
-    failures = ['layer_shifting', 'stringing', 'warping', 'under-extrusion', 'blobs']
+    #failures = ['layer_shifting', 'stringing', 'warping', 'under-extrusion', 'blobs']
 
-    for f in failures:
-        csv_to_json('./failure_data_csv/' + f + '_case_clue_csv/case-Table 1.csv', './static/json/' + f + '_case.json')
-        csv_to_json('./failure_data_csv/' + f + '_case_clue_csv/clue-Table 1.csv', './static/json/' + f + '_clue.json')
+    #for f in failures:
+    #    csv_to_json('./failure_data_csv/' + f + '_case_clue_csv/case-Table 1.csv', './static/json/' + f + '_case.json')
+    #    csv_to_json('./failure_data_csv/' + f + '_case_clue_csv/clue-Table 1.csv', './static/json/' + f + '_clue.json')
+    csv_to_json('./3D_general_description.csv', './static/3d_info/3D_general_description.json')
 
 
 if __name__ == "__main__":

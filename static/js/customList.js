@@ -353,7 +353,7 @@ function createCard(title, content, filter, diffLevel_n, priority, tutorial_webd
 /* create clue buttons and solution cards from json file for the given failure type name*/
 var failure_type = "warping";
 
-function loadSoltions(failure_type){
+function loadSolutions(failure_type){
 
   var case_data = [];
   var clue_data = [];

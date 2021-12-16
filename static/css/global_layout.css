@@ -201,6 +201,14 @@
   padding-top: 30px;
 }
 
+#selected_failure_label{
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-bottom: 5px;
+  padding-top: 3px;
+  font-family: "Barlow Condensed", sans-serif;
+}
+
 .flex_innercontainer_menu_item_on,
 .flex_innercontainer_menu_item_off {
   font-family: "Barlow Condensed", sans-serif;
@@ -226,6 +234,17 @@
 #flex_innercontainer_search_right {
   flex-basis: 65%;
   padding-left: 15px;
+}
+
+#flex_innercontainer_general_left {
+  flex-basis: 35%;
+  padding: 10px;
+  border-right: 2px #ccc solid;
+}
+#flex_innercontainer_general_right {
+  flex-basis: 65%;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /*search*/
