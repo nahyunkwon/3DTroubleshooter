@@ -150,7 +150,7 @@
 
   <div class="flex_container_imageselector_message">
     Do you want to see all failures and AI's confidences?
-     <button id="show_all_button" onclick="showHideClass('acc_below_threshold');">Show All Failures</button>
+     <button class="show_all_button_off" onclick="showHideClass('acc_below_threshold'); buttonToggle(this);">Show All Failures</button>
 
   </div>
 </div>
@@ -592,6 +592,21 @@
       }
 
   }
+
+    function buttonToggle(button) {
+        button = document.getElementsByClassName('show_all_button_off')[0];
+
+        if (button === undefined){
+            button = document.getElementsByClassName('show_all_button_on')[0];
+            button.classList.remove('show_all_button_on');
+            button.classList.add('show_all_button_off');
+        }
+        else {
+            button.classList.remove('show_all_button_off');
+            button.classList.add('show_all_button_on');
+        }
+
+    }
 </script>
 
 {% endblock %}

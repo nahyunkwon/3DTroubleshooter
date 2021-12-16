@@ -312,3 +312,18 @@ body {
   font-size: 14px;
   color: rgba(255, 255, 255, 1);
 }
+
+/* button */
+
+.show_all_button_on {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size:14px;
+  background-color: #0363b3;
+  color:white;
+}
+.show_all_button_off {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size:14px;
+  background-color: white;
+  color:black;
+}
