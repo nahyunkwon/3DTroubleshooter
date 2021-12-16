@@ -450,6 +450,8 @@
 
         if (tab === "general") {
 
+            document.getElementById('selected_failure_label').innerHTML = '<h2>Selected Failure Type: '+selected_failure+'</h2>';
+
             var desc_img = document.createElement('img');
             desc_img.style.width = "100%";
 
@@ -487,7 +489,10 @@
     function callGeneral(selected_failure) {
 
         if (selected_failure === "none") {
-            document.getElementById('selected_failure_label').innerHTML = '<h2>Nothing is selected.</h2>'
+            document.getElementById('selected_failure_label').innerHTML = ''
+        }
+        else {
+            document.getElementById('selected_failure_label').innerHTML = '<h2>Selected Failure Type: '+selected_failure+'</h2>';
         }
 
         var label = "";
@@ -588,7 +593,7 @@
   function callSolution(failure_label, priority){
 
         if (failure_label === "none") {
-            document.getElementById('selected_failure_label').innerHTML = '<h2>Nothing is selected.</h2>';
+            document.getElementById('selected_failure_label').innerHTML = '';
         }
         else {
             document.getElementById('selected_failure_label').innerHTML = '<h2>Selected Failure Type: '+failure_label+'</h2>';
