@@ -99,18 +99,19 @@ body div {
 
 #loading-div div img {
   position: absolute;
-  clip: rect(16px, 169px, 166px, 20px);
+  /* clip: rect(16px, 169px, 166px, 20px); */
+  clip: rect(16px, 216px, 186px, 50px);
   margin-left: 13px;
   height: 200px;
 }
 
-/* index.html */
+/* index_origin.html */
 .uploaded-img {
   /* height: 400px; */
   height: 360px;
 }
 
-/* .uploaded-img-map, */
+/*.uploaded-img-map,*/
 .uploaded-img-map-sub {
   position: absolute;
   /* height: 400px; */
@@ -119,11 +120,10 @@ body div {
   /* right: 20px; */
   top: 129px;
 }
-
-/* .uploaded-img-map {
+/*
   display: none;
-} */
-
+}
+*/
 .uploaded-img-map-sub {
   display: none;
 }
@@ -142,7 +142,7 @@ body div {
   overflow: hidden;
   /* border: 1px solid #ccc; */
   background-color: #f1f1f1;
-  height: 50px;
+  height: 500px;
 }
 
 .tab-sol {
@@ -398,8 +398,8 @@ body div {
 }
 
 #preview-container {
-  /* height: 400px;
-  max-width: 600px; */
+  /*height: 400px;
+  max-width: 800px;*/
 }
 
 #crop-form button {

@@ -3,10 +3,13 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
 
+<link href="../static/css/customList.css" rel="stylesheet" />
+<script src="../static/js/jquery.min.js"></script>
+
 <style>
-  body {
-    background-image: url("../static/images/3DPFIX_BG.png");
-  }
+  /* body {
+    min-height: 2000px;
+  } */
 </style>
 
 {% endblock %} {% block body %}
@@ -34,24 +37,34 @@
 </div>
 
 <!-- Image selector -->
-<div class="flex_container_imageselector_message">
-  Step 1. Select an image you want to explore.
+<div class="flex_container_center">
+  <div class="flex_container_imageselector_message">
+    Select an image you want to explore.
+  </div>
 </div>
 
 <!-- Image selector -->
 <div class="flex_container_center">
   <div id="flex_container_imageselector">
-    {% for i in range(n_img) %}
-
+    {% for i in range(n_img) %} {% if i == 0 %}
     <img
       class="uploaded-img tab-links flex_container_imageselector_on"
-      onclick="openTab(event, 'up-img-{{ i }}')"
-      id="defaultOpen"
+      onclick="selectImage(this); clickDefaultTabs(this);"
+      id="uploaded-img-{{ i }}"
+      src="{{ img_format }}{{ img_path[i] | safe }}"
+      alt=""
+    />
+    {% else %}
+
+    <img
+      class="uploaded-img tab-links flex_container_imageselector_off"
+      onclick="selectImage(this); clickDefaultTabs(this);"
+      id="uploaded-img-{{ i }}"
       src="{{ img_format }}{{ img_path[i] | safe }}"
       alt=""
     />
 
-    {% endfor %}
+    {% endif %} {% endfor %}
 
     <!-- <img class="flex_container_imageselector_on" src="img/ex1.jpg" />
     <img class="flex_container_imageselector_off" src="img/ex2.jpg" />
@@ -67,15 +80,18 @@
   </div>
 </div>
 
-<div class="flex_container_center">
+<div class="flex_container_center img-maps-div">
   {% for i in range(n_img) %}
-  <div id="flex_container_imageselector_innercontainer">
+  <div
+    id="flex_container_imageselector_innercontainer"
+    class="uploaded-img-wrapper-{{ i }}"
+  >
     <div class="flex_imageselector_innercontainer_each">
       <div class="flex_imageselector_innercontainer_each_name">
         <span style="background-color: #000">Original Image</span>
       </div>
       <img
-        class="uploaded-img"
+        class="uploaded-img-{{ i }}"
         src="{{ img_format }}{{ img_path[i] | safe }}"
         alt=""
       />
@@ -84,12 +100,13 @@
     0.75 %}
     <div
       class="flex_imageselector_innercontainer_each acc_below_threshold"
-      style="display: block"
+      style="display: none"
     >
       {% else %}
       <div
         class="flex_imageselector_innercontainer_each"
         style="display: block"
+        id="{{ card_info[i][m].split('-')[1] }}_map"
       >
         {% endif %}
         <div class="flex_imageselector_innercontainer_each_name">
@@ -107,7 +124,8 @@
           class="uploaded-img-map-sub uploaded-img-map-sub-{{ i }} sub-map-{{ m }}"
           src="{{ img_format }}{{ img_path_cam[(card_info[i][m].split('-')[0] | int)-1][i] | safe }}"
           alt=""
-          id="sub-map-{{ m }}-{{ i }}"
+          id="sub-map-{{ m }}-{{ i }}-{{ card_info[i][m].split('-')[1] }}"
+          onclick="selectMap(this, this.id.split('-')[2], this.id.split('-')[4]);"
         />
       </div>
       {% endfor %}
@@ -116,44 +134,468 @@
   </div>
 </div>
 
+<div class="flex_container_center">
+  <div class="flex_container_imageselector_message">
+    Select one failure type image above that you want to explore.
+  </div>
+</div>
+
+<div class="flex_container_center">
+  <div class="flex_container_imageselector_message">
+    Do you want to see all failures and AI's confidences?
+    <button
+      class="show_all_button_off"
+      onclick="showHideClass('acc_below_threshold'); buttonToggle(this);"
+    >
+      Show All Failures
+    </button>
+  </div>
+</div>
+
 <!-- Content -->
 <div class="flex_container_center" style="flex-direction: column">
   <div id="flex_innercontainer_menu">
-    <div class="flex_innercontainer_menu_item_on">
-      <a style="text-decoration: none">What's this problem?</a>
+    <div
+      class="flex_innercontainer_menu_item_off"
+      id="general_button"
+      onclick="switchTab(this, 'general');"
+    >
+      <a style="text-decoration: none">What's This Problem?</a>
     </div>
-    <div class="flex_innercontainer_menu_item_off">
-      <a style="text-decoration: none">Search How to fix</a>
+    <div
+      class="flex_innercontainer_menu_item_off"
+      id="common_button"
+      onclick="switchTab(this, 'common');"
+    >
+      <a style="text-decoration: none">See Common Solutions</a>
     </div>
-    <div class="flex_innercontainer_menu_item_off">
-      <a style="text-decoration: none">Solution diagram</a>
+    <div
+      class="flex_innercontainer_menu_item_off"
+      id="solution_button"
+      onclick="switchTab(this, 'solution');"
+    >
+      <a style="text-decoration: none">Common Solutions Did Not Work?</a>
     </div>
   </div>
-  <div class="paragraph_text">
-    It's not only writers who can benefit from this free online tool. If you're
-    a programmer who's working on a project where blocks of text are needed,
-    this tool can be a great way to get that. It's a good way to test your
-    programming and that the tool being created is working well.. Above are a
-    few examples of how the random paragraph generator can be beneficial. The
-    best way to see if this random paragraph picker will be useful for your
-    intended purposes is to give it a try. Generate a number of paragraphs to
-    see if they are beneficial to your current project.
+
+  <div id="selected_failure_label"></div>
+
+  <div id="flex_innercontainer_general" style="display: none">
+    <div id="flex_innercontainer_general_left">.</div>
+
+    <div id="flex_innercontainer_general_right"></div>
   </div>
-  <div class="paragraph_text" style="padding-bottom: 50px">
-    If you do find this paragraph tool useful, please do us a favor and let us
-    know how you're using it. It's greatly beneficial for us to know the
-    different ways this tool is being used so we can improve it with updates.
-    This is especially true since there are times when the generators we create
-    get used in completely unanticipated ways from when we initially created
-    them. If you have the time, please send us a quick note on what you'd like
-    to see changed or added to make it better in the future.
+
+  <div id="flex_innercontainer_search" style="display: none">
+    <div id="flex_innercontainer_search_left">
+      <div class="flex_innercontainer_search_heading">Step 1. Find a clue.</div>
+      <div class="search">
+        <input
+          type="text"
+          class="searchTerm"
+          placeholder="What are you looking for?"
+          id="myInput"
+          onkeyup="filterFunction()"
+        />
+      </div>
+
+      <div id="myBtnContainer"></div>
+    </div>
+    <div id="flex_innercontainer_search_right">
+      <div class="flex_innercontainer_search_heading">
+        Step 2. Learn solutions.
+      </div>
+
+      <fieldset style="height: 50px; width: 300px">
+        <legend>Filter based on difficulty level</legend>
+
+        <div class="diff-checkbox" style="padding-top: 20px">
+          <div class="checkbox checkbox-1">
+            <label
+              ><input
+                type="checkbox"
+                rel="diff-0"
+                onchange="diffFilter();"
+                checked="true"
+                required
+              />Basic</label
+            >
+          </div>
+          <div class="checkbox checkbox-2">
+            <label
+              ><input
+                type="checkbox"
+                rel="diff-1"
+                onchange="diffFilter();"
+                checked="true"
+                required
+              />Intermediate</label
+            >
+          </div>
+          <div class="checkbox checkbox-3">
+            <label
+              ><input
+                type="checkbox"
+                rel="diff-2"
+                onchange="diffFilter();"
+                checked="true"
+                required
+              />Advanced</label
+            >
+          </div>
+        </div>
+      </fieldset>
+      <br />
+
+      <div id="solution_placeholder"></div>
+    </div>
   </div>
 </div>
-<button onclick="addClass();">Select</button>
-<button onclick="showHideClass('acc_below_threshold');">Show/Hide</button>
+
+<!-- Footer hat -->
+<div
+  class="flex_container_center"
+  style="background: rgba(170, 170, 170, 1); height: 5px"
+></div>
+<!-- Footer -->
+<div class="flex_container_center" style="background: #000">
+  <div id="flex_item_footer">
+    <div>Copyright @ 2021, 3DPFix all right reserved</div>
+    <div>
+      Last updated: 11/24./2021 <a href="" class="link_black">GitHub</a>
+    </div>
+  </div>
+</div>
+
+<!-- * Modal window box -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-title">
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <h1>Please click one failure type image that you want to explore!</h1>
+      <div style="text-align: center">
+        <img id="alert_img" src="../static/images/click_alert.png" />
+      </div>
+    </div>
+    <div class="modal-tail"></div>
+  </div>
+</div>
+
+<script class="datajs" src="../static/js/customList.js"></script>
 <script>
-  function addClass() {
-    d3.select(".sub-map-0").node().classList.add("flex_imageselector_on");
+  var uploaded_imgs = document.getElementsByClassName("uploaded-img");
+
+  var selected_img_id = "0";
+
+  for (var k = 0; k < uploaded_imgs.length; k++) {
+    if (k.toString() === "0") {
+      document.getElementsByClassName("uploaded-img-wrapper-" + k.toString())[
+        selected_img_id
+      ].style.display = "flex";
+    } else {
+      document.getElementsByClassName("uploaded-img-wrapper-" + k.toString())[
+        selected_img_id
+      ].style.display = "none";
+    }
+  }
+
+  function selectImage(selected) {
+    var uploaded_imgs = document.getElementsByClassName("uploaded-img");
+    var current_img = selected.id.split("-")[2];
+
+    /* uploaded image selection */
+    for (var i = 0; i < uploaded_imgs.length; i++) {
+      while (
+        uploaded_imgs[i].className.includes("flex_container_imageselector_on")
+      ) {
+        uploaded_imgs[i].classList.remove("flex_container_imageselector_on");
+      }
+      while (
+        uploaded_imgs[i].className.includes("flex_container_imageselector_off")
+      ) {
+        uploaded_imgs[i].classList.remove("flex_container_imageselector_off");
+      }
+
+      if (i.toString() !== current_img) {
+        uploaded_imgs[i].classList.add("flex_container_imageselector_off");
+      } else {
+        uploaded_imgs[i].classList.add("flex_container_imageselector_on");
+      }
+    }
+
+    for (var k = 0; k < uploaded_imgs.length; k++) {
+      if (k.toString() === current_img) {
+        document.getElementsByClassName(
+          "uploaded-img-wrapper-" + k.toString()
+        )[0].style.display = "flex";
+      } else {
+        document.getElementsByClassName(
+          "uploaded-img-wrapper-" + k.toString()
+        )[0].style.display = "none";
+      }
+    }
+
+    document.getElementById("flex_innercontainer_general").style.display =
+      "none";
+    document.getElementById("flex_innercontainer_search").style.display =
+      "none";
+    document.getElementById("selected_failure_label").innerHTML = "";
+
+    // disable all tab button
+    var sol_button = document.getElementById("solution_button");
+    var gen_button = document.getElementById("general_button");
+    var com_button = document.getElementById("common_button");
+
+    sol_button.classList.remove("flex_innercontainer_menu_item_on");
+    sol_button.classList.add("flex_innercontainer_menu_item_off");
+
+    com_button.classList.remove("flex_innercontainer_menu_item_on");
+    com_button.classList.add("flex_innercontainer_menu_item_off");
+
+    gen_button.classList.remove("flex_innercontainer_menu_item_on");
+    gen_button.classList.add("flex_innercontainer_menu_item_off");
+  }
+
+  function switchTab(clicked, tab) {
+    // selected image
+    var uploaded_imgs = document.getElementsByClassName("uploaded-img");
+    var selected = 0;
+
+    for (var i = 0; i < uploaded_imgs.length; i++) {
+      if (
+        uploaded_imgs[i].className.includes("flex_container_imageselector_on")
+      ) {
+        selected = i;
+      }
+    }
+
+    // selected failure
+    var maps = document.getElementsByClassName(
+      "uploaded-img-map-sub-" + selected.toString()
+    );
+    var selected_failure = "none";
+
+    for (i = 0; i < maps.length; i++) {
+      if (maps[i].className.includes("flex_imageselector_on")) {
+        selected_failure = maps[i].id.split("-")[4];
+      }
+    }
+
+    if (selected_failure === "none") {
+      //alert('Please click one failure type image that you want to explore!');
+      putModal();
+      return;
+    }
+
+    var label = "";
+
+    if (selected_failure === "Underextrusion") {
+      label = "under-extrusion";
+    } else if (selected_failure === "Stringing") {
+      label = "stringing";
+    } else if (selected_failure === "LayerShifting") {
+      label = "layer_shifting";
+    } else if (selected_failure === "Warping") {
+      label = "warping";
+    } else if (selected_failure === "Blobs") {
+      label = "blobs";
+    }
+
+    var general_data = [];
+
+    $.ajax({
+      async: false,
+      global: false,
+      url: "../static/3d_info/3D_general_description.json",
+      dataType: "json",
+      success: function (data) {
+        general_data = data;
+      },
+    });
+
+    var sol_button = document.getElementById("solution_button");
+    var gen_button = document.getElementById("general_button");
+    var com_button = document.getElementById("common_button");
+    var general_div = document.getElementById("flex_innercontainer_general");
+    var sol_div = document.getElementById("flex_innercontainer_search");
+
+    if (clicked.id === "general_button") {
+      sol_button.classList.remove("flex_innercontainer_menu_item_on");
+      sol_button.classList.add("flex_innercontainer_menu_item_off");
+
+      com_button.classList.remove("flex_innercontainer_menu_item_on");
+      com_button.classList.add("flex_innercontainer_menu_item_off");
+
+      gen_button.classList.remove("flex_innercontainer_menu_item_off");
+      gen_button.classList.add("flex_innercontainer_menu_item_on");
+
+      general_div.style.display = "flex";
+      sol_div.style.display = "none";
+    } else if (clicked.id === "solution_button") {
+      gen_button.classList.remove("flex_innercontainer_menu_item_on");
+      gen_button.classList.add("flex_innercontainer_menu_item_off");
+
+      com_button.classList.remove("flex_innercontainer_menu_item_on");
+      com_button.classList.add("flex_innercontainer_menu_item_off");
+
+      sol_button.classList.remove("flex_innercontainer_menu_item_off");
+      sol_button.classList.add("flex_innercontainer_menu_item_on");
+
+      general_div.style.display = "none";
+      sol_div.style.display = "flex";
+    } else if (clicked.id === "common_button") {
+      gen_button.classList.remove("flex_innercontainer_menu_item_on");
+      gen_button.classList.add("flex_innercontainer_menu_item_off");
+
+      sol_button.classList.remove("flex_innercontainer_menu_item_on");
+      sol_button.classList.add("flex_innercontainer_menu_item_off");
+
+      com_button.classList.remove("flex_innercontainer_menu_item_off");
+      com_button.classList.add("flex_innercontainer_menu_item_on");
+
+      general_div.style.display = "none";
+      sol_div.style.display = "flex";
+    }
+
+    if (tab === "general") {
+      document.getElementById("selected_failure_label").innerHTML =
+        "<h2>Selected Failure Type: " + selected_failure + "</h2>";
+
+      var desc_img = document.createElement("img");
+      desc_img.style.width = "100%";
+
+      var general_left = document.getElementById(
+        "flex_innercontainer_general_left"
+      );
+      var general_right = document.getElementById(
+        "flex_innercontainer_general_right"
+      );
+
+      if (selected_failure !== "none") {
+        desc_img.src = "../static/3d_info/general_images/" + label + ".jpg";
+
+        general_left.firstChild.remove();
+        general_left.appendChild(desc_img);
+
+        for (i = 0; i < general_data.length; i++) {
+          if (general_data[i]["failure"] === label) {
+            general_right.innerHTML =
+              "<h1>" +
+              general_data[i]["title"] +
+              "</h1>" +
+              general_data[i]["description"];
+          }
+        }
+      }
+    } else var priority;
+    if (tab === "solution") {
+      sol_div.style.display = "flex";
+      callSolution(selected_failure, (priority = "1"));
+    } else if (tab === "common") {
+      sol_div.style.display = "flex";
+      callSolution(selected_failure, (priority = "0"));
+    }
+  }
+
+  function callGeneral(selected_failure) {
+    if (selected_failure === "none") {
+      document.getElementById("selected_failure_label").innerHTML = "";
+    } else {
+      document.getElementById("selected_failure_label").innerHTML =
+        "<h2>Selected Failure Type: " + selected_failure + "</h2>";
+    }
+
+    var label = "";
+
+    if (selected_failure === "Underextrusion") {
+      label = "under-extrusion";
+    } else if (selected_failure === "Stringing") {
+      label = "stringing";
+    } else if (selected_failure === "LayerShifting") {
+      label = "layer_shifting";
+    } else if (selected_failure === "Warping") {
+      label = "warping";
+    } else if (selected_failure === "Blobs") {
+      label = "blobs";
+    }
+
+    var general_data = [];
+
+    $.ajax({
+      async: false,
+      global: false,
+      url: "../static/3d_info/3D_general_description.json",
+      dataType: "json",
+      success: function (data) {
+        general_data = data;
+      },
+    });
+
+    var desc_img = document.createElement("img");
+    desc_img.style.width = "100%";
+
+    var general_left = document.getElementById(
+      "flex_innercontainer_general_left"
+    );
+    var general_right = document.getElementById(
+      "flex_innercontainer_general_right"
+    );
+
+    desc_img.src = "../static/3d_info/general_images/" + label + ".jpg";
+
+    general_left.firstChild.remove();
+    general_left.appendChild(desc_img);
+
+    for (var i = 0; i < general_data.length; i++) {
+      if (general_data[i]["failure"] === label) {
+        general_right.innerHTML =
+          "<h1>" +
+          general_data[i]["title"] +
+          "</h1>" +
+          general_data[i]["description"];
+      }
+    }
+  }
+
+  function selectMap(selected, img_id, failure_label) {
+    //d3.select(".sub-map-"+map_id).node().classList.add("flex_imageselector_on");
+    var maps = document.getElementsByClassName("uploaded-img-map-sub");
+    for (var i = 0; i < maps.length; i++) {
+      maps[i].classList.remove("flex_imageselector_on");
+    }
+    selected.classList.add("flex_imageselector_on");
+
+    var general_div = document.getElementById("flex_innercontainer_general");
+    var sol_div = document.getElementById("flex_innercontainer_search");
+
+    //document.getElementById('flex_innercontainer_search').style.display = 'flex';
+
+    var sol_button = document.getElementById("solution_button");
+    var gen_button = document.getElementById("general_button");
+    var com_button = document.getElementById("common_button");
+
+    var priority;
+
+    if (sol_button.className.includes("flex_innercontainer_menu_item_on")) {
+      general_div.style.display = "none";
+      sol_div.style.display = "flex";
+      callSolution(failure_label, (priority = "1"));
+    } else if (
+      com_button.className.includes("flex_innercontainer_menu_item_on")
+    ) {
+      general_div.style.display = "none";
+      sol_div.style.display = "flex";
+      callSolution(failure_label, (priority = "0"));
+    } else if (
+      gen_button.className.includes("flex_innercontainer_menu_item_on")
+    ) {
+      general_div.style.display = "flex";
+      sol_div.style.display = "none";
+      callGeneral(failure_label);
+    }
   }
 
   function showHideClass(className, set_display = "block") {
@@ -165,6 +607,73 @@
         x[i].style.display = set_display;
       }
   }
+
+  function callSolution(failure_label, priority) {
+    if (failure_label === "none") {
+      document.getElementById("selected_failure_label").innerHTML = "";
+    } else {
+      document.getElementById("selected_failure_label").innerHTML =
+        "<h2>Selected Failure Type: " + failure_label + "</h2>";
+    }
+
+    if (failure_label === "Underextrusion") {
+      loadSolutions("under-extrusion", priority);
+    } else if (failure_label === "Stringing") {
+      loadSolutions("stringing", priority);
+    } else if (failure_label === "LayerShifting") {
+      loadSolutions("layer_shifting", priority);
+    } else if (failure_label === "Warping") {
+      loadSolutions("warping", priority);
+    } else if (failure_label === "Blobs") {
+      loadSolutions("blobs", priority);
+    }
+  }
+
+  function buttonToggle(button) {
+    button = document.getElementsByClassName("show_all_button_off")[0];
+
+    if (button === undefined) {
+      button = document.getElementsByClassName("show_all_button_on")[0];
+      button.classList.remove("show_all_button_on");
+      button.classList.add("show_all_button_off");
+    } else {
+      button.classList.remove("show_all_button_off");
+      button.classList.add("show_all_button_on");
+    }
+  }
+
+  function putModal() {
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    modal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  }
 </script>
 
+<script>
+  // Click default tabs
+  document.getElementsByClassName("uploaded-img")[0].click();
+  function clickDefaultTabs(selected) {
+    var current_img = selected.id.split("-")[2];
+    document
+      .getElementsByClassName("uploaded-img-map-sub-" + current_img)[0]
+      .click();
+    document.getElementById("general_button").click();
+  }
+</script>
 {% endblock %}

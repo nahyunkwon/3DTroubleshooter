@@ -2,18 +2,25 @@
   float: left;
   border-style: solid;
   border-radius: 10px;
-  border-color: black;
+  border-color: dimgray;
   background-color: #f6f6f6;
   /* border-color: lightgray; */
-  border-width: 2px;
+  border-width: 1px;
   color: black;
-  width: 90%;
+  width: 100%;
   line-height: 20px;
   /* text-align: center; */
   padding: 10px;
-  font-family: Arial, serif;
+  /* font-family: Arial, serif; */
   margin: 2px;
   display: none;
+
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  word-break: break-all;
 }
 
 .show {
@@ -51,11 +58,14 @@ div[value="diff-hide"] {
 .btnList {
   background: none;
   border: none;
-  margin: 10px;
+  margin: 5px;
   width: 90%;
-  font-size: 16px;
   text-align: left;
   cursor: pointer;
+
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .btnList.activeList {
@@ -84,7 +94,7 @@ div[value="diff-hide"] {
   box-sizing: border-box;
   background-image: url("../images/searchicon.png");
   background-size: 20px 20px;
-  background-position: 14px 12px;
+  background-position: 5px 5px;
   background-repeat: no-repeat;
   font-size: 16px;
   padding: 14px 20px 12px 45px;
@@ -137,7 +147,7 @@ div[value="diff-hide"] {
 }
 #solution_placeholder {
   float: left;
-  width: 50%;
+  width: 100%;
   /* padding: 11px; */
 }
 
@@ -145,6 +155,11 @@ div[value="diff-hide"] {
 
 a {
   text-decoration: none;
+  color: #0363b3;
+}
+
+.popover__title {
+  color: #0363b3;
 }
 
 .popover__title:hover {
@@ -170,6 +185,12 @@ a {
   width: auto;
   /* transition-duration: 0.8s; */
   transition-duration: 0.1s;
+
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin-top: 3px;
+  margin-bottom: 10px;
 }
 .popover__content:before {
   position: absolute;
@@ -191,16 +212,19 @@ a {
   transform: translate(0, 20px);
   transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
 } */
+
+/* adjust popover location here*/
 .popover__wrapper:hover .popover__content {
   z-index: 10;
   opacity: 1;
   visibility: visible;
-  transform: translate(0, 20px);
+  transform: translate(-300px, 20px);
+  /*transition: 0.5s;*/
   transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
 }
 .popover__message {
   text-align: left;
-  width: 300px;
+  width: 200px;
 }
 
 /* New styles for customList */
@@ -251,9 +275,11 @@ a {
 }
 
 .card-title {
-  font-weight: bold;
   /* background-color: rgb(255, 254, 233); */
   /* border-bottom: 1px solid rgb(167, 167, 167); */
+  font-family: "Raleway", sans-serif;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 a {

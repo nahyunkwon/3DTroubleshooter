@@ -7,8 +7,8 @@ function filterFunction() {
   var input, filter, ul, li, a, i;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
-  a = div.getElementsByClassName("btnList");
+  //div = document.getElementById("myDropdown");
+  a = document.getElementsByClassName("btnList");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText || a[i].text;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -87,7 +87,7 @@ function createButton(content, c) {
   var button = document.createElement("button");
   //button.type = "button";
   button.className = "btnList";
-  button.innerHTML = content;
+  button.innerHTML = content + " (" + c.split(', ').length.toString() +")";
   //button.value = c;
   button.onclick = function () {
     filterSelection(c);
@@ -131,11 +131,11 @@ function termToPopover(
 ) {
   var disableClass = "";
   if (desc_src == "") {
-    disableClass = "disable-click";
+    //disableClass = "disable-click";
   }
   var replace_text =
     '<div class="popover__wrapper">' +
-    '<a target="_blank"' +
+    '<a target="_blank" style="color: #0363b3" ' +
     'class="popover__title ' +
     disableClass +
     '" href="' +
@@ -193,11 +193,21 @@ function termToPopover(
 }
 
 /* create solution cards */
-function createCard(title, content, filter, diffLevel_n) {
+function createCard(title, content, filter, diffLevel_n, priority, tutorial_webdoc, tutorial_video) {
   var card = document.createElement("div");
   //button.type = "button";
   // console.log(filter);
   card.className = "filterDiv " + filter + " show"; // + " diff-" + rndDiff;
+
+  if (diffLevel_n == "0"){
+    card.style = "background-color:#b3e6cc";
+  }
+  else if (diffLevel_n == "1"){
+    card.style = "background-color:#F2F972";
+  }
+  else if (diffLevel_n == "2"){
+    card.style = "background-color:#FA8585";
+  }
   card.setAttribute("name", "diff-" + diffLevel_n);
   card.setAttribute("value", "diff-show");
 
@@ -216,21 +226,21 @@ function createCard(title, content, filter, diffLevel_n) {
         //target_terms_in_title.push(target_terms[j]);
         title = title.replace(target_terms[j], "placeholder" + target_terms[j]);
       }
-      if (title.includes(capitalize(target_terms[j]))) {
+      else if (title.includes(capitalize(target_terms[j]))) {
         title = title.replace(
           capitalize(target_terms[j]),
           "placeholder" + capitalize(target_terms[j])
         );
       }
 
-      if (content.includes(target_terms[j])) {
+      else if (content.includes(target_terms[j])) {
         //target_terms_in_content.push(target_terms[j]);
         content = content.replace(
           target_terms[j],
           "placeholder" + target_terms[j]
         );
       }
-      if (content.includes(capitalize(target_terms[j]))) {
+      else if (content.includes(capitalize(target_terms[j]))) {
         content = content.replace(
           capitalize(target_terms[j]),
           "placeholder" + capitalize(target_terms[j])
@@ -301,13 +311,36 @@ function createCard(title, content, filter, diffLevel_n) {
     }
   }
 
-  card.innerHTML =
+  if (priority == "0"){
+
+    card.innerHTML = '<img src="../static/images/common_black.png" style="width:80px"><div class="card-title">' +
+    capitalize(title) +
+    //" -------- Diff level: " +
+    //diffLevel_n +
+    '</div>' +
+    capitalize(content);
+
+  }
+  else {
+    card.innerHTML =
     '<div class="card-title">' +
     capitalize(title) +
-    " -------- Diff level: " +
-    diffLevel_n +
-    "</div>" +
+    //" -------- Diff level: " +
+    //diffLevel_n +
+    '</div>' +
     capitalize(content);
+  }
+  
+  
+  if (tutorial_webdoc != ""){
+     //card.innerHTML += '<br> <button class="modal-btn" name="'+tutorial_webdoc+'|'+tutorial_video+'">View Tutorial</button>';
+    
+    card.innerHTML += '<br><a href="' + tutorial_webdoc + '" style="color:dodgerblue;padding-top:7px" target="_blank">View Detail</a>'
+  }
+  if (tutorial_video != ""){
+    card.innerHTML += '<br><a href="' + tutorial_video + '" style="color:dodgerblue;padding-top:7px" target="_blank">View Video</a>'
+  }
+
 
   // *** card.innerHTML =
   //   '<div class="customList-title">' + title + "</div>" + content;
@@ -317,64 +350,108 @@ function createCard(title, content, filter, diffLevel_n) {
   selectPanel.appendChild(card);
 }
 
-/* create clue buttons and solution cards from json file */
+/* create clue buttons and solution cards from json file for the given failure type name*/
+var failure_type = "warping";
 
-var case_data;
-var clue_data;
-var failure_type = "layer_shifting";
+function loadSolutions(failure_type, priority){
 
-$.ajax({
-  async: false,
-  global: false,
-  url: "../static/json/" + failure_type + "_case.json",
-  //'url': "../static/json/test_case.json",
-  dataType: "json",
-  success: function (data) {
-    case_data = data;
-  },
-});
+  var case_data = [];
+  var clue_data = [];
 
-$.ajax({
-  async: false,
-  global: false,
-  url: "../static/json/" + failure_type + "_clue.json",
-  dataType: "json",
-  success: function (data) {
-    clue_data = data;
-  },
-});
-
-for (var k = 0; k < clue_data.length; k++) {
-  createButton(clue_data[k]["clue"], clue_data[k]["related_case"]);
-}
-
-for (k = 0; k < case_data.length; k++) {
-  var sol_temp = "";
-  if (case_data[k]["solution"] != "") {
-    sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
-  }
-  createCard(
-    case_data[k]["case_content"],
-    sol_temp,
-    case_data[k]["case_id"],
-    case_data[k]["difficulty_level"]
-  );
-}
-
-/* create clue buttons and solution cards from json file */
-
-// createButton("testcontent", "a");
-// createCard("testtitle", "testcontent", "c");
-
-// Add activeList class to the current button (highlight it)
-var btnContainer = document.getElementById("myBtnContainer");
-var btns = btnContainer.getElementsByClassName("btnList");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function () {
-    var current = document.getElementsByClassName("activeList");
-    current[0].className = current[0].className.replace(" activeList", "");
-    this.className += " activeList";
+  $.ajax({
+    async: false,
+    global: false,
+    url: "../static/json/" + failure_type + "_case.json",
+    //'url': "../static/json/test_case.json",
+    dataType: "json",
+    success: function (data) {
+      case_data = data;
+    },
   });
+
+  $.ajax({
+    async: false,
+    global: false,
+    url: "../static/json/" + failure_type + "_clue.json",
+    dataType: "json",
+    success: function (data) {
+      clue_data = data;
+    },
+  });
+
+  $("#myBtnContainer").empty();
+  $("#solution_placeholder").empty();
+
+  var featured_cases = [];
+
+  for (k = 0; k < case_data.length; k++) {
+    var sol_temp = "";
+    //if (case_data[k]["solution"] != "") {
+      sol_temp = '<div class="horiz-line"></div>' + case_data[k]["solution"];
+    //}
+
+    if (priority === case_data[k]['priority']){
+      createCard(
+          case_data[k]["case_content"],
+          sol_temp,
+          case_data[k]["case_id"],
+          case_data[k]["difficulty_level"],
+          case_data[k]["priority"],
+          case_data[k]["tutorial_webdoc"],
+          case_data[k]["tutorial_video"]
+      );
+
+      featured_cases.push(case_data[k]["case_id"]);
+    }
+
+  }
+
+  /* All solutions button */
+  var button = document.createElement("button");
+  button.className = "btnList activeList";
+  var count_all = case_data.length;
+  button.innerHTML = "Select no clue and show every solution (" + featured_cases.length.toString() +")";
+  button.onclick = function () {
+    filterSelection('all');
+    diffFilter();
+  };
+
+  var selectPanel = document.getElementById("myBtnContainer");
+  selectPanel.appendChild(button);
+
+  /* buttons for clues */
+  for (var k = 0; k < clue_data.length; k++) {
+    var related_case = clue_data[k]["related_case"].split(", ");
+    var target_case = [];
+
+    for (var r=0; r<related_case.length; r++) {
+      if (featured_cases.includes(related_case[r])) {
+        target_case.push(related_case[r]);
+      }
+    }
+
+    if (target_case.length !== 0) {
+      createButton(clue_data[k]["clue"], target_case.join(', '));
+    }
+
+  }
+
+  /* create clue buttons and solution cards from json file */
+
+  // createButton("testcontent", "a");
+  // createCard("testtitle", "testcontent", "c");
+
+  // Add activeList class to the current button (highlight it)
+  var btnContainer = document.getElementById("myBtnContainer");
+  var btns = btnContainer.getElementsByClassName("btnList");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function () {
+      var current = document.getElementsByClassName("activeList");
+      current[0].className = current[0].className.replace(" activeList", "");
+      this.className += " activeList";
+    });
+  }
+
 }
 
 //// * Difficulty level checkbox

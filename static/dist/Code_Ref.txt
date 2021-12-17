@@ -1,3 +1,0 @@
-Good Ex: https://www.cssscript.com/feature-rich-image-cropper-pure-javascript-cropper-js/
-
-GitHub: https://github.com/fengyuanchen/cropperjs

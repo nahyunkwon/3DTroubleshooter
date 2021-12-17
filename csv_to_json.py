@@ -45,14 +45,15 @@ def csv_to_json(csvFilePath, jsonFilePath):
         jsonf.write(jsonString)
 
 
-# Driver Code
+def main():
 
-# Decide the two file paths according to your
-# computer system
-filename = 'layer_shifting_case'
-csvFilePath = filename + '.csv'
-jsonFilePath = filename + '.json'
+    #failures = ['layer_shifting', 'stringing', 'warping', 'under-extrusion', 'blobs']
 
-# Call the make_json function
-csv_to_json('./layer_shifting_cases_clues_csv/case-Table 1.csv', 'layer_shifting_case.json')
-csv_to_json('./layer_shifting_cases_clues_csv/clue-Table 1.csv', 'layer_shifting_clue.json')
+    #for f in failures:
+    #    csv_to_json('./failure_data_csv/' + f + '_case_clue_csv/case-Table 1.csv', './static/json/' + f + '_case.json')
+    #    csv_to_json('./failure_data_csv/' + f + '_case_clue_csv/clue-Table 1.csv', './static/json/' + f + '_clue.json')
+    csv_to_json('./3D_general_description.csv', './static/3d_info/3D_general_description.json')
+
+
+if __name__ == "__main__":
+    main()

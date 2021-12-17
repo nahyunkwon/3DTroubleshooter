@@ -3,11 +3,6 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.js"></script>
 
-<style>
-    body {
-        background-image: url("../static/images/3DPFIX_BG.png");
-    }
-</style>
 
 {% endblock %} {% block body %}
 
@@ -56,7 +51,7 @@
 <!-- Content -->
 <div class="flex_container_center" style="flex-direction:column">
     <div class="paragraph_heading" style="padding-top:50px;">
-        3DPFIX Introduction
+        What is 3DPFIX?
     </div>
     <div class="paragraph_text" style="padding-bottom:50px;">
         Does your 3D print have a problem, and you do not know what to do to fix it? Get immediate help from 3DPFIX!
@@ -81,7 +76,7 @@
 
 <div id="loading-div">
   <div>
-    <img src="../static/images/loading.gif" alt="Loading Icon">
+    <img src="../static/images/loading-1.gif" alt="Loading Icon">
   </div>
 </div>
 
@@ -156,7 +151,7 @@
         if (file) {
             reader.readAsDataURL(file);
         }
-    
+
 
     }
 
@@ -171,7 +166,7 @@
         var pass_check_total = file_len;
 
         // for (let i = 0; i < file_len; i++) {
-            
+
 
         // }
 
@@ -185,7 +180,7 @@
                         .select('#prev-div')
                         .append('div')
                         .attr('class', 'prev-sub-div ' + div_cls);
-                        
+
 
             newDiv
             .append('img')
@@ -199,9 +194,9 @@
 
                 // console.log(previewFileCheck(id, i, pass_check));
                 // previewFile(id, i);
-            } catch { 
+            } catch {
                 // createInitImg()
-                break; 
+                break;
             }
         }
 

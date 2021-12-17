@@ -6,7 +6,7 @@
     },
     {
         "clue_id": "1",
-        "clue": "I heard a a grinding noise while printing",
+        "clue": "I heard a grinding noise while printing",
         "related_case": "1, 2"
     },
     {
@@ -31,12 +31,12 @@
     },
     {
         "clue_id": "6",
-        "clue": "I turned on 'Use Adaptive Layers' in Cura",
+        "clue": "I used Cura, and turned on \u2018Use Adaptive Layers\u2019 in setting when slicing",
         "related_case": "8"
     },
     {
         "clue_id": "7",
-        "clue": "I enabled 'z hop' in Cura",
+        "clue": "I enabled z hop in Cura",
         "related_case": "9"
     },
     {

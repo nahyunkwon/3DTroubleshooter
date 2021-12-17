@@ -1,0 +1,22 @@
+[
+    {
+        "clue_id": "0",
+        "clue": "I freshly installed Cura.",
+        "related_case": "1"
+    },
+    {
+        "clue_id": "1",
+        "clue": "I got the new printer or installed new firmware.",
+        "related_case": "3"
+    },
+    {
+        "clue_id": "2",
+        "clue": "I am using PLA at 180C or lower.",
+        "related_case": "10"
+    },
+    {
+        "clue_id": "3",
+        "clue": "I am using PLA at 230C or above.",
+        "related_case": "11"
+    }
+]

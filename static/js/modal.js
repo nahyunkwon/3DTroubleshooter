@@ -2,7 +2,7 @@
 var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var modelBtn = document.getElementsByClassName("modal-btn")[0];
+var modalBtns = document.getElementsByClassName("modal-btn")[0];
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -11,7 +11,7 @@ var span = document.getElementsByClassName("close")[0];
 // request.open("GET", "./json/project-detail.json", false);
 // request.send(null)
 // var projects = JSON.parse(request.responseText);
-
+console.log(case_data);
 // When the user clicks the button, open the modal
 // for(var i=0; i<btns.length; i++){
 //   btns[i].onclick = function() {
@@ -22,7 +22,8 @@ var span = document.getElementsByClassName("close")[0];
 //         var current = projects[j];
 //     }
 //   }
-modelBtn.onclick = function () {
+
+modalBtns.onclick = function () {
   modal.style.display = "block";
 };
 

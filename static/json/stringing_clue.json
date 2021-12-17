@@ -1,0 +1,57 @@
+[
+    {
+        "clue_id": "0",
+        "clue": "My printer has bowden extruder.",
+        "related_case": "1, 11"
+    },
+    {
+        "clue_id": "1",
+        "clue": "I am using extra long bowden tube.",
+        "related_case": "2"
+    },
+    {
+        "clue_id": "2",
+        "clue": "Retraction distance is above 10mm.",
+        "related_case": "3"
+    },
+    {
+        "clue_id": "3",
+        "clue": "I have already adjusted retraction settings, and still have stringing.",
+        "related_case": "5"
+    },
+    {
+        "clue_id": "4",
+        "clue": "I am printing PLA at above 230\u00b0C with 0.4mm nozzle.",
+        "related_case": "6"
+    },
+    {
+        "clue_id": "5",
+        "clue": "There are big blobs on the surface.",
+        "related_case": "6"
+    },
+    {
+        "clue_id": "6",
+        "clue": "I am printing PLA with 0.8mm nozzle.",
+        "related_case": "7"
+    },
+    {
+        "clue_id": "7",
+        "clue": "I am using Simplify3D for slicing.",
+        "related_case": "8"
+    },
+    {
+        "clue_id": "8",
+        "clue": "I am using Cura for slicing.",
+        "related_case": "9, 20"
+    },
+    {
+        "clue_id": "9",
+        "clue": "I use PETG and 0.8mm nozzle.",
+        "related_case": "12"
+    },
+    {
+        "clue_id": "10",
+        "clue": "I turned on Z hop when slicing.",
+        "related_case": "13"
+    }
+]
