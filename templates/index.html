@@ -76,9 +76,32 @@
   </div>
 </div>
 
-<div class="flex_container_center">
+<div class="flex_container_center" id="lower_content">
   <div class="flex_container_imageselector_message">
-    According to the image you selected, your problem can be...
+    According to the image you selected, your problem can be... &emsp;
+
+    <div class="toggle-radio">
+      <input
+        type="radio"
+        name="default"
+        id="default_Option1"
+        value="Option1"
+        class="show_all_toggle_off"
+        onclick="hideClass('acc_below_threshold'); "
+        checked
+      />
+      <label for="default_Option1">Show the Best Guesses of AI</label>
+      <input
+        type="radio"
+        name="default"
+        id="default_Option2"
+        value="Option2"
+        class="show_all_toggle_on"
+        onclick="showClass('acc_below_threshold'); "
+      />
+      <label for="default_Option2">Show All Failure Types</label>
+    </div>
+
   </div>
 </div>
 
@@ -142,32 +165,6 @@
   </div>
 </div>
 
-<div class="flex_container_center">
-  <div class="flex_container_imageselector_message">
-    Do you want to see all failures and AI's confidences?
-    <div class="toggle-radio">
-      <input
-        type="radio"
-        name="default"
-        id="default_Option1"
-        value="Option1"
-        class="show_all_toggle_off"
-        onclick="hideClass('acc_below_threshold'); "
-        checked
-      />
-      <label for="default_Option1">Show the best guesses</label>
-      <input
-        type="radio"
-        name="default"
-        id="default_Option2"
-        value="Option2"
-        class="show_all_toggle_on"
-        onclick="showClass('acc_below_threshold'); "
-      />
-      <label for="default_Option2">Show all failure types</label>
-    </div>
-  </div>
-</div>
 
 <!-- Content -->
 <div class="flex_container_center" style="flex-direction: column">
@@ -625,6 +622,11 @@
       sol_div.style.display = "none";
       callGeneral(failure_label);
     }
+
+    //window.location.href('#lower_content');
+
+    $('html,body').animate({
+        scrollTop: $("#lower_content").offset().top}, 'slow');
   }
 
   function showHideClass(className, set_display = "block") {
