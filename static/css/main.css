@@ -99,7 +99,8 @@ body div {
 
 #loading-div div img {
   position: absolute;
-  clip: rect(16px, 169px, 166px, 20px);
+  /* clip: rect(16px, 169px, 166px, 20px); */
+  clip: rect(16px, 216px, 186px, 50px);
   margin-left: 13px;
   height: 200px;
 }
@@ -415,13 +416,12 @@ body div {
 .column {
   display: flex;
   flex-direction: column;
-    /* flex-basis: 100%; */
+  /* flex-basis: 100%; */
   /* flex: 1; */
 }
 
 .column.right {
   margin-left: 20px;
-
 }
 
 .image-uploaded {
