@@ -90,7 +90,7 @@
         onclick="hideClass('acc_below_threshold'); "
         checked
       />
-      <label for="default_Option1">Show the Best Guesses of AI</label>
+      <label for="default_Option1">Show AI's Best Guess</label>
       <input
         type="radio"
         name="default"
@@ -150,7 +150,7 @@
           src="{{ img_format }}{{ img_path_cam[(card_info[i][m].split('-')[0] | int)-1][i] | safe }}"
           alt=""
           id="sub-map-{{ m }}-{{ i }}-{{ card_info[i][m].split('-')[1] }}"
-          onclick="selectMap(this, this.id.split('-')[2], this.id.split('-')[4]);"
+          onclick="selectMap(this, this.id.split('-')[2], this.id.split('-')[4]); $('html,body').animate({scrollTop: $('#lower_content').offset().top}, 'slow');"
         />
       </div>
       {% endfor %}
@@ -161,10 +161,16 @@
 
 <div class="flex_container_center">
   <div class="flex_container_imageselector_message">
+    <div id="selected_failure_label"></div>
+  </div>
+</div>
+<!--
+<div class="flex_container_center">
+  <div class="flex_container_imageselector_message">
     Select one failure type image above that you want to explore.
   </div>
 </div>
-
+-->
 
 <!-- Content -->
 <div class="flex_container_center" style="flex-direction: column">
@@ -191,8 +197,6 @@
       <a style="text-decoration: none">Common Solutions Did Not Work?</a>
     </div>
   </div>
-
-  <div id="selected_failure_label"></div>
 
   <div id="flex_innercontainer_general" style="display: none">
     <div id="flex_innercontainer_general_left">.</div>
@@ -484,7 +488,7 @@
 
     if (tab === "general") {
       document.getElementById("selected_failure_label").innerHTML =
-        "<h2>Selected Failure Type: " + selected_failure + "</h2>";
+        "Selected Failure Type: " + selected_failure;
 
       var desc_img = document.createElement("img");
       desc_img.style.width = "100%";
@@ -527,7 +531,7 @@
       document.getElementById("selected_failure_label").innerHTML = "";
     } else {
       document.getElementById("selected_failure_label").innerHTML =
-        "<h2>Selected Failure Type: " + selected_failure + "</h2>";
+        "Selected Failure Type: " + selected_failure;
     }
 
     var label = "";
@@ -622,11 +626,6 @@
       sol_div.style.display = "none";
       callGeneral(failure_label);
     }
-
-    //window.location.href('#lower_content');
-
-    $('html,body').animate({
-        scrollTop: $("#lower_content").offset().top}, 'slow');
   }
 
   function showHideClass(className, set_display = "block") {
@@ -659,7 +658,7 @@
       document.getElementById("selected_failure_label").innerHTML = "";
     } else {
       document.getElementById("selected_failure_label").innerHTML =
-        "<h2>Selected Failure Type: " + failure_label + "</h2>";
+        "Selected Failure Type: " + failure_label;
     }
 
     if (failure_label === "Underextrusion") {
@@ -714,11 +713,14 @@
 <script>
   // Click default tabs
   document.getElementsByClassName("uploaded-img")[0].click();
+
   function clickDefaultTabs(selected) {
     var current_img = selected.id.split("-")[2];
-    document
-      .getElementsByClassName("uploaded-img-map-sub-" + current_img)[0]
-      .click();
+    //document.getElementsByClassName("uploaded-img-map-sub-" + current_img)[0].click();
+    var default_element = document.getElementsByClassName("uploaded-img-map-sub-" + current_img)[0]
+
+    selectMap(default_element, default_element.id.split('-')[2], default_element.id.split('-')[4]);
+
     document.getElementById("general_button").click();
   }
 

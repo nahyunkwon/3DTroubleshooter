@@ -365,15 +365,16 @@ a:active {
   display: flex;
   padding-left: 70px;
   padding-right: 70px;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
   padding-top: 30px;
 }
 
 #selected_failure_label {
   padding-left: 70px;
   padding-right: 70px;
-  padding-bottom: 5px;
-  padding-top: 3px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  height:40px;
   font-family: "Barlow Condensed", sans-serif;
 }
 
