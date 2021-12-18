@@ -6,6 +6,8 @@
 <link href="../static/css/customList.css" rel="stylesheet" />
 <script src="../static/js/jquery.min.js"></script>
 
+<link href="../static/css/radio_toggle.css" rel="stylesheet" />
+
 <style>
   /* body {
     min-height: 2000px;
@@ -143,12 +145,27 @@
 <div class="flex_container_center">
   <div class="flex_container_imageselector_message">
     Do you want to see all failures and AI's confidences?
-    <button
-      class="show_all_button_off"
-      onclick="showHideClass('acc_below_threshold'); buttonToggle(this);"
-    >
-      Show All Failures
-    </button>
+    <div class="toggle-radio">
+      <input
+        type="radio"
+        name="default"
+        id="default_Option1"
+        value="Option1"
+        class="show_all_toggle_off"
+        onclick="hideClass('acc_below_threshold'); "
+        checked
+      />
+      <label for="default_Option1">Show the best guesses</label>
+      <input
+        type="radio"
+        name="default"
+        id="default_Option2"
+        value="Option2"
+        class="show_all_toggle_on"
+        onclick="showClass('acc_below_threshold'); "
+      />
+      <label for="default_Option2">Show all failure types</label>
+    </div>
   </div>
 </div>
 
@@ -213,9 +230,10 @@
           <div class="checkbox checkbox-1">
             <label
               ><input
+                class="checkbox-input"
                 type="checkbox"
                 rel="diff-0"
-                onchange="diffFilter();"
+                onchange="diffFilter();checkboxDisabled();"
                 checked="true"
                 required
               />Basic</label
@@ -224,9 +242,10 @@
           <div class="checkbox checkbox-2">
             <label
               ><input
+                class="checkbox-input"
                 type="checkbox"
                 rel="diff-1"
-                onchange="diffFilter();"
+                onchange="diffFilter();checkboxDisabled();"
                 checked="true"
                 required
               />Intermediate</label
@@ -235,9 +254,10 @@
           <div class="checkbox checkbox-3">
             <label
               ><input
+                class="checkbox-input"
                 type="checkbox"
                 rel="diff-2"
-                onchange="diffFilter();"
+                onchange="diffFilter();checkboxDisabled();"
                 checked="true"
                 required
               />Advanced</label
@@ -360,6 +380,11 @@
   }
 
   function switchTab(clicked, tab) {
+    // Reset diff-level checkboxes
+    d3.selectAll(".checkbox-input")
+      .property("checked", true)
+      .property("disabled", false);
+
     // selected image
     var uploaded_imgs = document.getElementsByClassName("uploaded-img");
     var selected = 0;
@@ -561,6 +586,10 @@
   }
 
   function selectMap(selected, img_id, failure_label) {
+    // Reset diff-level checkboxes
+    d3.selectAll(".checkbox-input")
+      .property("checked", true)
+      .property("disabled", false);
     //d3.select(".sub-map-"+map_id).node().classList.add("flex_imageselector_on");
     var maps = document.getElementsByClassName("uploaded-img-map-sub");
     for (var i = 0; i < maps.length; i++) {
@@ -606,6 +635,21 @@
       } else {
         x[i].style.display = set_display;
       }
+  }
+
+  function showClass(className) {
+    let x = document.getElementsByClassName(className);
+    for (let i = 0; i < x.length; i++) x[i].style.display = "block";
+  }
+
+  function hideClass(className) {
+    let x = document.getElementsByClassName(className);
+    for (let i = 0; i < x.length; i++) x[i].style.display = "none";
+
+    let ele = document.getElementsByClassName(
+      "flex_container_imageselector_on"
+    )[0];
+    clickDefaultTabs(ele);
   }
 
   function callSolution(failure_label, priority) {
@@ -674,6 +718,29 @@
       .getElementsByClassName("uploaded-img-map-sub-" + current_img)[0]
       .click();
     document.getElementById("general_button").click();
+  }
+
+  // Disable diff-level checkbox if none checked
+  function checkboxDisabled() {
+    let checkboxes = document.getElementsByClassName("checkbox-input");
+    let nChecked = 0;
+    for (let i = 0; i < checkboxes.length; i++) {
+      if (checkboxes[i].checked == true) {
+        nChecked += 1;
+      }
+    }
+
+    if (nChecked == 1) {
+      for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked == true) {
+          checkboxes[i].disabled = true;
+        }
+      }
+    } else {
+      for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].disabled = false;
+      }
+    }
   }
 </script>
 {% endblock %}
