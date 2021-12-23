@@ -2,7 +2,7 @@ body {
   /* background-image: url("../images/3DPFIX_BG.png"); */
   margin: 0px;
   padding: 0px;
-  background-color: #ffc9c9;
+  background-color: #ddd;
 
 }
 
@@ -400,6 +400,7 @@ a:active {
   flex-basis: 35%;
   padding-right: 15px;
   border-right: 2px #ccc solid;
+  min-width:300px;
 }
 #flex_innercontainer_search_right {
   flex-basis: 65%;

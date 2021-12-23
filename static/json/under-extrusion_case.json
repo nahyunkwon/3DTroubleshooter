@@ -142,5 +142,17 @@
         "solution": "230C is way too hot for PLA. You need to check if your extruder is slipping or if your filament is binding.",
         "tutorial_webdoc": "https://all3dp.com/2/the-best-printing-temperature-for-different-filaments/",
         "tutorial_video": "https://www.youtube.com/watch?v=3CGSsDD6TMA"
+    },
+    {
+        "case_id": "12",
+        "priority": "1",
+        "difficulty_level": "0",
+        "title": "Wet filament",
+        "clue_id": "",
+        "clue": "",
+        "case_content": "Wet filament",
+        "solution": "Could also be moisture in your filament, if it's not new maybe look into drying it. I'll toss my filament in a dehydrator for a few hours and my problems are solved until it happens again. Otherwise, try a fresh roll of filament instead.",
+        "tutorial_webdoc": "https://all3dp.com/2/how-to-dry-filament-pla-abs-and-nylon/",
+        "tutorial_video": ""
     }
 ]

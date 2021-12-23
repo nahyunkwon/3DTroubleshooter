@@ -18,5 +18,10 @@
         "clue_id": "3",
         "clue": "I am using PLA at 230C or above.",
         "related_case": "11"
+    },
+    {
+        "clue_id": "4",
+        "clue": "I heard a popping noise when it leaves a gap.",
+        "related_case": "12"
     }
 ]
