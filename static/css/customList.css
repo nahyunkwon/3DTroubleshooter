@@ -15,12 +15,11 @@
   margin: 2px;
   display: none;
 
-  font-family: "Raleway", sans-serif;
+  font-family: "Barlow Thin", sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: lighter;
   margin-top: 3px;
   margin-bottom: 10px;
-  word-break: break-all;
 }
 
 .show {
@@ -63,9 +62,9 @@ div[value="diff-hide"] {
   text-align: left;
   cursor: pointer;
 
-  font-family: "Raleway", sans-serif;
+  font-family: "Barlow Thin", sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: lighter;
 }
 
 .btnList.activeList {

@@ -6,7 +6,7 @@
         "clue_id": "",
         "clue": "",
         "case_content": "Toolhead is moving too fast",
-        "solution": "If you feel that your printer may be moving too fast, try to reduce the printing speed by 50% to see if it helps . Print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. ",
+        "solution": "If you feel that your printer may be moving too fast, try to reduce the printing speed by 50% to see if it helps. Print speed shouldn't really go over 40mm/s if you want a quality print on *most* machines. ",
         "tutorial_webdoc": "https://3dprintscape.com/cura-speed/",
         "tutorial_video": ""
     },

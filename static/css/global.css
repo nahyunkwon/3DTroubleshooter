@@ -3,6 +3,7 @@ body {
   margin: 0px;
   padding: 0px;
   background-color: #ffc9c9;
+
 }
 
 a,
@@ -328,9 +329,9 @@ a:active {
 }
 
 .clue_item {
-  font-family: "Raleway", sans-serif;
+  font-family: "Barlow Thin", sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight:  lighter;
   padding-top: 25px;
 }
 
@@ -347,14 +348,14 @@ a:active {
   text-decoration: none;
 }
 .solution_heading {
-  font-family: "Raleway", sans-serif;
+  font-family: "Barlow Thin", sans-serif;
   font-size: 20px;
   font-weight: 700;
 }
 .solution_content {
-  font-family: "Barlow Condensed", sans-serif;
+  font-family: "Barlow Thin", sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: lighter;
   margin-top: 3px;
   margin-bottom: 10px;
 }
@@ -414,7 +415,8 @@ a:active {
   flex-basis: 65%;
   padding-left: 15px;
   padding-right: 15px;
-  font-family: "Raleway", sans-serif;
+  font-family: "Barlow Thin", sans-serif;
+  font-weight: lighter;
 }
 
 #flex_innercontainer_common {
