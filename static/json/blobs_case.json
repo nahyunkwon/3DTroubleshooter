@@ -176,8 +176,8 @@
         "clue_id": "5",
         "clue": "I am using Cura 4.7.x.",
         "case_content": "Cura 4.7 has a bug.",
-        "solution": "It might just be a slicer issue with Cura 4.7.x that hasn't been fixed yet, [see here](https://www.reddit.com/r/FixMyPrint/comments/iq6iyb/psa_theres_a_bug_in_cura_47x/). I'd try an older version (4.6.x) or another slicer to rule out the slicer and then focus on slicing parameters",
-        "tutorial_webdoc": "",
+        "solution": "It might just be a slicer issue with Cura 4.7.x that hasn't been fixed yet. I'd try an older version (4.6.x) or another slicer to rule out the slicer and then focus on slicing parameters",
+        "tutorial_webdoc": "https://www.reddit.com/r/FixMyPrint/comments/iq6iyb/psa_theres_a_bug_in_cura_47x/",
         "tutorial_video": "",
         "id_post": "j1xhcp"
     },

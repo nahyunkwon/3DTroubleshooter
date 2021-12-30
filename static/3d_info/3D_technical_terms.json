@@ -2,7 +2,7 @@
     {
         "id": "0",
         "term": "toolhead",
-        "synonyms": "extruder, hotend, nozzle, print head",
+        "synonyms": "extruder, hotend, hot end, nozzle, print head",
         "related_terms": "",
         "description": "The 3D printing Toolhead allows you to 3D print objects using the FFD (fuse filament deposition) method. This method consists in thermo extrude plastic filament through a hot-end.",
         "image_filename": "toolhead.jpg",
@@ -24,9 +24,9 @@
         "term": "set-screw",
         "synonyms": "grub screw",
         "related_terms": "",
-        "description": "Many 3D printers also include a series of belts that are driven by pulleys attached to a stepper motor shaft using a small set-screw (otherwise known as a grub screw). These set-screws anchor the pulley to the shaft of the motor so that the two items spin together. However, if the set-screw loosens, the pulley will no longer rotate together with the motor shaft.",
-        "image_filename": "",
-        "image_src": "",
+        "description": "Set-screws anchor the pulley to the shaft of the motor so that the two items spin together. However, if the set-screw loosens, the pulley will no longer rotate together with the motor shaft.",
+        "image_filename": "set_screw.jpg",
+        "image_src": "https://www.ebay.com/itm/20x-6-32-6-32-6-Brass-Threaded-Heat-Set-Screw-Inserts-for-3D-Printing-Metal/291980008796",
         "desc_src": "https://www.simplify3d.com/support/print-quality-troubleshooting/layer-shifting/"
     },
     {
@@ -45,8 +45,8 @@
         "synonyms": "",
         "related_terms": "",
         "description": "The Jerk setting measures the speed at which your print head moves from its still position. The higher the setting, the faster it will move off from a stable position, the lower the setting, the slower it will move off from a stable position.",
-        "image_filename": "",
-        "image_src": "",
+        "image_filename": "jerk.jpg",
+        "image_src": "https://3dprintscape.com/cura-jerk-settings-how-to-set-them/",
         "desc_src": "https://3dprinterly.com/how-to-get-the-perfect-jerk-acceleration-setting/"
     },
     {
@@ -55,8 +55,8 @@
         "synonyms": "",
         "related_terms": "",
         "description": "The Acceleration setting measures how fast your print head speeds up, limited by your designated 3D printer speed in your slicer settings.\nThe higher the setting, the quicker the print head will get to its maximum speed, the lower the setting, the slower the print head will get to its maximum speed.",
-        "image_filename": "",
-        "image_src": "",
+        "image_filename": "acceleration.png",
+        "image_src": "https://community.ultimaker.com/topic/21556-settings-starting-from-scratch-with-the-um3/",
         "desc_src": "https://3dprinterly.com/how-to-get-the-perfect-jerk-acceleration-setting/"
     },
     {
@@ -102,11 +102,11 @@
     {
         "id": "10",
         "term": "slicer",
-        "synonyms": "",
+        "synonyms": "slicing",
         "related_terms": "Cura, Makerbot Desktop, Simplify3D, Slic3r",
         "description": "A slicer is a program that converts digital 3D models into printing instructions for a given 3D printer to build an object. In addition to the model itself, the instructions contain user-entered 3D printing parameters, such as layer height, speed, and support structure settings.",
-        "image_filename": "",
-        "image_src": "",
+        "image_filename": "slicer.jpg",
+        "image_src": "https://en.wikipedia.org/wiki/Slicer_(3D_printing)",
         "desc_src": "https://all3dp.com/2/what-is-a-3d-slicer-simply-explained/"
     },
     {
@@ -115,15 +115,15 @@
         "synonyms": "e-step",
         "related_terms": "e-step calibration",
         "description": "E-steps are the number of steps the extruder needs to make to extrude one millimeter of filament, and when you calibrate the extruder, you will need to change this value to make sure that it is set correctly. Reference: https://all3dp.com/2/extruder-calibration-6-easy-steps-2/",
-        "image_filename": "",
-        "image_src": "",
+        "image_filename": "estep.jpg",
+        "image_src": "http://beginners3dprinting.com/how-to-calibrate-your-e-steps/",
         "desc_src": "https://all3dp.com/2/what-is-e-step-calibration-simply-explained/"
     },
     {
         "id": "12",
-        "term": "flow",
+        "term": "flow rate",
         "synonyms": "",
-        "related_terms": "flow %, flow rate",
+        "related_terms": "extrusion multiplier",
         "description": "3D printer flow rate, or the extrusion multiplier, refers to the slicer setting that determines the amount of plastic to extrude. By default, the flow rate is set to 1.0 or 100% depending on the slicer. When you set the flow rate to 1.1 or 110% you are increasing the flow rate by 10%.",
         "image_filename": "flow.jpg",
         "image_src": "http://best-cheap-3dprinters.com/calibrating-material-flow-rate-3d-printer/",
@@ -228,5 +228,185 @@
         "image_filename": "draft_shield.png",
         "image_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings",
         "desc_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings"
+    },
+    {
+        "id": "23",
+        "term": "retraction tower",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "It's an essential tool for using and optimizing print settings for filament-based 3D printers.",
+        "image_filename": "retraction_tower.jpg",
+        "image_src": "https://forum.prusaprinters.org/forum/original-prusa-i3-mk3s-mk3-assembly-and-first-prints-troubleshooting/pla-stringing-at-all-temperatures/",
+        "desc_src": "https://www.thingiverse.com/thing:3872943"
+    },
+    {
+        "id": "24",
+        "term": "retraction",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "Retraction is a feature meant to eliminate stringing by pulling back (retracting) filament when the printhead moves to a new location.",
+        "image_filename": "retraction.png",
+        "image_src": "https://community.ultimaker.com/topic/19745-cura-27-strange-retract-behavior/",
+        "desc_src": "https://all3dp.com/2/cura-retraction-settings-how-to-avoid-stringing/"
+    },
+    {
+        "id": "25",
+        "term": "travel speed",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "This is the speed at which the print head moves when it\u2019s not extruding. A higher travel speed decreases the chance of filament oozing from the nozzle, resulting in a cleaner object. However, higher speed could also cause the nozzle to hit a previously printed part, which may damage the print due to the heated nozzle. This can be prevented by using Z-hop when retracting.",
+        "image_filename": "travel_speed.png",
+        "image_src": "https://3dprinting.stackexchange.com/questions/7369/ender-3-seemingly-speeds-up-too-much-on-straight-long-shell-lines",
+        "desc_src": "https://support.ultimaker.com/hc/en-us/articles/360012611079-Speed-settings"
+    },
+    {
+        "id": "27",
+        "term": "printing temperature",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "This refers to the temperature of the nozzle while printing, including the adapted extrusion rate. Each printing profile has a slightly different printing temperature to create the best print result.",
+        "image_filename": "printing_temperature.jpg",
+        "image_src": "https://github.com/Ultimaker/Cura/issues/7342",
+        "desc_src": "https://support.ultimaker.com/hc/en-us/articles/360012610379-Material-settings"
+    },
+    {
+        "id": "28",
+        "term": "bowden tube",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "A Bowden extruder is a type of filament feeding mechanism used in many FDM 3d printers that pushes filament though a long and flexible PTFE (Teflon) tube to the hot end.",
+        "image_filename": "bowden.png",
+        "image_src": "https://all3dp.com/2/bowden-tube-all-you-need-to-know/",
+        "desc_src": "https://all3dp.com/2/bowden-tube-all-you-need-to-know/"
+    },
+    {
+        "id": "29",
+        "term": "direct drive",
+        "synonyms": "direct drive extruder",
+        "related_terms": "",
+        "description": "A direct drive extruder has the\u00a0stepper motor on the print head itself, so filament gets pushed directly into the hot end. This means the print head has to carry the weight of the stepper motor as it moves along the x-axis.",
+        "image_filename": "direct_drive.png",
+        "image_src": "https://all3dp.com/2/bowden-tube-all-you-need-to-know/",
+        "desc_src": "https://all3dp.com/2/bowden-tube-all-you-need-to-know/"
+    },
+    {
+        "id": "30",
+        "term": "combing",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "Combing will reduce the chance of defects on outer surfaces of the print by recalculating all nozzle travel moves to stay within the perimeter of the print. This results in greater travel distances, but with a reduced need for material retraction.",
+        "image_filename": "combing.png",
+        "image_src": "https://the3dprinterbee.com/cura-combing/",
+        "desc_src": "https://support.ultimaker.com/hc/en-us/articles/360012611299-Travel-settings"
+    },
+    {
+        "id": "31",
+        "term": "linear advance",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "Linear advance is a special firmware feature that expects and compensates for pressure building up in the nozzle due to switching between extrusion and retraction. This compensation yields prints with sharper corners, flatter walls, and cleaner solid infill, all while using higher printing speeds (if no other limitations exist).",
+        "image_filename": "linear_advance.jpg",
+        "image_src": "https://all3dp.com/2/linear-advance-cura-marlin/",
+        "desc_src": "https://all3dp.com/2/linear-advance-cura-marlin/"
+    },
+    {
+        "id": "32",
+        "term": "wipe distance",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "The outer wall wipe distance defines the extrusionless distance of the nozzle at the end of an outer wall in Cura. This wipes off excess material on already printed areas of the outer wall to get a smoother Z-seam. The default settings are 0.2 \u2013 0.4 mm.\u00a0",
+        "image_filename": "wipe_distance.png",
+        "image_src": "https://www.google.com/search?q=3d+printing+slicer&client=safari&rls=en&sxsrf=AOaemvIDFdHxKay3cKqWZ7SyBsPuifpZtg:1640804805552&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiWh9Kc2on1AhWXkmoFHR8DChYQ_AUoBHoECAEQBg&biw=1174&bih=716&dpr=2#imgrc=zrfu0Iy1wKJtcM",
+        "desc_src": "https://the3dprinterbee.com/cura-outer-wall-wipe-distance/"
+    },
+    {
+        "id": "33",
+        "term": "temp tower",
+        "synonyms": "temperature tower",
+        "related_terms": "",
+        "description": "The idea is to 3D print the entire tower, but vary the temperature on each \u201cfloor\u201d. That way you can very easily visually compare the print results between the two temperatures.\u00a0",
+        "image_filename": "temp_tower.jpg",
+        "image_src": "https://www.fabbaloo.com/2020/04/how-to-use-a-3d-print-temperature-tower",
+        "desc_src": "https://www.thingiverse.com/thing:2493504"
+    },
+    {
+        "id": "34",
+        "term": "coasting",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "When you\u2019ve enabled coasting in Cura, the nozzle stops extruding material towards the end of its extrusion path. Instead, the material that\u2019s oozing from the nozzle is used to complete the layer.",
+        "image_filename": "coasting.png",
+        "image_src": "https://community.ultimaker.com/topic/23184-cura-leaves-weird-holes-in-walls/",
+        "desc_src": "https://all3dp.com/2/cura-coasting-settings-explained/"
+    },
+    {
+        "id": "35",
+        "term": "infill",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "Infill pattern is the structure and shape of the material inside of a part. Ranging from simple lines to more complex geometric shapes, infill patterns can affect a part\u2019s strength, weight, print time, and even flexibility",
+        "image_filename": "infill.jpg",
+        "image_src": "https://all3dp.com/2/infill-3d-printing-what-it-means-and-how-to-use-it/",
+        "desc_src": "https://all3dp.com/2/infill-3d-printing-what-it-means-and-how-to-use-it/"
+    },
+    {
+        "id": "36",
+        "term": "ptfe tube",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "PTFE is a very common component used in filament-based 3D printers. It's the white material used in tubes guiding filament towards the extruder and hot end.",
+        "image_filename": "pfte_tube.jpg",
+        "image_src": "https://www.amazon.com/Meters-Teflon-Filament-printer-Rostock/dp/B00THZKC8Y",
+        "desc_src": "https://www.fabbaloo.com/2020/03/is-your-3d-printer-killing-you-slowly"
+    },
+    {
+        "id": "37",
+        "term": "z seam",
+        "synonyms": "z-seam, seam",
+        "related_terms": "",
+        "description": "A Z seam usually looks like a single line of printing imperfections spanning the entire Z-axis of your model.",
+        "image_filename": "z-seam.jpg",
+        "image_src": "https://all3dp.com/2/cura-z-seam-tutorial/",
+        "desc_src": "https://all3dp.com/2/cura-z-seam-tutorial/"
+    },
+    {
+        "id": "38",
+        "term": "clog",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "Heat up the nozzle to 250\u00b0C and push the filament through the nozzle until you don't see any of the previous filament coming out of the hotend. Cool down your extruder to room temperature to solidify the filament in the nozzle.",
+        "image_filename": "clog.jpg",
+        "image_src": "https://www.simplify3d.com/support/print-quality-troubleshooting/clogged-extruder/",
+        "desc_src": "https://www.matterhackers.com/news/how-to-unclog-a-3d-printer-nozzle"
+    },
+    {
+        "id": "39",
+        "term": "filament diameter",
+        "synonyms": "filament size",
+        "related_terms": "",
+        "description": "Filament size should not be confused with the nozzle size, and several different combinations of nozzle and filament sizes may be used. One of the most common nozzle sizes is 0.4\u00a0mm, while examples of other common sizes includes 0.35\u00a0mm and 0.25\u00a0mm.",
+        "image_filename": "filament.jpg",
+        "image_src": "https://en.wikipedia.org/wiki/3D_printing_filament",
+        "desc_src": "https://en.wikipedia.org/wiki/3D_printing_filament"
+    },
+    {
+        "id": "40",
+        "term": "filament",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "3D printing filament is the thermoplastic feedstock for fused deposition modeling 3D printers. There are many types of filament available with different properties, requiring different temperatures to print.",
+        "image_filename": "filament.jpg",
+        "image_src": "https://en.wikipedia.org/wiki/3D_printing_filament",
+        "desc_src": "https://en.wikipedia.org/wiki/3D_printing_filament"
+    },
+    {
+        "id": "41",
+        "term": "volumetric extrusion",
+        "synonyms": "",
+        "related_terms": "",
+        "description": "Its a feature of marlin firmware which interprets E move commands (G0 Ex or G1 Ex) as units of volume, mm3, instead of linear mm. When it enabled on gcode that is sliced in units of linear mm, it effectively divides the moves by area of the filament, which is 1/2.4, effectively 40% flow. It is poorly described in the menu, and tends to be enabled by accident either by user or at factory.",
+        "image_filename": "volumetric_extrusion.jpg",
+        "image_src": "https://www.reddit.com/r/ender3/comments/h85z3c/interesting_discovery_my_gcode_flavor_swutched/",
+        "desc_src": "https://www.reddit.com/r/ender3/comments/f0ik8k/volumetric_extrusion_psa/"
     }
 ]
