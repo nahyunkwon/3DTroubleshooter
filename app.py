@@ -305,73 +305,9 @@ def index():
         else:
             pass
 
-    return render_template("init.html", img_format='', img_path=['/static/images/init.svg'], n_img=0,
-                           output=text + "0 files.", card_info=[["Init-card"]], init_hide=True)
+    return render_template("init.html", img_format='', img_path=['/static/images/init.svg'], n_img=0, output=text + "0 files.", card_info=[["Init-card"]], init_hide=True)
 
 
-@app.route('/<cmd>')
-def command(cmd=None):
-    # camera_command = cmd[0].upper()
-    # multiple_crop_overlap_size(output_pred[0].overlay[2], output_pred[0].img_reduced_size[0], cmd)
-    # response = np.load(BytesIO(b64decode(str(cmd).encode('ascii'))))['x'].shape
-    # response = str(len(cmd))
-    # response = "Moving {}".format(cmd.capitalize())
-    # js_input_list = str(cmd).split("|")
-    # len_list = len(js_input_list)
-    # overlay_sigmoid = js_input_list[:(len_list-2)]
-    # img_reduced_size, js_crop_input = js_input_list[(len_list-2):]
-    # img_reduced_size = eval(img_reduced_size)  # convert string tuple to tuple
-
-    # overlap_res = '{'
-    # for m in range(len_list-2):
-    #     overlap_res += f'"{model_info.name[m]}: "'
-    #     overlay_sigmoid_sub = np.float32(json.loads([overlay_sigmoid][m]))
-    #     overlap_res += multiple_crop_overlap_size(np.float32(json.loads(overlay_sigmoid_sub)), img_reduced_size, js_crop_input) + ','
-    # # response = multiple_crop_overlap_size(overlay_sigmoid, img_reduced_size, '73.49249999999998,44.28,188.805,279.51750000000004,36.592499999999966,160.51500000000001,458.175,225.09000000000003,')
-    # overlap_res = '}'
-
-    global output_pred
-
-    ## Get input from JS
-    js_crop_input = str(cmd)
-    # overlay_sigmoid = np.float32(json.loads(overlay_sigmoid))
-
-    # overlap_res = multiple_crop_overlap_size(output_pred[0].overlay[1], img_reduced_size, js_crop_input)
-
-    # overlap_res = '{'
-    # for m in range(len(model_info)):
-    #     overlap_res += f'"{model_info.name[m]}": '
-    #     overlay_sigmoid_sub = output_pred[0].overlay[m]
-    #     overlap_res += (str(multiple_crop_overlap_size(overlay_sigmoid_sub, img_reduced_size, js_crop_input)) + ',')
-    # overlap_res = []
-    # overlap_res += '}'
-
-    if js_crop_input == '':
-        overlap_res = 'No cropping'
-    else:
-        img_reduced_size = eval(output_pred[0].img_reduced_size[0])  # convert string tuple to tuple
-        df_rank_crop = pd.DataFrame(columns=['name', 'overlap_iou'])
-        df_rank_crop.name = model_info.name
-        rank_model = []
-        rank_model_px = []
-
-        for m in range(len(df_rank_crop)):
-            overlay_sigmoid_sub = output_pred[0].overlay[m]
-            df_rank_crop.loc[m, 'overlap_iou'] = round(
-                multiple_crop_overlap_size(overlay_sigmoid_sub, img_reduced_size, js_crop_input), 3)
-
-        rank_model.append(df_rank_crop.sort_values(by="overlap_iou", ascending=False).name.to_list())
-        rank_model_px.append(df_rank_crop.sort_values(by="overlap_iou", ascending=False).overlap_iou.to_list())
-
-        # overlap_res = json.dumps(rank_model) + "<br>" + json.dumps(rank_model_px)
-        overlap_res = rank_model + rank_model_px + [js_crop_input]
-
-        del js_crop_input
-        del overlay_sigmoid_sub
-        gc.collect()
-
-    # ser.write(camera_command)
-    return str(overlap_res), 200, {'Content-Type': 'text/plain'}
 
 
 if __name__ == '__main__':
