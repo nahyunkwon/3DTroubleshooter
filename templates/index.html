@@ -201,6 +201,7 @@
     <div id="flex_innercontainer_general_left">.</div>
 
     <div id="flex_innercontainer_general_right"></div>
+
   </div>
 
   <div id="flex_innercontainer_search" style="display: none">
@@ -502,8 +503,17 @@
       if (selected_failure !== "none") {
         desc_img.src = "../static/3d_info/general_images/" + label + ".jpg";
 
-        general_left.firstChild.remove();
+        var common_img = document.createElement("img");
+        common_img.style.width = "100%";
+
+        common_img.src = "../static/3d_info/general_images/" + label + "_common.jpg";
+
+        while (general_left.firstChild != null) {
+          general_left.firstChild.remove();
+        }
+
         general_left.appendChild(desc_img);
+        general_left.appendChild(common_img);
 
         for (i = 0; i < general_data.length; i++) {
           if (general_data[i]["failure"] === label) {
@@ -559,9 +569,6 @@
       },
     });
 
-    var desc_img = document.createElement("img");
-    desc_img.style.width = "100%";
-
     var general_left = document.getElementById(
       "flex_innercontainer_general_left"
     );
@@ -569,10 +576,21 @@
       "flex_innercontainer_general_right"
     );
 
+    var desc_img = document.createElement("img");
+    desc_img.style.width = "100%";
+
     desc_img.src = "../static/3d_info/general_images/" + label + ".jpg";
 
-    general_left.firstChild.remove();
+    var common_img = document.createElement("img");
+    common_img.style.width = "100%";
+
+    common_img.src = "../static/3d_info/general_images/" + label + "_common.jpg";
+
+    while (general_left.firstChild != null) {
+      general_left.firstChild.remove();
+    }
     general_left.appendChild(desc_img);
+    general_left.appendChild(common_img);
 
     for (var i = 0; i < general_data.length; i++) {
       if (general_data[i]["failure"] === label) {
