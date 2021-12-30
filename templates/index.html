@@ -8,8 +8,7 @@
 
 <link href="../static/css/radio_toggle.css" rel="stylesheet" />
 
-<style>
-</style>
+<style></style>
 
 {% endblock %} {% block body %}
 <!-- Header hat -->
@@ -98,7 +97,6 @@
       />
       <label for="default_Option2">Show All Failure Types</label>
     </div>
-
   </div>
 </div>
 
@@ -137,7 +135,11 @@
           >
         </div>
         <div class="flex_imageselector_innercontainer_each_prob">
-          <span class="error_color{{ m+1 }}"
+          <span class="error_values error_color{{ m+1 }}"
+            >{{ (((card_info_prob[i][m] * 100) | round) |
+            string).rstrip('0').rstrip('.') }}%</span
+          >
+          <span class="hidden_error_values error_color{{ m+1 }}"
             >{{ (((card_info_prob[i][m] * 100) | round) |
             string).rstrip('0').rstrip('.') }}%</span
           >
@@ -199,6 +201,7 @@
     <div id="flex_innercontainer_general_left">.</div>
 
     <div id="flex_innercontainer_general_right"></div>
+
   </div>
 
   <div id="flex_innercontainer_search" style="display: none">
@@ -500,8 +503,17 @@
       if (selected_failure !== "none") {
         desc_img.src = "../static/3d_info/general_images/" + label + ".jpg";
 
-        general_left.firstChild.remove();
+        var common_img = document.createElement("img");
+        common_img.style.width = "100%";
+
+        common_img.src = "../static/3d_info/general_images/" + label + "_common.jpg";
+
+        while (general_left.firstChild != null) {
+          general_left.firstChild.remove();
+        }
+
         general_left.appendChild(desc_img);
+        general_left.appendChild(common_img);
 
         for (i = 0; i < general_data.length; i++) {
           if (general_data[i]["failure"] === label) {
@@ -557,9 +569,6 @@
       },
     });
 
-    var desc_img = document.createElement("img");
-    desc_img.style.width = "100%";
-
     var general_left = document.getElementById(
       "flex_innercontainer_general_left"
     );
@@ -567,10 +576,21 @@
       "flex_innercontainer_general_right"
     );
 
+    var desc_img = document.createElement("img");
+    desc_img.style.width = "100%";
+
     desc_img.src = "../static/3d_info/general_images/" + label + ".jpg";
 
-    general_left.firstChild.remove();
+    var common_img = document.createElement("img");
+    common_img.style.width = "100%";
+
+    common_img.src = "../static/3d_info/general_images/" + label + "_common.jpg";
+
+    while (general_left.firstChild != null) {
+      general_left.firstChild.remove();
+    }
     general_left.appendChild(desc_img);
+    general_left.appendChild(common_img);
 
     for (var i = 0; i < general_data.length; i++) {
       if (general_data[i]["failure"] === label) {
@@ -714,9 +734,15 @@
   function clickDefaultTabs(selected) {
     var current_img = selected.id.split("-")[2];
     //document.getElementsByClassName("uploaded-img-map-sub-" + current_img)[0].click();
-    var default_element = document.getElementsByClassName("uploaded-img-map-sub-" + current_img)[0]
+    var default_element = document.getElementsByClassName(
+      "uploaded-img-map-sub-" + current_img
+    )[0];
 
-    selectMap(default_element, default_element.id.split('-')[2], default_element.id.split('-')[4]);
+    selectMap(
+      default_element,
+      default_element.id.split("-")[2],
+      default_element.id.split("-")[4]
+    );
 
     document.getElementById("general_button").click();
   }
@@ -742,6 +768,27 @@
         checkboxes[i].disabled = false;
       }
     }
+  }
+</script>
+
+<script class="perc-to-levels">
+  function perc2levels(perc) {
+    if (perc >= 75) {
+      return "Highly Likely";
+    } else if (perc >= 50) {
+      return "Likely";
+    } else if (perc >= 25) {
+      return "Unlikely";
+    } else {
+      return "Highly Unlikely";
+    }
+  }
+
+  let error_values = document.getElementsByClassName("error_values");
+  for (let i = 0; i < error_values.length; i++) {
+    document.getElementsByClassName("error_values")[i].innerHTML = perc2levels(
+      parseFloat(error_values[i].innerHTML)
+    );
   }
 </script>
 {% endblock %}
