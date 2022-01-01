@@ -313,6 +313,9 @@ function createCard(
     }
   }
 
+  title = title.replace('placeholder', '');
+  content = content.replace('placeholder', '');
+
   if (priority == "0") {
     card.innerHTML =
       '<img src="../static/images/common_black.png" style="width:80px"><div class="card-title">' +

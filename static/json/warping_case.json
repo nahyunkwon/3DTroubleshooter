@@ -150,7 +150,7 @@
         "title": "Draft Shield",
         "clue_id": "5",
         "clue": "There is draft where my printer is located.",
-        "case_content": "Draft Shield: Check for drafts, an open window can do this.",
+        "case_content": "Keep the print away from the cold air",
         "solution": "Large prints like this will always have warping problem even with PLA. You can put a cardboard box around your printer to keep the print away from the cold air. You can also use \u2018draft shield\u2019 setting in Cura. It generates a printed wall around the 3D print.  ",
         "tutorial_webdoc": "",
         "tutorial_video": "https://www.youtube.com/watch?v=9uClZoz0WWY"

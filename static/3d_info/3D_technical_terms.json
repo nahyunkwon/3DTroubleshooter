@@ -151,13 +151,13 @@
     },
     {
         "id": "15",
-        "term": "raft",
+        "term": "draft shield",
         "synonyms": "",
-        "related_terms": "brim, skirt",
-        "description": "A 3D printing raft forms the first layer of a horizontal mesh of filament deposited directly on the build platform. Upon this first layer, the print is deposited.",
-        "image_filename": "raft.jpg",
-        "image_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/",
-        "desc_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/"
+        "related_terms": "",
+        "description": "A draft shield will create a one-layer thick wall around the object, which protects it from unwanted air flows from the environment. Materials that are prone to warping or delaminate easily (e.g. ABS) can benefit from this feature.",
+        "image_filename": "draft_shield.png",
+        "image_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings",
+        "desc_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings"
     },
     {
         "id": "16",
@@ -221,13 +221,13 @@
     },
     {
         "id": "22",
-        "term": "draft shield",
+        "term": "raft",
         "synonyms": "",
-        "related_terms": "",
-        "description": "A draft shield will create a one-layer thick wall around the object, which protects it from unwanted air flows from the environment. Materials that are prone to warping or delaminate easily (e.g. ABS) can benefit from this feature.",
-        "image_filename": "draft_shield.png",
-        "image_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings",
-        "desc_src": "https://support.ultimaker.com/hc/en-us/articles/360012614559-Experimental-settings"
+        "related_terms": "brim, skirt",
+        "description": "A 3D printing raft forms the first layer of a horizontal mesh of filament deposited directly on the build platform. Upon this first layer, the print is deposited.",
+        "image_filename": "raft.jpg",
+        "image_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/",
+        "desc_src": "https://all3dp.com/2/3d-printing-raft-brim-and-skirt-all-you-need-to-know/"
     },
     {
         "id": "23",
